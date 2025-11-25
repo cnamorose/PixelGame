@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a619ded546aee7940a988ed18d13cb6f
-      internalID: -1446928434
+      spriteID: 200926b015b3016449509cf34d459e96
+      internalID: 542796875
       vertices: []
       indices: 
       edges: []
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 790ce2d78f1eead43bb0123bdfdf1c03
-      internalID: 722974793
+      spriteID: 21f84bc25ccd5344685d8bcc99c8da94
+      internalID: 1686301496
       vertices: []
       indices: 
       edges: []
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 06165572ff58b9d4ebe2071ecf19da78
-      internalID: -975380555
+      spriteID: 2d6e37543e7d51f42b99d08de9df6154
+      internalID: -1736245051
       vertices: []
       indices: 
       edges: []
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1026a3e2c841847448f5f61e7b7a4231
-      internalID: 825355074
+      spriteID: 2a529966df88d434daea97530abdfef7
+      internalID: -1597478370
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      mainchwalkR_0: -1446928434
-      mainchwalkR_1: 722974793
-      mainchwalkR_2: -975380555
-      mainchwalkR_3: 825355074
+      mainchwalkR_0: 542796875
+      mainchwalkR_1: 1686301496
+      mainchwalkR_2: -1736245051
+      mainchwalkR_3: -1597478370
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

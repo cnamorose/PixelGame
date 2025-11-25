@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 635dcb7ded59ea549aae4a89b3f87044
+guid: 9e75fa1a1b0c0af419980b37cd8b2aac
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mainchrun_Sheet_0
+      name: mainchwalk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4ed70bda429c094fbdf48791f143d21
-      internalID: 2037365363
+      spriteID: a3e70d2ff7034604d9310897cdcb7e30
+      internalID: -1760150920
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mainchrun_Sheet_1
+      name: mainchwalk_1
       rect:
         serializedVersion: 2
         x: 32
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e6186ad4070d8ae4aa96fc627bb591d3
-      internalID: 1827037059
+      spriteID: c18cca1961958ba4299496c75d0d89de
+      internalID: 1596860149
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mainchrun_Sheet_2
+      name: mainchwalk_2
       rect:
         serializedVersion: 2
         x: 64
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3966183e11485040a30e0da82312539
-      internalID: 1571282625
+      spriteID: d0f6a446cc64ae74795dcaba1f4bcb5a
+      internalID: -2124267569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mainchrun_Sheet_3
+      name: mainchwalk_3
       rect:
         serializedVersion: 2
         x: 96
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e791a61ef0b7b74e8790085b156f965
-      internalID: 246858292
+      spriteID: e648d0f4f7c6bdb41a0146840d410e9f
+      internalID: 1549309364
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      mainchrun_Sheet_0: 2037365363
-      mainchrun_Sheet_1: 1827037059
-      mainchrun_Sheet_2: 1571282625
-      mainchrun_Sheet_3: 246858292
+      mainchwalk_0: -1760150920
+      mainchwalk_1: 1596860149
+      mainchwalk_2: -2124267569
+      mainchwalk_3: 1549309364
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

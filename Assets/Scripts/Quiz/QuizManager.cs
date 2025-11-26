@@ -8,6 +8,11 @@ public class QuizManager : MonoBehaviour
 {
     public PlayerLifeManager playerLife;
 
+    private float timeLimit = 5f;
+    private float currentTime;
+    private bool isAnswering = false;
+    public TMP_Text timerText;
+
     [Header("Quiz Data")]
     public QuizData[] quizList;       // ScriptableObject 퀴즈들
     private List<QuizData> quizPool;  // 문제 중복 방지용 리스트
@@ -39,11 +44,25 @@ public class QuizManager : MonoBehaviour
         gameOverPanel.SetActive(false);
     }
 
+    void Update()
+    {
+        if (!isAnswering) return;
+
+        currentTime -= Time.deltaTime;
+
+        // 텍스트 UI 갱신
+        timerText.text = Mathf.Ceil(currentTime).ToString();
+
+        if (currentTime <= 0)
+        {
+            TimeOut();
+        }
+    }
+
     public void LoadRandomQuiz()
     {
         if (quizCount >= maxQuizCount)
         {
-            // ✔ 4문제 다 풀면 게임 종료
             ShowGameOver();
             return;
         }
@@ -58,7 +77,9 @@ public class QuizManager : MonoBehaviour
         int rand = Random.Range(0, quizPool.Count);
         currentQuiz = quizPool[rand];
 
-        // UI 적용
+        // 문제 중복 방지
+        quizPool.RemoveAt(rand);
+
         questionText.text = currentQuiz.question;
 
         for (int i = 0; i < 4; i++)
@@ -66,28 +87,36 @@ public class QuizManager : MonoBehaviour
             answerTexts[i].text = currentQuiz.answers[i];
         }
 
-        // 선택된 문제 제거 → 중복 방지
-        //quizPool.RemoveAt(rand);
+        // 타이머 초기화
+        currentTime = timeLimit;
+        isAnswering = true;
+
+        timerText.text = currentTime.ToString();
     }
 
     public void CheckAnswer(int index)
     {
         if (index == currentQuiz.correctIndex)
         {
+            isAnswering = false;    
             quizCount++;
             LoadRandomQuiz();
         }
         else
-        {
-            // 플레이어 목숨 감소
+        {  
             playerLife.LoseLife();
-
-            // UI 업데이트
             UpdateLifeUI();
 
-            // 게임 오버 체크
             if (playerLife.currentLife <= 0)
+            {
+                isAnswering = false;   
                 ShowGameOver();
+            }
+        
+            else
+            {
+                LoadRandomQuiz();
+            }
         }
     }
 
@@ -101,6 +130,26 @@ public class QuizManager : MonoBehaviour
                 lifePills[i].sprite = emptyPillSprite;
         }
     }
+
+    void TimeOut()
+    {
+        isAnswering = false;
+
+        Debug.Log("시간 초과! 목숨 감소");
+
+        playerLife.LoseLife();
+        UpdateLifeUI();
+
+        if (playerLife.currentLife <= 0)
+        {
+            ShowGameOver();
+        }
+        else
+        {
+            LoadRandomQuiz();
+        }
+    }
+
 
     void ShowGameOver()
     {

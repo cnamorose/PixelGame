@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 public class QuizManager : MonoBehaviour
 {
+    public PlayerLifeManager playerLife;
+
     [Header("Quiz Data")]
     public QuizData[] quizList;       // ScriptableObject 퀴즈들
     private List<QuizData> quizPool;  // 문제 중복 방지용 리스트
-    public LifeManager lifeManager;
 
     private QuizData currentQuiz;
 
@@ -22,7 +23,6 @@ public class QuizManager : MonoBehaviour
     public Sprite fullPillSprite;     // 꽉 찬 알약 이미지
     public Sprite emptyPillSprite;    // 빈 알약 이미지
 
-    private int lifeCount = 3;
 
     [Header("Game Over")]
     public GameObject gameOverPanel;
@@ -33,6 +33,7 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         quizPool = new List<QuizData>(quizList);
+        playerLife = FindObjectOfType<PlayerLifeManager>();
         LoadRandomQuiz();
         UpdateLifeUI();
         gameOverPanel.SetActive(false);
@@ -73,24 +74,20 @@ public class QuizManager : MonoBehaviour
     {
         if (index == currentQuiz.correctIndex)
         {
-            Debug.Log("정답!");
-
             quizCount++;
-
-            // 다음 문제
             LoadRandomQuiz();
         }
         else
         {
-            Debug.Log("오답!");
-            lifeManager.LoseLife();
-            lifeCount--;
+            // 플레이어 목숨 감소
+            playerLife.LoseLife();
+
+            // UI 업데이트
             UpdateLifeUI();
 
-            if (lifeCount <= 0)
-            {
+            // 게임 오버 체크
+            if (playerLife.currentLife <= 0)
                 ShowGameOver();
-            }
         }
     }
 
@@ -98,7 +95,7 @@ public class QuizManager : MonoBehaviour
     {
         for (int i = 0; i < lifePills.Length; i++)
         {
-            if (i < lifeCount)
+            if (i < playerLife.currentLife)
                 lifePills[i].sprite = fullPillSprite;
             else
                 lifePills[i].sprite = emptyPillSprite;

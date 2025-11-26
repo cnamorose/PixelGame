@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAction : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerAction : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -52,6 +54,15 @@ public class PlayerAction : MonoBehaviour
         }
         else
             anim.SetBool("isChange", false);
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SceneManager.LoadScene("Quiz");
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SceneManager.LoadScene("Room");
+        }
     }
 
     private void FixedUpdate()

@@ -28,9 +28,16 @@ public class QuizManager : MonoBehaviour
     public Sprite fullPillSprite;     // 꽉 찬 알약 이미지
     public Sprite emptyPillSprite;    // 빈 알약 이미지
 
+    [Header("Fade UI")]
+    public Image fadePanel;
 
     [Header("Game Over")]
     public GameObject gameOverPanel;
+
+    [Header("UI Group")]
+    public GameObject lifeUI;     // 알약 UI 묶은 부모 오브젝트
+    public GameObject timerUI;
+    public TMP_Text extraGameOverText;
 
     private int quizCount = 0;
     private int maxQuizCount = 4;
@@ -153,6 +160,34 @@ public class QuizManager : MonoBehaviour
 
     void ShowGameOver()
     {
-        gameOverPanel.SetActive(true);
+        StartCoroutine(FadeAndShowGameOver());
     }
+
+    IEnumerator FadeAndShowGameOver()
+    {
+        lifeUI.SetActive(false);
+        timerUI.SetActive(false);
+
+        fadePanel.gameObject.SetActive(true);
+
+        float fadeTime = 1f;
+        Color c = fadePanel.color;
+
+        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        {
+            float alpha = Mathf.Lerp(0f, 1f, t / fadeTime);
+            fadePanel.color = new Color(c.r, c.g, c.b, alpha);
+            yield return null;
+        }
+
+        fadePanel.color = new Color(c.r, c.g, c.b, 1f);
+
+        yield return new WaitForSeconds(1f);
+        gameOverPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        extraGameOverText.gameObject.SetActive(true);
+
+
+    }
+
 }

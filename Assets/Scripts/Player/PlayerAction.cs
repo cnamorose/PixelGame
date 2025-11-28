@@ -13,16 +13,23 @@ public class PlayerAction : MonoBehaviour
     float h;
     float v;
     bool isHorizonMove;
+    bool isQuizScene = false;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void Update()
     {
+
+        if (isQuizScene)
+            return;
+
         //Move Value
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
@@ -67,8 +74,31 @@ public class PlayerAction : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isQuizScene)
+        {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
+
         //Move
         Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
         rigid.velocity = moveVec * Speed;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Quiz")
+        {
+            // 플레이어 숨기기 + 움직임 차단
+            isQuizScene = true;
+            GetComponent<SpriteRenderer>().enabled = false;
+            rigid.velocity = Vector2.zero;
+        }
+        else
+        {
+            // 다시 보이게 + 움직임 가능
+            isQuizScene = false;
+            GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 }

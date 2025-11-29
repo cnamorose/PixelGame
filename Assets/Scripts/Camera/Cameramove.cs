@@ -6,6 +6,11 @@ public class Cameramove : MonoBehaviour
 {
     public Transform target;
 
+    [Header("Camera Clamp Settings")]
+    public bool useClamp = false;   
+    public float minX, maxX;
+    public float minY, maxY;
+
     void Start()
     {
         if (target == null)
@@ -20,10 +25,16 @@ public class Cameramove : MonoBehaviour
     {
         if (target == null) return;
 
-        transform.position = new Vector3(
-            target.position.x,
-            target.position.y,
-            transform.position.z
-        );
+        float newX = target.position.x;
+        float newY = target.position.y;
+
+        if (useClamp)
+        {
+
+            newX = Mathf.Clamp(newX, minX, maxX);
+            newY = Mathf.Clamp(newY, minY, maxY);
+        }
+
+        transform.position = new Vector3(newX, newY, transform.position.z);
     }
 }

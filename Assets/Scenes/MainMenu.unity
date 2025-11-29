@@ -228,6 +228,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  useClamp: 0
+  minX: 0
+  maxX: 0
+  minY: 0
+  maxY: 0
 --- !u!1001 &1078126779
 PrefabInstance:
   m_ObjectHideFlags: 0

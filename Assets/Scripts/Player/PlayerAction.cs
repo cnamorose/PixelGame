@@ -62,6 +62,7 @@ public class PlayerAction : MonoBehaviour
         else
             anim.SetBool("isChange", false);
 
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             SceneManager.LoadScene("Quiz");
@@ -69,6 +70,10 @@ public class PlayerAction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             SceneManager.LoadScene("Room");
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SceneManager.LoadScene("school_1");
         }
     }
 
@@ -100,5 +105,12 @@ public class PlayerAction : MonoBehaviour
             isQuizScene = false;
             GetComponent<SpriteRenderer>().enabled = true;
         }
+
+        GameObject spawn = GameObject.Find("PlayerPoint");
+        if (spawn != null)
+        {
+            transform.position = spawn.transform.position;
+        }
+
     }
 }

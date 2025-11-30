@@ -23,11 +23,6 @@ public class QuizManager : MonoBehaviour
     public TMP_Text questionText;
     public TMP_Text[] answerTexts;
 
-    [Header("Life System")]
-    public Image[] lifePills;         // Pill1, Pill2, Pill3
-    public Sprite fullPillSprite;     // 꽉 찬 알약 이미지
-    public Sprite emptyPillSprite;    // 빈 알약 이미지
-
     [Header("Fade UI")]
     public Image fadePanel;
 
@@ -47,7 +42,6 @@ public class QuizManager : MonoBehaviour
         quizPool = new List<QuizData>(quizList);
         playerLife = FindObjectOfType<PlayerLifeManager>();
         LoadRandomQuiz();
-        UpdateLifeUI();
         gameOverPanel.SetActive(false);
     }
 
@@ -112,7 +106,6 @@ public class QuizManager : MonoBehaviour
         else
         {  
             playerLife.LoseLife();
-            UpdateLifeUI();
 
             if (playerLife.currentLife <= 0)
             {
@@ -127,17 +120,6 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-    void UpdateLifeUI()
-    {
-        for (int i = 0; i < lifePills.Length; i++)
-        {
-            if (i < playerLife.currentLife)
-                lifePills[i].sprite = fullPillSprite;
-            else
-                lifePills[i].sprite = emptyPillSprite;
-        }
-    }
-
     void TimeOut()
     {
         isAnswering = false;
@@ -145,7 +127,6 @@ public class QuizManager : MonoBehaviour
         Debug.Log("시간 초과! 목숨 감소");
 
         playerLife.LoseLife();
-        UpdateLifeUI();
 
         if (playerLife.currentLife <= 0)
         {

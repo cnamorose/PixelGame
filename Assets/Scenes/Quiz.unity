@@ -2032,6 +2032,7 @@ GameObject:
   - component: {fileID: 1821767106}
   - component: {fileID: 1821767108}
   - component: {fileID: 1821767107}
+  - component: {fileID: 1821767109}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -2099,6 +2100,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821767105}
   m_CullTransparentMesh: 1
+--- !u!114 &1821767109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821767105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b994ee4aae8e5eb4298a963780d38e1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifePills:
+  - {fileID: 1942157348}
+  - {fileID: 1173998718}
+  - {fileID: 400121807}
+  fullPill: {fileID: -1905487577, guid: f32da95dcf8ddd540a06549a1b7606ca, type: 3}
+  emptyPill: {fileID: -874012121, guid: f32da95dcf8ddd540a06549a1b7606ca, type: 3}
 --- !u!1 &1942157346
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,12 +2236,6 @@ MonoBehaviour:
   - {fileID: 1454581372}
   - {fileID: 368081508}
   - {fileID: 1142829956}
-  lifePills:
-  - {fileID: 1942157348}
-  - {fileID: 1173998718}
-  - {fileID: 400121807}
-  fullPillSprite: {fileID: -1905487577, guid: f32da95dcf8ddd540a06549a1b7606ca, type: 3}
-  emptyPillSprite: {fileID: -874012121, guid: f32da95dcf8ddd540a06549a1b7606ca, type: 3}
   fadePanel: {fileID: 1042163735}
   gameOverPanel: {fileID: 1319221861}
   lifeUI: {fileID: 1821767105}

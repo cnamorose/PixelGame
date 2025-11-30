@@ -5,25 +5,32 @@ using UnityEngine.UI;
 
 public class LifeUIManager : MonoBehaviour
 {
-    public PlayerLifeManager playerLife;
     public Image[] lifePills;
     public Sprite fullPill;
     public Sprite emptyPill;
 
+    void OnEnable()
+    {
+        PlayerLifeManager.Instance.OnLifeChanged += UpdateLifeUI;
+    }
+
+    void OnDisable()
+    {
+        PlayerLifeManager.Instance.OnLifeChanged -= UpdateLifeUI;
+    }
+
     void Start()
     {
-        playerLife = FindObjectOfType<PlayerLifeManager>();
         UpdateLifeUI();
     }
 
     public void UpdateLifeUI()
     {
+        int life = PlayerLifeManager.Instance.currentLife;
+
         for (int i = 0; i < lifePills.Length; i++)
         {
-            if (i < playerLife.currentLife)
-                lifePills[i].sprite = fullPill;
-            else
-                lifePills[i].sprite = emptyPill;
+            lifePills[i].sprite = (i < life) ? fullPill : emptyPill;
         }
     }
 }

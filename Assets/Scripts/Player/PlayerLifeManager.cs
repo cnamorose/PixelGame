@@ -2,27 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class PlayerLifeManager : MonoBehaviour
 {
+    public static PlayerLifeManager Instance;
+
     public int maxLife = 3;
     public int currentLife = 3;
 
-    void Awake()
+    public event Action OnLifeChanged;
+
+    private void Awake()
     {
-        DontDestroyOnLoad(gameObject); // 씬 전환해도 유지
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void LoseLife()
     {
-        if (currentLife <= 0) return;
-
-        currentLife--;
-        Debug.Log("Player Life = " + currentLife);
+        currentLife = Mathf.Max(0, currentLife - 1);
+        OnLifeChanged?.Invoke();
     }
 
-    public void ResetLife()
+    public void FullHeal()
     {
         currentLife = maxLife;
+        OnLifeChanged?.Invoke();
     }
 }

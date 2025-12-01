@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 311409537157261920}
   - component: {fileID: 820392325991029314}
   - component: {fileID: 684882593655419949}
-  - component: {fileID: 8411938238295329020}
+  - component: {fileID: 7664162300444622191}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player 1
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -1760150920, guid: 9e75fa1a1b0c0af419980b37cd8b2aac, type: 3}
+  m_Sprite: {fileID: 1205268847, guid: 5b6699b232541284ba7d5841e4903da5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -143,7 +143,7 @@ Animator:
   m_GameObject: {fileID: 5936046421175526638}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4fd3a4aa4b40d164486d968d134324ef, type: 2}
+  m_Controller: {fileID: 22100000, guid: 93dbb5a5cd912c64fb5e0dd6b14b6a84, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLife: 3
   currentLife: 3
---- !u!114 &8411938238295329020
+--- !u!114 &7664162300444622191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,5 +270,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1086dd1f9386b46afd5368b0b84d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Girl
+  characterName: Boy
   doubleClickTime: 0.25

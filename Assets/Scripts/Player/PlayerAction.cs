@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerAction : MonoBehaviour
 {
+    public AnimatorOverrideController PlayerM;
+    public RuntimeAnimatorController Player;
+
     public float Speed;
     Animator anim;
 
@@ -22,6 +26,20 @@ public class PlayerAction : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void Start()
+    {
+        string character = PlayerPrefs.GetString("SelectedCharacter", "Girl");
+
+        // 스프라이트 초기화 (기본 SpriteRenderer 값 제거)
+        GetComponent<SpriteRenderer>().sprite = null;
+
+        // 애니메이터 적용
+        if (character == "Boy")
+            anim.runtimeAnimatorController = PlayerM;
+        else
+            anim.runtimeAnimatorController = Player;
     }
 
     void Update()

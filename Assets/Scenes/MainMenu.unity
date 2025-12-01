@@ -243,29 +243,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1048040938}
   - component: {fileID: 1048040937}
-  - component: {fileID: 1048040936}
   - component: {fileID: 1048040939}
+  - component: {fileID: 1048040940}
   m_Layer: 0
   m_Name: PlayerF
-  m_TagString: Untagged
+  m_TagString: Selector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1048040936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1048040935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e1086dd1f9386b46afd5368b0b84d9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterName: Girl
-  doubleClickTime: 0.25
 --- !u!212 &1048040937
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -378,6 +364,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.144159, y: 0.19767582}
   m_EdgeRadius: 0
+--- !u!114 &1048040940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048040935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19106f0d56824194197f1efbdd0975ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Girl
 --- !u!1 &1176905172
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,29 +387,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1176905175}
   - component: {fileID: 1176905174}
-  - component: {fileID: 1176905173}
   - component: {fileID: 1176905176}
+  - component: {fileID: 1176905177}
   m_Layer: 0
   m_Name: PlayerM
-  m_TagString: Untagged
+  m_TagString: Selector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1176905173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176905172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e1086dd1f9386b46afd5368b0b84d9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterName: Boy
-  doubleClickTime: 0.25
 --- !u!212 &1176905174
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -523,6 +508,64 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1174006, y: 0.19003057}
   m_EdgeRadius: 0
+--- !u!114 &1176905177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176905172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19106f0d56824194197f1efbdd0975ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Boy
+--- !u!1 &2126914822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2126914823}
+  - component: {fileID: 2126914824}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2126914823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126914822}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.88, y: 8.2, z: -0.05097379}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2126914824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126914822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5637f8ec287d4e3468268ffc597df064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 5936046421175526638, guid: 437719fa764a9e943b384c644c8135b8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -530,3 +573,4 @@ SceneRoots:
   - {fileID: 408396678}
   - {fileID: 1048040938}
   - {fileID: 1176905175}
+  - {fileID: 2126914823}

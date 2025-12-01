@@ -19,13 +19,29 @@ public class PlayerAction : MonoBehaviour
     bool isHorizonMove;
     bool isQuizScene = false;
 
+    public void SetCharacter(string type)
+    {
+        if (anim == null)
+            anim = GetComponent<Animator>();
+
+        // 기본 스프라이트 제거
+        GetComponent<SpriteRenderer>().sprite = null;
+
+        if (type == "Boy")
+            anim.runtimeAnimatorController = PlayerM;
+        else
+            anim.runtimeAnimatorController = Player;
+    }
+
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         DontDestroyOnLoad(gameObject);
-
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Debug.Log("Player Awake! instance id = " + GetInstanceID());
+
     }
 
     void Start()
@@ -40,6 +56,11 @@ public class PlayerAction : MonoBehaviour
             anim.runtimeAnimatorController = PlayerM;
         else
             anim.runtimeAnimatorController = Player;
+
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 
     void Update()
@@ -110,6 +131,8 @@ public class PlayerAction : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("OnSceneLoaded 실행됨. 씬 = " + scene.name);
+
         if (scene.name == "Quiz")
         {
             // 플레이어 숨기기 + 움직임 차단
@@ -128,6 +151,7 @@ public class PlayerAction : MonoBehaviour
         if (spawn != null)
         {
             transform.position = spawn.transform.position;
+            Debug.Log("spawn 결과 = " + spawn);
         }
 
     }

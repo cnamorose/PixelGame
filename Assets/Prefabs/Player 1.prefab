@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 311409537157261920}
   - component: {fileID: 820392325991029314}
   - component: {fileID: 684882593655419949}
-  - component: {fileID: 7664162300444622191}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -258,17 +257,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLife: 3
   currentLife: 3
---- !u!114 &7664162300444622191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5936046421175526638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e1086dd1f9386b46afd5368b0b84d9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterName: Boy
-  doubleClickTime: 0.25

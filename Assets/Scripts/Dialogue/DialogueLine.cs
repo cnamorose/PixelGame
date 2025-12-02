@@ -6,6 +6,9 @@ using UnityEngine;
 public class DialogueLine
 {
     public string speaker;
+    [TextArea]
     public string text;
+
+    public bool requiresName;
 }
 

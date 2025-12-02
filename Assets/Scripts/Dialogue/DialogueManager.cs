@@ -6,6 +6,11 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
+    public PlayerData playerData;
+    public GameObject nameInputPanel;
+    public TMP_InputField nameInputField;
+    public Button nameConfirmButton;
+
     public TextMeshProUGUI speakerText;
     public TextMeshProUGUI dialogueText;
     public GameObject dialoguePanel;
@@ -43,8 +48,20 @@ public class DialogueManager : MonoBehaviour
 
     void ShowLine()
     {
-        speakerText.text = currentLines[index].speaker;
-        dialogueText.text = currentLines[index].text;
+        var line = currentLines[index];
+
+        // 이름 입력이 필요한 대사라면 → UI 열기
+        if (line.requiresName)
+        {
+            dialoguePanel.SetActive(false);
+            nameInputPanel.SetActive(true);
+            return;
+        }
+
+        // 일반 대사 처리
+        string text = line.text.Replace("{name}", playerData.playerName);
+        speakerText.text = line.speaker;
+        dialogueText.text = text;
     }
 
     void NextLine()
@@ -59,6 +76,29 @@ public class DialogueManager : MonoBehaviour
         {
             EndDialogue();
         }
+    }
+    public void ConfirmName()
+    {
+        string name = nameInputField.text;
+
+        if (string.IsNullOrWhiteSpace(name))
+            name = "플레이어";
+
+        playerData.playerName = name;
+
+        nameInputPanel.SetActive(false);
+        dialoguePanel.SetActive(true);
+
+        NextLine();
+    }
+
+    void OpenNameInput()
+    {
+        nameInputPanel.SetActive(true);
+        dialoguePanel.SetActive(false);
+
+        nameConfirmButton.onClick.RemoveAllListeners();
+        nameConfirmButton.onClick.AddListener(ConfirmName);
     }
 
     void EndDialogue()

@@ -16,13 +16,19 @@ MonoBehaviour:
   lines:
   - speaker: Devil
     text: "\uB4DC\uB514\uC5B4 \uB9CC\uB0AC\uAD70, \uC778\uAC04..."
+    requiresName: 0
   - speaker: Player
     text: "\uBB50\uC57C\u2026 \uB204\uAD6C\uC138\uC694?"
+    requiresName: 0
   - speaker: Devil
-    text: "\uC878\uC5C5 \uC55E\uB454 4\uD559\uB144\uC774\uC9C0?"
+    text: "\uB108 \uC774\uB984\uC774 \uBB50\uC9C0?"
+    requiresName: 0
   - speaker: Player
-    text: "\uB124???? \uB9DE\uAE34 \uD55C\uB370,, \uC9C4\uC9DC \uB204\uAD6C\uC2DC\uC8E0"
+    text: 
+    requiresName: 1
   - speaker: Devil
-    text: "\uC878\uC5C5\uD558\uB824\uBA74 \uB17C\uBB38 \uC368\uC57C \uD558\uC9C0?"
+    text: "{name}, \uC774\uAC8C \uB108 \uC774\uB984 \uB9DE\uC544?"
+    requiresName: 0
   - speaker: Player
-    text: "??\uC65C \uBB3C\uC5B4\uBCF4\uC2DC\uB0D0\uACE0\uC694"
+    text: "\uB9DE\uAE34\uD55C\uB370,, \uC65C \uBB3C\uC5B4\uBCF4\uC2DC\uB0D0\uACE0\uC694??"
+    requiresName: 0

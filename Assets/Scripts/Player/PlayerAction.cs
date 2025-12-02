@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -11,20 +11,24 @@ public class PlayerAction : MonoBehaviour
     public RuntimeAnimatorController Player;
 
     public float Speed;
-    Animator anim;
+    public Animator anim;
 
     Rigidbody2D rigid;
-    float h;
-    float v;
+    public float h;
+    public float v;
+
     bool isHorizonMove;
     bool isQuizScene = false;
+
+    public bool forceIdle = false;
+    public int idleDir = 1;
+
 
     public void SetCharacter(string type)
     {
         if (anim == null)
             anim = GetComponent<Animator>();
 
-        // ±‚∫ª Ω∫«¡∂Û¿Ã∆Æ ¡¶∞≈
         GetComponent<SpriteRenderer>().sprite = null;
 
         if (type == "Boy")
@@ -40,31 +44,29 @@ public class PlayerAction : MonoBehaviour
         anim = GetComponent<Animator>();
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
-        Debug.Log("Player Awake! instance id = " + GetInstanceID());
-
     }
 
-    void Start()
-    {
-        string character = PlayerPrefs.GetString("SelectedCharacter", "Girl");
-
-        // Ω∫«¡∂Û¿Ã∆Æ √ ±‚»≠ (±‚∫ª SpriteRenderer ∞™ ¡¶∞≈)
-        GetComponent<SpriteRenderer>().sprite = null;
-
-        // æ÷¥œ∏ﬁ¿Ã≈Õ ¿˚øÎ
-        if (character == "Boy")
-            anim.runtimeAnimatorController = PlayerM;
-        else
-            anim.runtimeAnimatorController = Player;
-
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            GetComponent<SpriteRenderer>().enabled = false;
-        }
-    }
 
     void Update()
     {
+        // ======================================
+        // üî• Ïª∑Ïî¨ Ï§ëÏù¥Î©¥ Î™®Îì† ÏûÖÎ†•/Ïï†Îãà Ïã§Ìñâ Ï∞®Îã®
+        // ======================================
+        if (forceIdle)
+        {
+            rigid.velocity = Vector2.zero;
+
+            h = 0;
+            v = 0;
+
+            anim.SetBool("isChange", false);
+            anim.SetInteger("hAxisRaw", idleDir);
+            anim.SetInteger("vAxisRaw", 0);
+
+            return;
+        }
+        // ======================================
+
 
         if (isQuizScene)
             return;
@@ -84,7 +86,7 @@ public class PlayerAction : MonoBehaviour
             isHorizonMove = true;
         else if (vDown)
             isHorizonMove = false;
-        else if ( hUp || vUp)
+        else if (hUp || vUp)
             isHorizonMove = h != 0;
 
         //Animation
@@ -93,66 +95,46 @@ public class PlayerAction : MonoBehaviour
             anim.SetBool("isChange", true);
             anim.SetInteger("hAxisRaw", (int)h);
         }
-        else if(anim.GetInteger("vAxisRaw") != v)
+        else if (anim.GetInteger("vAxisRaw") != v)
         {
             anim.SetBool("isChange", true);
             anim.SetInteger("vAxisRaw", (int)v);
         }
         else
             anim.SetBool("isChange", false);
-
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SceneManager.LoadScene("Quiz");
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            SceneManager.LoadScene("Room");
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SceneManager.LoadScene("school_1");
-        }
     }
+
 
     private void FixedUpdate()
     {
+        if (forceIdle)
+        {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
+
         if (isQuizScene)
         {
             rigid.velocity = Vector2.zero;
             return;
         }
 
-        //Move
         Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
         rigid.velocity = moveVec * Speed;
     }
 
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("OnSceneLoaded Ω««‡µ . æ¿ = " + scene.name);
+        isQuizScene = scene.name == "Quiz";
 
-        if (scene.name == "Quiz")
-        {
-            // «√∑π¿ÃæÓ º˚±‚±‚ + øÚ¡˜¿” ¬˜¥‹
-            isQuizScene = true;
-            GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = !isQuizScene;
+
+        if (isQuizScene)
             rigid.velocity = Vector2.zero;
-        }
-        else
-        {
-            // ¥ŸΩ√ ∫∏¿Ã∞‘ + øÚ¡˜¿” ∞°¥…
-            isQuizScene = false;
-            GetComponent<SpriteRenderer>().enabled = true;
-        }
 
         GameObject spawn = GameObject.Find("PlayerPoint");
-        if (spawn != null)
-        {
+        if (spawn)
             transform.position = spawn.transform.position;
-            Debug.Log("spawn ∞·∞˙ = " + spawn);
-        }
-
     }
 }

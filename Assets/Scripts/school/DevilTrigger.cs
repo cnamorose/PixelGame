@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class DevilTrigger : MonoBehaviour
 {
+    public DialogueSequence dialogue; // ★ ScriptableObject
     public Transform Demon;
     public Camera mainCamera;
-    public GameObject dialogueUI;
+    public GameObject dialogueManagerObj;
 
-    bool eventStarted = false;
     Cameramove cam;
+    DialogueManager dlg;
+    bool eventStarted = false;
+
+    PlayerAction player;
 
     void Start()
     {
-        if (mainCamera == null)
-            mainCamera = Camera.main;
-
-        cam = mainCamera.GetComponent<Cameramove>();
+        if (mainCamera == null) mainCamera = Camera.main;
+        cam = Camera.main.GetComponent<Cameramove>();
+        dlg = dialogueManagerObj.GetComponent<DialogueManager>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -26,51 +29,38 @@ public class DevilTrigger : MonoBehaviour
 
         eventStarted = true;
 
-        PlayerAction player = collision.GetComponentInParent<PlayerAction>();
+        // PlayerAction 찾기
+        player = collision.GetComponentInParent<PlayerAction>();
         if (player == null)
-            return;
+            player = FindObjectOfType<PlayerAction>();
 
-        StartCoroutine(StartDevilEvent(player));
+        StartCoroutine(StartDevilEvent());
     }
 
-
-    IEnumerator StartDevilEvent(PlayerAction player)
+    IEnumerator StartDevilEvent()
     {
-        Rigidbody2D rigid = player.GetComponent<Rigidbody2D>();
-        rigid.velocity = Vector2.zero;
-
-        // 🔥 플레이어 움직임 완전정지
+        Rigidbody2D rigid = player.GetComponent<Rigidbody2D>(); rigid.velocity = Vector2.zero;
         player.anim.enabled = false;
-
         player.forceIdle = true;
-        player.idleDir = 1; // 오른쪽 보기
+        player.idleDir = 1;
 
-        // 🔥 카메라 컷씬
-        if (cam != null)
-        {
-            Vector3 mid = (player.transform.position + Demon.position) / 2f;
-            mid.z = mainCamera.transform.position.z;
-
-            cam.StartCutscene(mid);
-        }
+        // 카메라 컷씬 이동
+        Vector3 mid = (player.transform.position + Demon.position) / 2f;
+        mid.z = mainCamera.transform.position.z;
+        cam.StartCutscene(mid);
 
         yield return new WaitForSeconds(0.5f);
 
-        if (dialogueUI)
-            dialogueUI.SetActive(true);
-    }
+        dlg.trigger = this;
+        dlg.player = player;
 
+        dlg.StartDialogue(dialogue); // ScriptableObject 넘기기
+    }
 
     public void EndCutscene(PlayerAction player)
     {
-        if (cam != null)
-            cam.EndCutscene();
-
-        if (player != null)
-        {
-            player.forceIdle = false;
-            player.anim.enabled = true;
-        }    
-
+        cam.EndCutscene();
+        player.forceIdle = false;
+        player.anim.enabled = true;
     }
 }

@@ -14,9 +14,9 @@ public class PlayerAction : MonoBehaviour
     public Animator anim;
 
     Rigidbody2D rigid;
+
     public float h;
     public float v;
-
     bool isHorizonMove;
     bool isQuizScene = false;
 
@@ -48,25 +48,18 @@ public class PlayerAction : MonoBehaviour
 
 
     void Update()
-    {
-        // ======================================
-        // 🔥 컷씬 중이면 모든 입력/애니 실행 차단
-        // ======================================
+    {   
         if (forceIdle)
         {
             rigid.velocity = Vector2.zero;
-
             h = 0;
             v = 0;
-
             anim.SetBool("isChange", false);
             anim.SetInteger("hAxisRaw", idleDir);
             anim.SetInteger("vAxisRaw", 0);
 
             return;
         }
-        // ======================================
-
 
         if (isQuizScene)
             return;
@@ -126,15 +119,20 @@ public class PlayerAction : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        isQuizScene = scene.name == "Quiz";
-
-        GetComponent<SpriteRenderer>().enabled = !isQuizScene;
-
-        if (isQuizScene)
+        if (scene.name == "Quiz")
+        {
+            isQuizScene = true;
+            GetComponent<SpriteRenderer>().enabled = false;
             rigid.velocity = Vector2.zero;
+        }
+        else
+        {
+            isQuizScene = false;
+            GetComponent<SpriteRenderer>().enabled = true;
+        }
 
         GameObject spawn = GameObject.Find("PlayerPoint");
-        if (spawn)
+        if (spawn != null)
             transform.position = spawn.transform.position;
     }
 }

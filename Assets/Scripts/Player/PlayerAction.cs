@@ -48,7 +48,12 @@ public class PlayerAction : MonoBehaviour
 
 
     void Update()
-    {   
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SceneManager.LoadScene("Quiz");
+            return;
+        }
         if (forceIdle)
         {
             rigid.velocity = Vector2.zero;

@@ -50,7 +50,6 @@ public class DialogueManager : MonoBehaviour
     {
         var line = currentLines[index];
 
-        // 이름 입력이 필요한 대사라면 → UI 열기
         if (line.requiresName)
         {
             dialoguePanel.SetActive(false);
@@ -58,10 +57,23 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // 일반 대사 처리
-        string text = line.text.Replace("{name}", playerData.playerName);
-        speakerText.text = line.speaker;
-        dialogueText.text = text;
+        string text = line.text
+            .Replace("{name}", playerData.playerName)
+            .Replace("\\n", "\n");
+
+        // 화자에 따라 색 결정
+        string color = "#000000"; // 기본 흰색
+
+        if (line.speaker == "Player")
+            color = "#172646";   // 연두색
+        else if (line.speaker == "Devil")
+            color = "#AB0116";   // 빨간색
+
+        // 말풍선 내용에 색 적용
+        dialogueText.text = $"<color={color}>{text}</color>";
+
+        // 화자 이름도 색 줄 수 있음
+        //speakerText.text = $"<color={color}>{line.speaker}</color>";
     }
 
     void NextLine()
@@ -104,7 +116,37 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         dialoguePanel.SetActive(false);
+        StartCoroutine(EndSequence());
+    }
+
+    [SerializeField] Image fadeImage;
+    [SerializeField] TextMeshProUGUI missionText;
+
+    [SerializeField] float fadeDuration = 1.5f;
+    IEnumerator EndSequence()
+    {
+        // 1) 페이드 아웃
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float a = Mathf.Lerp(0f, 1f, t / fadeDuration);
+            fadeImage.color = new Color(0, 0, 0, a);
+            yield return null;
+        }
+
+        // 2) 문구 표시
+        missionText.gameObject.SetActive(true);
+        missionText.text = "악마의 졸업 방해를 이겨내고\n논문을 완성하자!";
+
+        yield return new WaitForSeconds(2.5f);
+
         trigger.EndCutscene(player);
+
+        // 3) 다음 씬 로드
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
+
+        Destroy(gameObject);
     }
 }
 

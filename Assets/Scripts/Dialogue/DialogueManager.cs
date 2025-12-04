@@ -134,9 +134,11 @@ public class DialogueManager : MonoBehaviour
             fadeImage.color = new Color(0, 0, 0, a);
             yield return null;
         }
+        yield return new WaitForSeconds(1.5f);
 
         // 2) 문구 표시
         missionText.gameObject.SetActive(true);
+
         missionText.text = "악마의 졸업 방해를 이겨내고\n논문을 완성하자!";
 
         yield return new WaitForSeconds(2.5f);

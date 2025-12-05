@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class QuizManager : MonoBehaviour
 {
@@ -62,20 +63,21 @@ public class QuizManager : MonoBehaviour
 
     public void LoadRandomQuiz()
     {
-        if (quizCount >= maxQuizCount)
-        {
-            ShowGameOver();
-            return;
-        }
-
         if (quizPool.Count == 0)
         {
             Debug.Log("모든 문제를 다 풀었음!");
-            ShowGameOver();
+            ShowQuizClear();
             return;
         }
 
-        int rand = Random.Range(0, quizPool.Count);
+        if (quizCount >= maxQuizCount)
+        {
+            ShowQuizClear();
+            return;
+        }
+
+        
+        int rand = UnityEngine.Random.Range(0, quizPool.Count);
         currentQuiz = quizPool[rand];
 
         // 문제 중복 방지
@@ -143,6 +145,11 @@ public class QuizManager : MonoBehaviour
     {
         StartCoroutine(FadeAndShowGameOver());
     }
+    
+    void ShowQuizClear()
+    {
+        StartCoroutine(QuizClearSequence());
+    }
 
     IEnumerator FadeAndShowGameOver()
     {
@@ -169,6 +176,26 @@ public class QuizManager : MonoBehaviour
         extraGameOverText.gameObject.SetActive(true);
 
 
+    }
+
+    IEnumerator QuizClearSequence()
+    {
+        fadePanel.gameObject.SetActive(true);
+
+        float fadeTime = 1f;
+        Color c = fadePanel.color;
+
+        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        {
+            float alpha = Mathf.Lerp(0f, 1f, t / fadeTime);
+            fadePanel.color = new Color(c.r, c.g, c.b, alpha);
+            yield return null;
+        }
+        fadePanel.color = new Color(c.r, c.g, c.b, 1f);
+
+        yield return new WaitForSeconds(3f);
+     
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
     }
 
 }

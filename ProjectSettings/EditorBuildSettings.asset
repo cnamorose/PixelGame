@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Quiz.unity
     guid: 79053e894469045459b5c8080515f3c9
+  - enabled: 1
+    path: Assets/Scenes/KeyboardMonster.unity
+    guid: ddaac422e29ca944d986e88d2344c812
   m_configObjects: {}

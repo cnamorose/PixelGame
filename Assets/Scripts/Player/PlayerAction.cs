@@ -156,7 +156,7 @@ public class PlayerAction : MonoBehaviour
     public PlayerMoveMode moveMode = PlayerMoveMode.TopDown;
 
     public float Speed;
-    public float jumpForce = 7f;
+    public float jumpForce = 35f;
 
     public Animator anim;
     Rigidbody2D rigid;
@@ -333,13 +333,19 @@ public class PlayerAction : MonoBehaviour
         if (scene.name == "KeyboardMonster")
         {
             moveMode = PlayerMoveMode.Platformer;
-            rigid.gravityScale = 3f;  
+            rigid.gravityScale = 1f;
+            transform.localScale = new Vector3(
+        transform.localScale.x * 0.5f,
+        transform.localScale.y * 0.5f,
+        transform.localScale.z
+    );
         }
         else
         {
             moveMode = PlayerMoveMode.TopDown;
             rigid.gravityScale = 0f;  
-            rigid.velocity = Vector2.zero; 
+            rigid.velocity = Vector2.zero;
+            
         }
     }
 }

@@ -7,6 +7,7 @@ using System;
 public class PlayerLifeManager : MonoBehaviour
 {
     public static PlayerLifeManager Instance;
+    public event Action OnLifeZero;
 
     public int maxLife = 3;
     public int currentLife = 3;
@@ -26,10 +27,15 @@ public class PlayerLifeManager : MonoBehaviour
         }
     }
 
+
     public void LoseLife()
     {
         currentLife = Mathf.Max(0, currentLife - 1);
         OnLifeChanged?.Invoke();
+        if (currentLife <= 0)
+        {
+            GameOverManager.Instance.ShowGameOver();
+        }
     }
 
     public void FullHeal()

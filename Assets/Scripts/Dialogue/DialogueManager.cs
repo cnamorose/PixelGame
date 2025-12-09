@@ -38,6 +38,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+        if (dialoguePanel == null) return;
         if (!dialoguePanel.activeSelf) return;
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))

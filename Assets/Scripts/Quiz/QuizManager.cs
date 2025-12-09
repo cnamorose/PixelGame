@@ -27,13 +27,8 @@ public class QuizManager : MonoBehaviour
     [Header("Fade UI")]
     public Image fadePanel;
 
-    [Header("Game Over")]
-    public GameObject gameOverPanel;
-
-    [Header("UI Group")]
-    public GameObject lifeUI;     // 알약 UI 묶은 부모 오브젝트
     public GameObject timerUI;
-    public TMP_Text extraGameOverText;
+
 
     private int quizCount = 0;
     private int maxQuizCount = 4;
@@ -43,7 +38,6 @@ public class QuizManager : MonoBehaviour
         quizPool = new List<QuizData>(quizList);
         playerLife = FindObjectOfType<PlayerLifeManager>();
         LoadRandomQuiz();
-        gameOverPanel.SetActive(false);
     }
 
     void Update()
@@ -52,7 +46,7 @@ public class QuizManager : MonoBehaviour
 
         currentTime -= Time.deltaTime;
 
-        // 텍스트 UI 갱신
+
         timerText.text = Mathf.Ceil(currentTime).ToString();
 
         if (currentTime <= 0)
@@ -63,24 +57,14 @@ public class QuizManager : MonoBehaviour
 
     public void LoadRandomQuiz()
     {
-        if (quizPool.Count == 0)
-        {
-            Debug.Log("모든 문제를 다 풀었음!");
-            ShowQuizClear();
-            return;
-        }
-
-        if (quizCount >= maxQuizCount)
+        if (quizPool.Count == 0 || quizCount >= maxQuizCount)
         {
             ShowQuizClear();
             return;
         }
 
-        
         int rand = UnityEngine.Random.Range(0, quizPool.Count);
         currentQuiz = quizPool[rand];
-
-        // 문제 중복 방지
         quizPool.RemoveAt(rand);
 
         questionText.text = currentQuiz.question;
@@ -90,12 +74,10 @@ public class QuizManager : MonoBehaviour
             answerTexts[i].text = currentQuiz.answers[i];
         }
 
-        // 타이머 초기화
         currentTime = timeLimit;
         isAnswering = true;
-
-        timerText.text = currentTime.ToString();
     }
+
 
     public void CheckAnswer(int index)
     {
@@ -109,13 +91,7 @@ public class QuizManager : MonoBehaviour
         {  
             playerLife.LoseLife();
 
-            if (playerLife.currentLife <= 0)
-            {
-                isAnswering = false;   
-                ShowGameOver();
-            }
-        
-            else
+            if(playerLife.currentLife > 0)
             {
                 LoadRandomQuiz();
             }
@@ -130,56 +106,23 @@ public class QuizManager : MonoBehaviour
 
         playerLife.LoseLife();
 
-        if (playerLife.currentLife <= 0)
-        {
-            ShowGameOver();
-        }
-        else
+        if (playerLife.currentLife > 0)
         {
             LoadRandomQuiz();
         }
+        
     }
 
-
-    void ShowGameOver()
-    {
-        StartCoroutine(FadeAndShowGameOver());
-    }
-    
     void ShowQuizClear()
     {
         StartCoroutine(QuizClearSequence());
     }
 
-    IEnumerator FadeAndShowGameOver()
-    {
-        lifeUI.SetActive(false);
-        timerUI.SetActive(false);
-
-        fadePanel.gameObject.SetActive(true);
-
-        float fadeTime = 1f;
-        Color c = fadePanel.color;
-
-        for (float t = 0; t < fadeTime; t += Time.deltaTime)
-        {
-            float alpha = Mathf.Lerp(0f, 1f, t / fadeTime);
-            fadePanel.color = new Color(c.r, c.g, c.b, alpha);
-            yield return null;
-        }
-
-        fadePanel.color = new Color(c.r, c.g, c.b, 1f);
-
-        yield return new WaitForSeconds(1f);
-        gameOverPanel.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        extraGameOverText.gameObject.SetActive(true);
-
-
-    }
-
     IEnumerator QuizClearSequence()
     {
+        GameObject lifeUI = GameObject.Find("LifeUI");
+        if (lifeUI != null) lifeUI.SetActive(false);
+
         fadePanel.gameObject.SetActive(true);
 
         float fadeTime = 1f;

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefab;
     private GameObject currentPlayer;
+    internal static object Instance;
 
     void Awake()
     {

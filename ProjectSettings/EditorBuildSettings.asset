@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KeyboardMonster.unity
     guid: ddaac422e29ca944d986e88d2344c812
+  - enabled: 1
+    path: Assets/Scenes/Keyboard_boss.unity
+    guid: 4703195c7c1361f4294add23a079bb58
   m_configObjects: {}

@@ -330,22 +330,30 @@ public class PlayerAction : MonoBehaviour
         if (spawn != null)
             transform.position = spawn.transform.position;
 
-        if (scene.name == "KeyboardMonster")
+        if (scene.name == "KeyboardMonster" || scene.name == "Keyboard_boss")
         {
-            moveMode = PlayerMoveMode.Platformer;
-            rigid.gravityScale = 1f;
-            transform.localScale = new Vector3(
-        transform.localScale.x * 0.5f,
-        transform.localScale.y * 0.5f,
-        transform.localScale.z
-    );
+            if (scene.name == "KeyboardMonster")
+            {
+                moveMode = PlayerMoveMode.Platformer;
+                rigid.gravityScale = 1f;
+                transform.localScale = new Vector3(
+                transform.localScale.x * 0.5f,
+                transform.localScale.y * 0.5f,
+                transform.localScale.z
+                );
+            }
+            if (scene.name == "Keyboard_boss")
+            {
+                moveMode = PlayerMoveMode.Platformer;
+                rigid.gravityScale = 1f;
+            }
         }
         else
         {
             moveMode = PlayerMoveMode.TopDown;
-            rigid.gravityScale = 0f;  
+            rigid.gravityScale = 0f;
             rigid.velocity = Vector2.zero;
-            
+
         }
     }
 }

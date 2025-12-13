@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +6,8 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager Instance;
+
     public PlayerData playerData;
     public GameObject nameInputPanel;
     public TMP_InputField nameInputField;
@@ -23,10 +25,19 @@ public class DialogueManager : MonoBehaviour
 
     void Awake()
     {
-        dialoguePanel.SetActive(false);
-        DontDestroyOnLoad(gameObject); // ÀüÃ¼ ¾À °øÀ¯
-    }
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
+        dialoguePanel.SetActive(false);
+    }
     public void StartDialogue(DialogueSequence sequence)
     {
         currentLines = sequence.lines;
@@ -41,11 +52,25 @@ public class DialogueManager : MonoBehaviour
         if (dialoguePanel == null) return;
         if (!dialoguePanel.activeSelf) return;
 
+        // ë‹¨ë°œ ëŒ€ì‚¬ì¼ ê²½ìš° ì»·ì‹  ë¡œì§ ë§‰ê¸°
+        if (currentLines == null) return;
+
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             NextLine();
         }
     }
+
+    public void ShowSimpleDialogue(string text, string color = "#000000")
+    {
+        dialoguePanel.SetActive(true);
+        dialogueText.text = $"<color={color}>{text}</color>";
+
+        // ì»·ì‹  ìƒíƒœ ì´ˆê¸°í™”
+        currentLines = null;
+        index = 0;
+    }
+
 
     void ShowLine()
     {
@@ -62,18 +87,18 @@ public class DialogueManager : MonoBehaviour
             .Replace("{name}", playerData.playerName)
             .Replace("\\n", "\n");
 
-        // È­ÀÚ¿¡ µû¶ó »ö °áÁ¤
-        string color = "#000000"; // ±âº» Èò»ö
+        // í™”ìì— ë”°ë¼ ìƒ‰ ê²°ì •
+        string color = "#000000"; // ê¸°ë³¸ í°ìƒ‰
 
         if (line.speaker == "Player")
-            color = "#172646";   // ¿¬µÎ»ö
+            color = "#172646";   // ì—°ë‘ìƒ‰
         else if (line.speaker == "Devil")
-            color = "#AB0116";   // »¡°£»ö
+            color = "#AB0116";   // ë¹¨ê°„ìƒ‰
 
-        // ¸»Ç³¼± ³»¿ë¿¡ »ö Àû¿ë
+        // ë§í’ì„  ë‚´ìš©ì— ìƒ‰ ì ìš©
         dialogueText.text = $"<color={color}>{text}</color>";
 
-        // È­ÀÚ ÀÌ¸§µµ »ö ÁÙ ¼ö ÀÖÀ½
+        // í™”ì ì´ë¦„ë„ ìƒ‰ ì¤„ ìˆ˜ ìˆìŒ
         //speakerText.text = $"<color={color}>{line.speaker}</color>";
     }
 
@@ -95,7 +120,7 @@ public class DialogueManager : MonoBehaviour
         string name = nameInputField.text;
 
         if (string.IsNullOrWhiteSpace(name))
-            name = "ÇÃ·¹ÀÌ¾î";
+            name = "í”Œë ˆì´ì–´";
 
         playerData.playerName = name;
 
@@ -126,7 +151,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] float fadeDuration = 1.5f;
     IEnumerator EndSequence()
     {
-        // 1) ÆäÀÌµå ¾Æ¿ô
+        // 1) í˜ì´ë“œ ì•„ì›ƒ
         float t = 0f;
         while (t < fadeDuration)
         {
@@ -137,16 +162,16 @@ public class DialogueManager : MonoBehaviour
         }
         yield return new WaitForSeconds(1.5f);
 
-        // 2) ¹®±¸ Ç¥½Ã
+        // 2) ë¬¸êµ¬ í‘œì‹œ
         missionText.gameObject.SetActive(true);
 
-        missionText.text = "¾Ç¸¶ÀÇ Á¹¾÷ ¹æÇØ¸¦ ÀÌ°Ü³»°í\n³í¹®À» ¿Ï¼ºÇÏÀÚ!";
+        missionText.text = "ì•…ë§ˆì˜ ì¡¸ì—… ë°©í•´ë¥¼ ì´ê²¨ë‚´ê³ \në…¼ë¬¸ì„ ì™„ì„±í•˜ì!";
 
         yield return new WaitForSeconds(2.5f);
 
         trigger.EndCutscene(player);
 
-        // 3) ´ÙÀ½ ¾À ·Îµå
+        // 3) ë‹¤ìŒ ì”¬ ë¡œë“œ
         UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
 
         Destroy(gameObject);

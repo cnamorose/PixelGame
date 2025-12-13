@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 15
   m_Sprite: {fileID: 1205268847, guid: 5b6699b232541284ba7d5841e4903da5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -130,6 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0c9b9adc4db5d4891965eca17f3002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 0}
+  isInventoryOpen: 0
   PlayerM: {fileID: 22100000, guid: 93dbb5a5cd912c64fb5e0dd6b14b6a84, type: 2}
   Player: {fileID: 9100000, guid: 4fd3a4aa4b40d164486d968d134324ef, type: 2}
   moveMode: 0
@@ -267,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764fab809c48d724286f3b5f99d3d72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invincibleTime: 1
   maxLife: 3
   currentLife: 3
 --- !u!1 &7785957512270500507

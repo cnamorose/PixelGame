@@ -106,4 +106,100 @@ public class Cameramove : MonoBehaviour
     {
         cutsceneMode = false;
     }
+
+    public IEnumerator ShakeCamera(float duration, float magnitude)
+    {
+        Vector3 originalPos = transform.position;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.position = new Vector3(
+                originalPos.x + x,
+                originalPos.y + y,
+                originalPos.z
+            );
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = originalPos;
+    }
+
+    public void ForceResetToPlayer()
+    {
+        cutsceneMode = false;   // 컷씬 해제
+        enabled = true;         // 카메라 스크립트 동작
+
+        GameObject p = GameObject.FindWithTag("Player");
+        if (p != null)
+            target = p.transform;
+    }
+
+    public void ForceEndBossCamera()
+    {
+        cutsceneMode = false;
+        enabled = true;
+
+        GameObject p = GameObject.FindWithTag("Player");
+        if (p != null)
+        {
+            target = p.transform;
+
+            PlayerAction pa = p.GetComponent<PlayerAction>();
+            if (pa != null)
+            {
+                pa.limitByCamera = false;   // ⭐ 핵심
+                pa.forceIdle = false;
+            }
+
+            transform.position = new Vector3(
+                p.transform.position.x,
+                p.transform.position.y,
+                transform.position.z
+            );
+        }
+    }
+
+    public Coroutine ZoomToTarget(
+    MonoBehaviour caller,
+    Transform focusTarget,
+    float zoomSize,
+    float duration
+)
+    {
+        return caller.StartCoroutine(
+            ZoomRoutine(focusTarget, zoomSize, duration)
+        );
+    }
+
+    IEnumerator ZoomRoutine(Transform focus, float targetSize, float duration)
+    {
+        cutsceneMode = true;
+
+        Vector3 startPos = transform.position;
+        float startSize = cam.orthographicSize;
+
+        Vector3 focusPos = new Vector3(
+            focus.position.x,
+            focus.position.y,
+            startPos.z
+        );
+
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float p = t / duration;
+
+            cam.orthographicSize = Mathf.Lerp(startSize, targetSize, p);
+            transform.position = Vector3.Lerp(startPos, focusPos, p);
+
+            yield return null;
+        }
+    }
 }

@@ -1,7 +1,8 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PC : Interactable
 {
@@ -13,6 +14,7 @@ public class PC : Interactable
     public Sprite screen3_Clear;
 
     SpriteRenderer sr;
+    [SerializeField] RedFadeController redFade;
 
     void Start()
     {
@@ -36,12 +38,12 @@ public class PC : Interactable
     }
     public override void Interact()
     {
-        Debug.Log("PC Interact È£ÃâµÊ");
+        Debug.Log("PC Interact í˜¸ì¶œë¨");
 
         if (!playerdata.quizCleared)
         {
             DialogueManager.Instance.ShowSimpleDialogueAutoClose(
-                "´Ù¸¥ ½ºÅ×ÀÌÁö¸¦ Å¬¸®¾îÇØ¾ß ÇÑ´Ù..."
+                "ë‹¤ë¥¸ ìŠ¤í…Œì´ì§€ë¥¼ í´ë¦¬ì–´í•´ì•¼ í•œë‹¤..."
             );
             return;
         }
@@ -49,21 +51,62 @@ public class PC : Interactable
         if (!playerdata.pcCleared)
         {
             DialogueManager.Instance.ShowChoiceDialogue(
-                "ºí·ç½ºÅ©¸°ÀÌ´Ù.\nÇØ°áÇÏ°Ú½À´Ï±î?",
+                "ë¸”ë£¨ìŠ¤í¬ë¦°ì´ë‹¤.\ní•´ê²°í•˜ê² ìŠµë‹ˆê¹Œ?",
                 onYes: () =>
                 {
                     SceneManager.LoadScene("KeyboardMonster");
                 },
                 onNo: () =>
                 {
-                    // ¾Æ¹« °Íµµ ¾È ÇÔ
+                    // ì•„ë¬´ ê²ƒë„ ì•ˆ í•¨
                 }
             );
             return;
         }
 
-        DialogueManager.Instance.ShowSimpleDialogueAutoClose(
-            "ÀÌ¹Ì ÇØ°áµÈ ¹®Á¦´Ù."
+        if (playerdata.pcCleared)
+        {
+            DialogueManager.Instance.ShowChoiceDialogue(
+                "ë…¼ë¬¸ì„ ì‘ì„±í•˜ì‹œê² ìŠµë‹ˆê¹Œ?",
+                onYes: () =>
+                {
+                    StartCoroutine(WritePaperSequence());
+
+                },
+                onNo: () => { }
+            );
+            return;
+
+        }
+
+        if (playerdata.paperclear)
+        {
+            DialogueManager.Instance.ShowSimpleDialogueAutoClose(
+            "ì´ë¯¸ ë…¼ë¬¸ì€ ì™„ì„±ë˜ì–´ ìˆë‹¤.");
+            return;
+        }
+    }
+    IEnumerator WritePaperSequence()
+    {
+        DialogueManager.Instance.CloseDialogue();
+
+        yield return StartCoroutine(
+            redFade.Play()
         );
+
+        DialogueManager.Instance.ShowSimpleDialogue(
+            "3ì´ˆê°€ ì§€ë‚œ ê²ƒ ê°™ì§€ë§Œ,\nì‚¬ì‹¤ì€ 1ì£¼ì¼ì´ ì§€ë‚¬ë‹¤."
+        );
+
+        yield return new WaitForSeconds(2.5f);
+
+        DialogueManager.Instance.ShowSimpleDialogue(
+            "ë…¼ë¬¸ ì‘ì„±ì„ ì™„ë£Œí–ˆë‹¤!"
+        );
+
+        yield return new WaitForSeconds(2f);
+
+        playerdata.paperclear = true;
+        DialogueManager.Instance.playerData.hasPen = true;
     }
 }

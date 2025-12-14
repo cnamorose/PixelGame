@@ -52,6 +52,9 @@ public class PlayerLifeManager : MonoBehaviour
 
     IEnumerator InvincibleRoutine()
     {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Quiz")
+            yield break;
+
         isInvincible = true;
 
         //깜빡임 연출

@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class EnemyContactDamage : MonoBehaviour
 {
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (!collision.collider.CompareTag("Player")) return;
-
-    //    if (PlayerLifeManager.Instance != null)
-    //    {
-    //        PlayerLifeManager.Instance.LoseLife();
-    //    }
-    //}
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("¥Í¿Ω: " + other.name);

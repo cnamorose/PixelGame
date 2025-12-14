@@ -18,10 +18,6 @@ public class PlayerShooter : MonoBehaviour
 
     void Update()
     {
-        // 특정 씬에서만 허용
-        //if (SceneManager.GetActiveScene().name != "KeyboardMonster")
-        //    return;
-
         if (SceneManager.GetActiveScene().name != "Keyboard_boss")
             return;
 

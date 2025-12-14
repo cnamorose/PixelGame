@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +6,6 @@ public class KeyItem : MonoBehaviour
 {
     bool isAttached = false;
     Vector3 baseLocalPos;
-    Vector3 baseWorldPos;
-
-    void Start()
-    {
-        baseWorldPos = transform.position;
-    }
 
     public void OnAttachedToPlayer()
     {
@@ -29,17 +23,8 @@ public class KeyItem : MonoBehaviour
         }
         else
         {
-            transform.position = baseWorldPos + Vector3.up * offset;
+            // ⭐ 월드 상태에서는 그냥 현재 위치 기준으로 살짝만 흔들기
+            transform.position += Vector3.up * Mathf.Sin(Time.time * 4f) * 0.001f;
         }
-    }
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("���� Ʈ����: " + other.name);
-
-        PlayerKeyHolder holder = other.GetComponent<PlayerKeyHolder>();
-        Debug.Log("holder = " + holder);
-
-        if (holder == null) return;
-        holder.AttachKey(gameObject);
     }
 }

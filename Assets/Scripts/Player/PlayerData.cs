@@ -11,6 +11,7 @@ public class PlayerData : ScriptableObject
     [Header("Progress")]
     public bool quizCleared = false;     
     public bool pcCleared = false;
+    public bool paperclear = false;
 
     public bool hasPen;
     public bool hasPaper;

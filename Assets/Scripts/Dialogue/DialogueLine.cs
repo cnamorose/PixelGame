@@ -10,5 +10,6 @@ public class DialogueLine
     public string text;
 
     public bool requiresName;
+    public bool shakeCamera;
 }
 

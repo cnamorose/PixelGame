@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerAction : MonoBehaviour
 {
+
+    [Header("Camera Lock Limit")]
+    public bool limitByCamera = false;
+    public float camPaddingX = 0.4f; // 좌우 여백
+    public float camPaddingY = 0.2f; // 상하 여백
+
+
     Vector3 originalScale;
 
     [Header("Inventory")]
@@ -86,6 +94,12 @@ public class PlayerAction : MonoBehaviour
 
     void Awake()
     {
+        if (FindObjectsOfType<PlayerAction>().Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
@@ -96,8 +110,30 @@ public class PlayerAction : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    public IEnumerator ForcedMove(Vector3 targetPos, float speed = 3f)
+    {
+        forceIdle = true;
+
+        while (Vector3.Distance(transform.position, targetPos) > 0.05f)
+        {
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                targetPos,
+                speed * Time.deltaTime
+            );
+            yield return null;
+        }
+
+        transform.position = targetPos;
+        forceIdle = false;
+    }
+
     void Update()
     {
+        if (GameOverManager.Instance != null &&
+        GameOverManager.Instance.isGameOverSequenceRunning)
+            return;
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (currentInteractable != null)
@@ -120,11 +156,7 @@ public class PlayerAction : MonoBehaviour
         }
 
         // 씬 이동 단축키
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SceneManager.LoadScene("Quiz");
-            return;
-        }
+    
 
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -254,14 +286,62 @@ public class PlayerAction : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // =========================
+        // 📦 인벤토리 초기화 (복구!)
+        // =========================
         inventoryUI = GameObject.Find("InventoryUI");
 
         if (inventoryUI != null)
         {
-            inventoryUI.SetActive(false); // 여기서 숨김
+            inventoryUI.SetActive(false);
             isInventoryOpen = false;
         }
 
+        // =========================
+        // 🧍‍♂️ Room 진입 처리
+        // =========================
+        if (scene.name == "Room")
+        {
+            if (GameOverManager.Instance != null &&
+                GameOverManager.Instance.fromGameOver)
+            {
+                // 🔴 게임오버 리스폰
+                Transform respawn =
+                    GameObject.Find("RespawnPoint_GameOver")?.transform;
+
+                if (respawn != null)
+                    transform.position = respawn.position;
+
+                if (PlayerLifeManager.Instance != null)
+                {
+                    PlayerLifeManager.Instance.FullHeal();
+
+                    // ⭐ 여기 추가
+                    GameObject lifeUI = GameObject.Find("LifeUI");
+                    if (lifeUI != null)
+                        lifeUI.SetActive(false);
+                }
+
+                forceIdle = false;
+                UnlockControl();
+
+                // GameOver 처리 끝
+                GameOverManager.Instance.fromGameOver = false;
+            }
+            else
+            {
+                // 🟢 일반 Room 진입 (퀴즈 클리어 포함)
+                Transform spawn =
+                    GameObject.Find("PlayerPoint")?.transform;
+
+                if (spawn != null)
+                    transform.position = spawn.position;
+            }
+        }
+
+        // =========================
+        // 🎮 Quiz 씬 처리 (기존 유지)
+        // =========================
         if (scene.name == "Quiz")
         {
             isQuizScene = true;
@@ -274,16 +354,14 @@ public class PlayerAction : MonoBehaviour
             GetComponent<SpriteRenderer>().enabled = true;
         }
 
-        GameObject spawn = GameObject.Find("PlayerPoint");
-        if (spawn != null)
-            transform.position = spawn.transform.position;
-
+        // =========================
+        // 🕹 이동 모드 전환 (중요!!!)
+        // =========================
         if (scene.name == "KeyboardMonster" || scene.name == "Keyboard_boss")
         {
             moveMode = PlayerMoveMode.Platformer;
             rigid.gravityScale = 1f;
-
-            // ⭐ 항상 동일한 크기로 강제
+            rigid.velocity = Vector2.zero;
             transform.localScale = originalScale * 0.5f;
         }
         else
@@ -291,9 +369,34 @@ public class PlayerAction : MonoBehaviour
             moveMode = PlayerMoveMode.TopDown;
             rigid.gravityScale = 0f;
             rigid.velocity = Vector2.zero;
-
-            // ⭐ 원래 크기로 복구
             transform.localScale = originalScale;
         }
+
     }
+
+    void LateUpdate()
+    {
+        if (!limitByCamera) return;
+
+        Camera cam = Camera.main;
+        if (cam == null) return;
+
+        Vector3 pos = transform.position;
+
+        float camHeight = cam.orthographicSize;
+        float camWidth = camHeight * cam.aspect;
+
+        Vector3 camPos = cam.transform.position;
+
+        float minX = camPos.x - camWidth + camPaddingX;
+        float maxX = camPos.x + camWidth - camPaddingX;
+        float minY = camPos.y - camHeight + camPaddingY;
+        float maxY = camPos.y + camHeight - camPaddingY;
+
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+
+        transform.position = pos;
+    }
+
 }

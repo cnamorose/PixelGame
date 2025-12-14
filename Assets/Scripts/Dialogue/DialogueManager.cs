@@ -187,6 +187,13 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if (line.shakeCamera)
+        {
+            Cameramove cam = Camera.main?.GetComponent<Cameramove>();
+            if (cam != null)
+                StartCoroutine(cam.ShakeCamera(1.5f, 0.2f));
+        }
+
         string text = line.text
             .Replace("{name}", playerData.playerName)
             .Replace("\\n", "\n");
@@ -197,6 +204,9 @@ public class DialogueManager : MonoBehaviour
             color = "#172646";
         else if (line.speaker == "Devil")
             color = "#AB0116";
+        else if (line.speaker == "person")
+            color = "#3a6b4f";
+
 
         dialogueText.text = $"<color={color}>{text}</color>";
     }
@@ -337,7 +347,16 @@ public class DialogueManager : MonoBehaviour
         // =====================
         currentCutscene = CutsceneType.None;
 
+        Cameramove cam = Camera.main ? Camera.main.GetComponent<Cameramove>() : null;
+        if (cam != null)
+            cam.EndCutscene();
+
+        if (player != null)
+            player.forceIdle = false;
+
         UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
         StartCoroutine(FadeInAfterSceneLoad());
     }
+
+   
 }

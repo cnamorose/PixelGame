@@ -328,7 +328,7 @@ Transform:
   m_GameObject: {fileID: 213649636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.56, y: -2.6, z: -0.055892006}
+  m_LocalPosition: {x: 5.5, y: -2.87, z: -0.055892006}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -346,10 +346,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b17b0600e2645a4fab09e85e13408c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  keyPrefab: {fileID: 5079524630823566486, guid: 34b094e2b1769ec4d8f57eb28e534256, type: 3}
+  deathClip: {fileID: 7400000, guid: 6ae109424c5f05c4382053a6d31fc297, type: 2}
+  hitBlinkDuration: 0.15
+  hitBlinkCount: 3
+  maxHp: 20
   hp: 0
   attackDelay: 1
-  idleDelay: 0.6
+  idleDelay: 0.8
   anim: {fileID: 0}
   defaultPos: {fileID: 1545305807}
   attack2Pos: {fileID: 515435413}
@@ -364,7 +368,7 @@ MonoBehaviour:
   - {fileID: 1344514073}
   minThrowSpeed: 10
   maxThrowSpeed: 14
-  throwForce: 7
+  throwForce: 3
   spreadAngle: 20
   dropPrefab: {fileID: 1296770395}
   dropInterval: 0.4
@@ -439,7 +443,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0070012435, y: 0.060676783}
@@ -1793,9 +1797,23 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1368780090}
+    m_ColliderPaths:
+    - - X: 1060000000
+        Y: -47500000
+      - X: -200000000
+        Y: -47500000
+      - X: -200000000
+        Y: -51875000
+      - X: 1060000000
+        Y: -51875000
   m_CompositePaths:
-    m_Paths: []
+    m_Paths:
+    - - {x: 105.99997, y: -5.1875}
+      - {x: 105.99997, y: -4.75}
+      - {x: -20, y: -4.750029}
+      - {x: -19.999971, y: -5.1875}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -1858,7 +1876,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0

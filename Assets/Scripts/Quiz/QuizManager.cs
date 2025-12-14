@@ -1,12 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using System;
+using static DialogueManager;
 
 public class QuizManager : MonoBehaviour
 {
+    [Header("Dialogue")]
+    public DialogueSequence quizClearDialogue;
+
+    [Header("Devil")]
+    public GameObject devilObject;
+
     public PlayerLifeManager playerLife;
 
     private float timeLimit = 5f;
@@ -123,6 +130,9 @@ public class QuizManager : MonoBehaviour
         GameObject lifeUI = GameObject.Find("LifeUI");
         if (lifeUI != null) lifeUI.SetActive(false);
 
+        if (devilObject != null)
+            devilObject.SetActive(false);
+
         fadePanel.gameObject.SetActive(true);
 
         float fadeTime = 1f;
@@ -131,14 +141,24 @@ public class QuizManager : MonoBehaviour
         for (float t = 0; t < fadeTime; t += Time.deltaTime)
         {
             float alpha = Mathf.Lerp(0f, 1f, t / fadeTime);
-            fadePanel.color = new Color(c.r, c.g, c.b, alpha);
+            fadePanel.color = new Color(1f, 1f, 1f, alpha);
             yield return null;
         }
-        fadePanel.color = new Color(c.r, c.g, c.b, 1f);
+        fadePanel.color = new Color(1f, 1f, 1f, 1f);
 
-        yield return new WaitForSeconds(3f);
-     
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
+        yield return new WaitForSeconds(0.5f);
+
+        if (devilObject != null)
+            devilObject.SetActive(true);
+
+        DialogueManager.Instance.playerData.quizCleared = true;
+
+        DialogueManager.Instance.playerData.hasPen = true;
+        DialogueManager.Instance.playerData.hasPaper = true;
+
+        DialogueManager.Instance.currentCutscene = CutsceneType.QuizClear;
+
+        DialogueManager.Instance.StartDialogue(quizClearDialogue);
     }
 
 }

@@ -5,13 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class KBossController : MonoBehaviour
 {
+    [Header("Drop")]
+    public GameObject keyPrefab;
+
+    [Header("Death Animation")]
+    public AnimationClip deathClip;
+
+    [Header("Hit Effect")]
+    public float hitBlinkDuration = 0.15f;
+    public int hitBlinkCount = 3;
+
+    SpriteRenderer sr;
+    bool isHitBlinking = false;
+
     [Header("Status")]
-    public int maxHp = 100;
+    public int maxHp = 20;
     public int hp;
 
     [Header("Attack")]
     public float attackDelay = 1.0f;   // 공격 전 대기
-    public float idleDelay = 0.6f;      // 공격 후 대기
+    public float idleDelay = 1.0f;      // 공격 후 대기
 
     [Header("References")]
     public Animator anim;
@@ -59,6 +72,8 @@ public class KBossController : MonoBehaviour
 
         if (anim == null)
             anim = GetComponent<Animator>();
+
+        sr = GetComponent<SpriteRenderer>();
 
         originalScale = transform.localScale; // ⭐ 중요
 
@@ -311,12 +326,33 @@ public class KBossController : MonoBehaviour
         if (isDead) return;
 
         hp -= damage;
+        
+        if (!isHitBlinking)
+            StartCoroutine(HitBlink());
 
         if (hp <= 0)
         {
             hp = 0;
+            isDead = true;
             Die();
         }
+    }
+
+    IEnumerator HitBlink()
+    {
+        isHitBlinking = true;
+
+        for (int i = 0; i < hitBlinkCount; i++)
+        {
+            sr.color = new Color(1f, 1f, 1f, 0.2f);
+            yield return new WaitForSeconds(hitBlinkDuration);
+
+            sr.color = Color.white;
+            yield return new WaitForSeconds(hitBlinkDuration);
+        }
+
+        sr.color = Color.white;
+        isHitBlinking = false;
     }
 
     // ================================
@@ -324,23 +360,44 @@ public class KBossController : MonoBehaviour
     // ================================
     void Die()
     {
-        isDead = true;
-
-        anim.SetBool("IsDead", true);
-        anim.SetBool("IsAttacking", false);
-        anim.SetInteger("AttackIndex", 0);
-
+        // 모든 행동 중지
         StopAllCoroutines();
+        isAttacking = false;
 
-        // 엔딩은 애니 끝나고 처리하는 게 좋음
-        // (아래 함수는 Animation Event로 호출 추천)
+        PlayerAction player = FindObjectOfType<PlayerAction>();
+        if (player != null)
+            player.LockControl();
+
+        // Animator 초기화 + Death 강제 재생
+        anim.enabled = true;
+        anim.speed = 1f;
+        anim.Rebind();
+        anim.Update(0f);
+        anim.Play("C_Boss_E", 0, 0f);
+
+        // ⭐ 일정 시간 후 보스 삭제
+        StartCoroutine(DestroyAfterDeath());
     }
-
-    // ================================
-    // 엔딩 처리 (애니 이벤트용)
-    // ================================
-    public void OnDeathAnimationEnd()
+    [SerializeField] float keyDropYOffset = -0.5f;
+    IEnumerator DestroyAfterDeath()
     {
-        SceneManager.LoadScene("Ending"); // 엔딩 씬 이름
+        PlayerAction player = FindObjectOfType<PlayerAction>();
+
+        float waitTime = deathClip != null ? deathClip.length : 0.8f;
+        yield return new WaitForSeconds(waitTime);
+
+        if (keyPrefab != null)
+        {
+            Vector3 dropPos = transform.position;
+            dropPos.y += keyDropYOffset;
+
+            Instantiate(keyPrefab, dropPos, Quaternion.identity);
+        }
+
+        if (player != null)
+            player.UnlockControl();
+
+        Destroy(gameObject);
     }
+
 }

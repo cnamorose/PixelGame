@@ -497,14 +497,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 582ae409608ff3049af6a62f18d107fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerdata: {fileID: 11400000, guid: e5457224feb74b34ea6dcd243ea4e275, type: 2}
   pen: {fileID: 393590150}
   paper: {fileID: 1952222017}
   usb: {fileID: 1029399006}
   paper2: {fileID: 783958353}
-  hasPen: 0
-  hasPaper: 0
-  hasUsb: 0
-  hasPaper2: 0
 --- !u!1 &331745707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,6 +1677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13416064ecf5636439ab86d5d3b04847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerdata: {fileID: 11400000, guid: e5457224feb74b34ea6dcd243ea4e275, type: 2}
 --- !u!61 &843490056
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2186,8 +2184,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2ffffb9a6fdb04db301c586912973e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSprite: {fileID: 0}
-  activeSprite: {fileID: 0}
+  playerdata: {fileID: 11400000, guid: e5457224feb74b34ea6dcd243ea4e275, type: 2}
+  screen1_Locked: {fileID: -1382561058, guid: 0e5959a71a80ed04ba5ebcc9be4bbb26, type: 3}
+  screen2_Blue: {fileID: -1440323645, guid: 0e5959a71a80ed04ba5ebcc9be4bbb26, type: 3}
+  screen3_Clear: {fileID: 884658880, guid: 0e5959a71a80ed04ba5ebcc9be4bbb26, type: 3}
 --- !u!61 &1130092794
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -3,10 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+
+    // ⭐ 대화 상태 하나로 통합
+    public enum DialogueMode
+    {
+        None,
+        Simple,     // 단발 대사
+        Choice,     // 선택지
+        Cutscene    // 컷신 (끝나면 EndSequence)
+    }
+
+    DialogueMode mode = DialogueMode.None;
+
+    [Header("Choice UI")]
+    public GameObject choicePanel;
+    public Button yesButton;
+    public Button noButton;
 
     public PlayerData playerData;
     public GameObject nameInputPanel;
@@ -23,6 +41,11 @@ public class DialogueManager : MonoBehaviour
     public DevilTrigger trigger;
     public PlayerAction player;
 
+    [Header("Cutscene UI")]
+    [SerializeField] Image fadeImage;
+    [SerializeField] TextMeshProUGUI missionText;
+    [SerializeField] float fadeDuration = 1.5f;
+
     void Awake()
     {
         if (Instance == null)
@@ -37,40 +60,121 @@ public class DialogueManager : MonoBehaviour
         }
 
         dialoguePanel.SetActive(false);
+        choicePanel.SetActive(false);
+        nameInputPanel.SetActive(false);
+
+        if (missionText != null)
+            missionText.gameObject.SetActive(false);
+
+        if (fadeImage != null)
+            fadeImage.color = new Color(0, 0, 0, 0);
     }
+
+    /* =========================
+       대화 시작 함수들
+       ========================= */
+
+    // 컷신 대화 시작
     public void StartDialogue(DialogueSequence sequence)
     {
+        StopAllCoroutines();
+
+        mode = DialogueMode.Cutscene;
         currentLines = sequence.lines;
         index = 0;
 
         dialoguePanel.SetActive(true);
+        choicePanel.SetActive(false);
+
         ShowLine();
     }
 
+    // 단발 대사
+    public void ShowSimpleDialogue(string text, string color = "#000000")
+    {
+        StopAllCoroutines();
+
+        mode = DialogueMode.Simple;
+        currentLines = null;
+
+        dialoguePanel.SetActive(true);
+        choicePanel.SetActive(false);
+
+        dialogueText.text = $"<color={color}>{text}</color>";
+    }
+
+    // 자동 닫힘 단발 대사
+    public void ShowSimpleDialogueAutoClose(string text, float closeTime = 2f, string color = "#000000")
+    {
+        StopAllCoroutines();
+
+        mode = DialogueMode.Simple;
+        currentLines = null;
+
+        dialoguePanel.SetActive(true);
+        choicePanel.SetActive(false);
+
+        dialogueText.text = $"<color={color}>{text}</color>";
+        StartCoroutine(AutoCloseDialogue(closeTime));
+    }
+
+    // 선택지 대사
+    public void ShowChoiceDialogue(string text, Action onYes, Action onNo, string color = "#000000")
+    {
+        StopAllCoroutines();
+
+        mode = DialogueMode.Choice;
+        currentLines = null;
+
+        dialoguePanel.SetActive(true);
+        choicePanel.SetActive(true);
+
+        dialogueText.text = $"<color={color}>{text}</color>";
+
+        yesButton.onClick.RemoveAllListeners();
+        noButton.onClick.RemoveAllListeners();
+
+        yesButton.onClick.AddListener(() =>
+        {
+            onYes?.Invoke();
+            CloseDialogue();
+        });
+
+        noButton.onClick.AddListener(() =>
+        {
+            onNo?.Invoke();
+            CloseDialogue();
+        });
+    }
+
+    /* =========================
+       Update
+       ========================= */
+
     void Update()
     {
-        if (dialoguePanel == null) return;
         if (!dialoguePanel.activeSelf) return;
 
-        // 단발 대사일 경우 컷신 로직 막기
-        if (currentLines == null) return;
+        if (mode == DialogueMode.Choice)
+            return;
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        if (mode == DialogueMode.Simple)
         {
-            NextLine();
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+                CloseDialogue();
+            return;
+        }
+
+        if (mode == DialogueMode.Cutscene)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+                NextLine();
         }
     }
 
-    public void ShowSimpleDialogue(string text, string color = "#000000")
-    {
-        dialoguePanel.SetActive(true);
-        dialogueText.text = $"<color={color}>{text}</color>";
-
-        // 컷신 상태 초기화
-        currentLines = null;
-        index = 0;
-    }
-
+    /* =========================
+       컷신 흐름
+       ========================= */
 
     void ShowLine()
     {
@@ -87,19 +191,14 @@ public class DialogueManager : MonoBehaviour
             .Replace("{name}", playerData.playerName)
             .Replace("\\n", "\n");
 
-        // 화자에 따라 색 결정
-        string color = "#000000"; // 기본 흰색
+        string color = "#000000";
 
         if (line.speaker == "Player")
-            color = "#172646";   // 연두색
+            color = "#172646";
         else if (line.speaker == "Devil")
-            color = "#AB0116";   // 빨간색
+            color = "#AB0116";
 
-        // 말풍선 내용에 색 적용
         dialogueText.text = $"<color={color}>{text}</color>";
-
-        // 화자 이름도 색 줄 수 있음
-        //speakerText.text = $"<color={color}>{line.speaker}</color>";
     }
 
     void NextLine()
@@ -115,10 +214,10 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
         }
     }
+
     public void ConfirmName()
     {
         string name = nameInputField.text;
-
         if (string.IsNullOrWhiteSpace(name))
             name = "플레이어";
 
@@ -130,28 +229,76 @@ public class DialogueManager : MonoBehaviour
         NextLine();
     }
 
-    void OpenNameInput()
-    {
-        nameInputPanel.SetActive(true);
-        dialoguePanel.SetActive(false);
+    /* =========================
+       종료 처리
+       ========================= */
 
-        nameConfirmButton.onClick.RemoveAllListeners();
-        nameConfirmButton.onClick.AddListener(ConfirmName);
+    public void CloseDialogue()
+    {
+        StopAllCoroutines();
+
+        dialoguePanel.SetActive(false);
+        choicePanel.SetActive(false);
+
+        mode = DialogueMode.None;
+        currentLines = null;
     }
 
     void EndDialogue()
     {
         dialoguePanel.SetActive(false);
-        StartCoroutine(EndSequence());
+
+        if (mode == DialogueMode.Cutscene)
+        {
+            StartCoroutine(EndSequence());
+        }
+
+        mode = DialogueMode.None;
     }
 
-    [SerializeField] Image fadeImage;
-    [SerializeField] TextMeshProUGUI missionText;
+    IEnumerator AutoCloseDialogue(float time)
+    {
+        yield return new WaitForSeconds(time);
+        CloseDialogue();
+    }
+    IEnumerator FadeInAfterSceneLoad()
+    {
+        // 씬 로드 기다림
+        yield return null;
+        yield return new WaitForSeconds(0.1f);
 
-    [SerializeField] float fadeDuration = 1.5f;
+        // 미션 문구 숨김
+        if (missionText != null)
+            missionText.gameObject.SetActive(false);
+
+        // 페이드 인
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float a = Mathf.Lerp(1f, 0f, t / fadeDuration);
+            fadeImage.color = new Color(0, 0, 0, a);
+            yield return null;
+        }
+
+        fadeImage.color = new Color(0, 0, 0, 0);
+    }
+
+    public enum CutsceneType
+    {
+        None,
+        SchoolIntro,
+        QuizClear
+    }
+
+    public CutsceneType currentCutscene = CutsceneType.None;
+
+
     IEnumerator EndSequence()
     {
-        // 1) 페이드 아웃
+        // =====================
+        // 공통: 검정 페이드 아웃
+        // =====================
         float t = 0f;
         while (t < fadeDuration)
         {
@@ -160,21 +307,37 @@ public class DialogueManager : MonoBehaviour
             fadeImage.color = new Color(0, 0, 0, a);
             yield return null;
         }
-        yield return new WaitForSeconds(1.5f);
 
-        // 2) 문구 표시
-        missionText.gameObject.SetActive(true);
+        // =====================
+        // School 컷신 전용
+        // =====================
+        if (currentCutscene == CutsceneType.SchoolIntro)
+        {
+            yield return new WaitForSeconds(1.5f);
 
-        missionText.text = "악마의 졸업 방해를 이겨내고\n논문을 완성하자!";
+            missionText.gameObject.SetActive(true);
+            missionText.text = "악마의 졸업 방해를 이겨내고\n논문을 완성하자!";
 
-        yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(2.5f);
 
-        trigger.EndCutscene(player);
+            trigger.EndCutscene(player);
+        }
 
-        // 3) 다음 씬 로드
+        // =====================
+        // Quiz 컷신 전용
+        // =====================
+        if (currentCutscene == CutsceneType.QuizClear)
+        {
+            // (퀴즈 쪽에선 미션 문구 X)
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // =====================
+        // 공통: 씬 이동 + 페이드 인
+        // =====================
+        currentCutscene = CutsceneType.None;
+
         UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
-
-        Destroy(gameObject);
+        StartCoroutine(FadeInAfterSceneLoad());
     }
 }
-

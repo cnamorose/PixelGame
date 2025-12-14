@@ -6,25 +6,30 @@ public class Bed : Interactable
 {
     public override void Interact()
     {
-        // 안전 체크 (혹시 모를 상황 대비)
-        if (PlayerLifeManager.Instance == null)
-            return;
+        var life = PlayerLifeManager.Instance;
 
-        // 체력이 가득 찼을 때
-        if (PlayerLifeManager.Instance.currentLife >=
-            PlayerLifeManager.Instance.maxLife)
+        Debug.Log("침대 상호작용");
+
+        if (life.currentLife >= life.maxLife)
         {
-            DialogueManager.Instance.ShowSimpleDialogue(
-                "정신은 피로해도 몸은 멀쩡하다..."
+            DialogueManager.Instance.ShowSimpleDialogueAutoClose(
+                "정신은 피로해도 몸은 멀쩡하다...",
+                2f
             );
         }
         else
         {
-            DialogueManager.Instance.ShowSimpleDialogue(
-                "10분만 자고 일어나자..."
+            DialogueManager.Instance.ShowChoiceDialogue(
+                "자고 일어나시겠습니까?",
+                onYes: () =>
+                {
+                    life.FullHeal();
+                },
+                onNo: () =>
+                {
+                    // 아무 것도 안 함
+                }
             );
-
-            PlayerLifeManager.Instance.FullHeal();
         }
     }
 }

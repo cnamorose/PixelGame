@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static DialogueManager;
 
 public class DevilTrigger : MonoBehaviour
 {
@@ -53,6 +54,8 @@ public class DevilTrigger : MonoBehaviour
 
         dlg.trigger = this;
         dlg.player = player;
+
+        DialogueManager.Instance.currentCutscene = CutsceneType.SchoolIntro;
 
         dlg.StartDialogue(dialogue); // ScriptableObject 넘기기
     }

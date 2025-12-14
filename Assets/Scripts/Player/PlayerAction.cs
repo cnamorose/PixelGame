@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAction : MonoBehaviour
 {
+    Vector3 originalScale;
+
     [Header("Inventory")]
     public GameObject inventoryUI;
     public bool isInventoryOpen = false;
@@ -33,6 +35,17 @@ public class PlayerAction : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     bool isGrounded;
+
+    public void LockControl()
+    {
+        forceIdle = true;
+        rigid.velocity = Vector2.zero;
+    }
+
+    public void UnlockControl()
+    {
+        forceIdle = false;
+    }
 
     public enum PlayerMoveMode
     {
@@ -75,6 +88,9 @@ public class PlayerAction : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        originalScale = transform.localScale;
+
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -113,6 +129,12 @@ public class PlayerAction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             SceneManager.LoadScene("KeyboardMonster");
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Room");
             return;
         }
 
@@ -163,7 +185,7 @@ public class PlayerAction : MonoBehaviour
         // 바닥 체크 (Platformer 모드에서만 사용)
         if (moveMode == PlayerMoveMode.Platformer)
         {
-            isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.25f, groundLayer);
 
             // 플랫폼 이동: 좌우만 움직임, Y속도는 중력 유지
             rigid.velocity = new Vector2(h * Speed, rigid.velocity.y);
@@ -258,21 +280,11 @@ public class PlayerAction : MonoBehaviour
 
         if (scene.name == "KeyboardMonster" || scene.name == "Keyboard_boss")
         {
-            if (scene.name == "KeyboardMonster")
-            {
-                moveMode = PlayerMoveMode.Platformer;
-                rigid.gravityScale = 1f;
-                transform.localScale = new Vector3(
-                transform.localScale.x * 0.5f,
-                transform.localScale.y * 0.5f,
-                transform.localScale.z
-                );
-            }
-            if (scene.name == "Keyboard_boss")
-            {
-                moveMode = PlayerMoveMode.Platformer;
-                rigid.gravityScale = 1f;
-            }
+            moveMode = PlayerMoveMode.Platformer;
+            rigid.gravityScale = 1f;
+
+            // ⭐ 항상 동일한 크기로 강제
+            transform.localScale = originalScale * 0.5f;
         }
         else
         {
@@ -280,6 +292,8 @@ public class PlayerAction : MonoBehaviour
             rigid.gravityScale = 0f;
             rigid.velocity = Vector2.zero;
 
+            // ⭐ 원래 크기로 복구
+            transform.localScale = originalScale;
         }
     }
 }

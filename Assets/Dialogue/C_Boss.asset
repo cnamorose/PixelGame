@@ -35,7 +35,7 @@ MonoBehaviour:
     requiresName: 0
     shakeCamera: 0
   - speaker: Player
-    text: "\uC0AC\uC2E4 \uC545\uB9C8\uAC00 \uC878\uC5C5\uC744 \uB9DD\uCE5C\uB2E4\uACE0\\n\nPC
+    text: "\uC0AC\uC2E4 \uC545\uB9C8\uAC00 \uC878\uC5C5\uC744 \uB9DD\uCE5C\uB2E4\uACE0\\nPC
       \uB9DD\uAC00\uD2B8\uB838\uC5B4\uC694,, "
     requiresName: 0
     shakeCamera: 0
@@ -68,8 +68,8 @@ MonoBehaviour:
     requiresName: 0
     shakeCamera: 0
   - speaker: person
-    text: "\uBE68\uB9AC USB\uBC1B\uACE0 \uB3CC\uC544\uAC00\uC11C\\n\n\uB17C\uBB38
-      \uC368\uC11C \uC81C\uCD9C\uD574!!!"
+    text: "\uBE68\uB9AC USB\uBC1B\uACE0 \uB3CC\uC544\uAC00\uC11C\\n\uB17C\uBB38 \uC368\uC11C
+      \uC81C\uCD9C\uD574!!!"
     requiresName: 0
     shakeCamera: 0
   - speaker: Player
@@ -85,7 +85,7 @@ MonoBehaviour:
     requiresName: 0
     shakeCamera: 1
   - speaker: person
-    text: "\uADF8\uB798 \uB098\uAC00\uC11C\uBCF4\uC790\\n\n\uAD6C\uD574\uC918\uC11C
+    text: "\uADF8\uB798 \uB098\uAC00\uC11C\uBCF4\uC790\\n\uAD6C\uD574\uC918\uC11C
       \uACE0\uB9C8\uC6CC!!!"
     requiresName: 0
     shakeCamera: 1

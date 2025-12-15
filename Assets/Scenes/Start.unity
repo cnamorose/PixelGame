@@ -952,7 +952,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.20714667, g: 0.2618314, b: 0.3301887, a: 0}
+  m_BackGroundColor: {r: 0.7738964, g: 0.7836998, b: 0.8773585, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1262,6 +1262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb753e4a4ba7c04cb7cdb4f65f793bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGameOverSequenceRunning: 0
+  fromGameOver: 0
   fadePanel: {fileID: 332801216}
   gameOverPanel: {fileID: 1262298712}
   extraGameOverText: {fileID: 505845096}

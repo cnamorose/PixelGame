@@ -17,16 +17,21 @@ MonoBehaviour:
   - speaker: Devil
     text: "\uC774 \uC5B4\uB824\uC6B4 \uBB38\uC81C\uB97C \uC804\uBD80 \uD480\uB2E4\uB2C8...."
     requiresName: 0
+    shakeCamera: 0
   - speaker: Devil
     text: "\uBD84\uD558\uB2E4..."
     requiresName: 0
+    shakeCamera: 0
   - speaker: Devil
-    text: "\uC57D\uC18D\uC740 \uC57D\uC18D\uC774\uB2C8, \uBCFC\uD39C\uACFC \uC885\uC774\uB97C
+    text: "\uC57D\uC18D\uC740 \uC57D\uC18D\uC774\uB2C8, \uD39C\uACFC \uC885\uC774\uB97C
       \uC8FC\uACA0\uB2E4."
     requiresName: 0
+    shakeCamera: 0
   - speaker: Devil
     text: "\uD558\uC9C0\uB9CC,"
     requiresName: 0
+    shakeCamera: 0
   - speaker: Devil
     text: "\uB2E4\uC74C\uC740 \uC5B4\uB824\uC6B8\uAC70\uB2E4, {name}."
     requiresName: 0
+    shakeCamera: 0

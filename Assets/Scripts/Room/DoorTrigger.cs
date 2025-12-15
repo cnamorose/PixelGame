@@ -8,7 +8,7 @@ public class DoorTrigger : MonoBehaviour
 {
     public TMP_Text warningText;
     public PlayerData playerData;   // 추가
-    public string nextSceneName = "Ending"; // 이동할 씬 이름
+    public string nextSceneName = "last_school"; // 이동할 씬 이름
 
     private Coroutine hideRoutine;
 

@@ -770,7 +770,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: ggg
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 58fb9e2326c2d824eb12fc1c14cb3847, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 33e6eabd7ac7f4944a3b83795cb8ba92, type: 2}
   m_sharedMaterial: {fileID: 1183626946746845871, guid: 637e6a32953131047a57e62cd82cff11, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1156,6 +1156,7 @@ MonoBehaviour:
   fadeImage: {fileID: 585947519}
   missionText: {fileID: 1080083778}
   fadeDuration: 1.5
+  currentCutscene: 0
 --- !u!4 &697422907
 Transform:
   m_ObjectHideFlags: 0
@@ -2670,7 +2671,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: ddd
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 637e6a32953131047a57e62cd82cff11, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 33e6eabd7ac7f4944a3b83795cb8ba92, type: 2}
   m_sharedMaterial: {fileID: 1183626946746845871, guid: 637e6a32953131047a57e62cd82cff11, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

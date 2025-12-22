@@ -12,11 +12,34 @@ public class KeyDropEvent : MonoBehaviour
 
     private bool triggered = false;
     private Vector3 originalPos;
+    private bool keyShown = false;
+
 
     void Start()
     {
         originalPos = disappearTilemap.transform.position;
+
+        if (keyRigidbody != null)
+        {
+            keyRigidbody.gameObject.SetActive(false);
+            keyRigidbody.gravityScale = 0f;
+        }
     }
+
+    void Update()
+    {
+        if (keyShown) return;
+
+        if (GameManager_KM.Instance != null &&
+            GameManager_KM.Instance.HasAllParts())
+        {
+            keyShown = true;
+
+            keyRigidbody.gameObject.SetActive(true);
+            keyRigidbody.gravityScale = 0f; // 아직 안 떨어지게
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {

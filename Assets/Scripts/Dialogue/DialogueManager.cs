@@ -191,7 +191,10 @@ public class DialogueManager : MonoBehaviour
         {
             Cameramove cam = Camera.main?.GetComponent<Cameramove>();
             if (cam != null)
-                StartCoroutine(cam.ShakeCamera(1.5f, 0.2f));
+            {
+                float magnitude = line.weakShake ? 0.08f : 0.2f;
+                StartCoroutine(cam.ShakeCamera(1.5f, magnitude));
+            }
         }
 
         string text = line.text
@@ -298,7 +301,8 @@ public class DialogueManager : MonoBehaviour
     {
         None,
         SchoolIntro,
-        QuizClear
+        QuizClear,
+        KeyMonster
     }
 
     public CutsceneType currentCutscene = CutsceneType.None;
@@ -306,6 +310,17 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator EndSequence()
     {
+        // ⭐ KeyMonster 컷신 전용: 먼저 흔들림 시작
+        if (currentCutscene == CutsceneType.KeyMonster)
+        {
+            Cameramove cam = Camera.main ? Camera.main.GetComponent<Cameramove>() : null;
+            if (cam != null)
+            {
+                // 페이드 시간 + 약간 더
+                StartCoroutine(cam.ShakeCamera(fadeDuration + 0.3f, 0.2f));
+            }
+        }
+
         // =====================
         // 공통: 검정 페이드 아웃
         // =====================
@@ -338,7 +353,6 @@ public class DialogueManager : MonoBehaviour
         // =====================
         if (currentCutscene == CutsceneType.QuizClear)
         {
-            // (퀴즈 쪽에선 미션 문구 X)
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -347,9 +361,9 @@ public class DialogueManager : MonoBehaviour
         // =====================
         currentCutscene = CutsceneType.None;
 
-        Cameramove cam = Camera.main ? Camera.main.GetComponent<Cameramove>() : null;
-        if (cam != null)
-            cam.EndCutscene();
+        Cameramove cam2 = Camera.main ? Camera.main.GetComponent<Cameramove>() : null;
+        if (cam2 != null)
+            cam2.EndCutscene();
 
         if (player != null)
             player.forceIdle = false;
@@ -358,5 +372,6 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(FadeInAfterSceneLoad());
     }
 
-   
+
+
 }

@@ -11,10 +11,13 @@ public class PlayerLifeManager : MonoBehaviour
     public float invincibleTime = 1f;
     private bool isInvincible = false;
 
+
     public int maxLife = 3;
     public int currentLife = 3;
 
     public event Action OnLifeChanged;
+    public Vector3 respawnPosition;
+
 
     private void Awake()
     {

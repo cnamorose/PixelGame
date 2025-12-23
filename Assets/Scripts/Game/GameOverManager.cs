@@ -31,9 +31,31 @@ public class GameOverManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Room")
+        {
+            isGameOverSequenceRunning = false;
+        }
+    }
+
+
     public void ShowGameOver()
     {
         if (isGameOverSequenceRunning) return;
+
+        if (SceneManager.GetActiveScene().name == "Room")
+            return;
 
         isGameOverSequenceRunning = true;
 

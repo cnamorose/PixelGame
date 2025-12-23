@@ -107,7 +107,7 @@ MonoBehaviour:
     text: "\uC878\uC5C5\uD559\uAE30\uC5D0 \uC878\uC5C5\uD558\uC9C0 \uBABB\uD55C \uC790\uB4E4\uC758
       \uB208\uBB3C\uC774\uC9C0!!!!!!!!!!"
     requiresName: 0
-    shakeCamera: 0
+    shakeCamera: 1
     weakShake: 1
   - speaker: Devil
     text: "\uB124 \uAC83\uB9CC \uBAA8\uC73C\uBA74 \uB531 10\uC138\uD2B8\uAC00 \uC644\uC131\uB41C\uB2E4. "
@@ -152,7 +152,7 @@ MonoBehaviour:
     text: "\uC544.. \uC548\uB3FC!!!! \uB098 \uAF2D \uC774\uBC88\uD559\uAE30\uC5D0
       \\n \uC878\uC5C5\uD574\uC57C\uD55C\uB2E4\uACE0!!!!!!"
     requiresName: 0
-    shakeCamera: 0
+    shakeCamera: 1
     weakShake: 1
   - speaker: Devil
     text: "\uC2DC\uC791\uD558\uC9C0. \\n {name}, \uB124 \uC878\uC5C5\uC758 \uC6B4\uBA85\uC740

@@ -44,6 +44,9 @@ public class PlayerAction : MonoBehaviour
     public LayerMask groundLayer;
     bool isGrounded;
 
+    public Transform RespawnPoint_GameOver;
+    public Transform PlayerPoint;
+
     public void LockControl()
     {
         forceIdle = true;
@@ -286,9 +289,7 @@ public class PlayerAction : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // =========================
-        // 📦 인벤토리 초기화 (복구!)
-        // =========================
+       
         inventoryUI = GameObject.Find("InventoryUI");
 
         if (inventoryUI != null)
@@ -298,9 +299,9 @@ public class PlayerAction : MonoBehaviour
         }
 
         // =========================
-        // 🧍‍♂️ Room 진입 처리
+        // Room 진입 처리
         // =========================
-        if (scene.name == "Room")
+        /**if (scene.name == "Room")
         {
             if (GameOverManager.Instance != null &&
                 GameOverManager.Instance.fromGameOver)
@@ -330,12 +331,45 @@ public class PlayerAction : MonoBehaviour
             }
             else
             {
-                // 🟢 일반 Room 진입 (퀴즈 클리어 포함)
+                // 일반 Room 진입 (퀴즈 클리어 포함)
                 Transform spawn =
                     GameObject.Find("PlayerPoint")?.transform;
 
                 if (spawn != null)
                     transform.position = spawn.position;
+            }
+        }**/
+
+        if (scene.name == "Room")
+        {
+            RespawnPoint_GameOver =
+                GameObject.Find("RespawnPoint_GameOver")?.transform;
+
+            PlayerPoint =
+                GameObject.Find("PlayerPoint")?.transform;
+        }
+
+
+        if (scene.name == "Room")
+        {
+            if (GameOverManager.Instance != null &&
+                GameOverManager.Instance.fromGameOver)
+            {
+                if (RespawnPoint_GameOver != null)
+                    transform.position = RespawnPoint_GameOver.position;
+
+                if (PlayerLifeManager.Instance != null)
+                    PlayerLifeManager.Instance.FullHeal();
+
+                forceIdle = false;
+                UnlockControl();
+
+                GameOverManager.Instance.fromGameOver = false;
+            }
+            else
+            {
+                if (PlayerPoint != null)
+                    transform.position = PlayerPoint.position;
             }
         }
 

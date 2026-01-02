@@ -5,18 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public Transform attackPoint;      // 손 위치
-    public SpriteRenderer penRenderer; // Pen의 SpriteRenderer
-    public float attackDuration = 0.15f;
-    public float swingAngle = 130f;
+    public GameObject penPrefab;   //Pen 프리팹
+    public Transform attackPoint;  // 공격 기준점
+    public float stabDistance = 0.3f;
+    public float stabDuration = 0.1f;
 
     PlayerAction action;
-    Coroutine swingRoutine;
+    bool isAttacking = false;
 
     void Awake()
     {
         action = GetComponent<PlayerAction>();
-        penRenderer.enabled = false; // ⭐ 처음엔 안 보이게
     }
 
     void Update()
@@ -24,50 +23,47 @@ public class PlayerAttack : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "DevilMonster")
             return;
 
-        if (action.forceIdle)
+        if (action.forceIdle || isAttacking)
             return;
 
-        if (Input.GetKeyDown(KeyCode.A))
-            StartSwing(true);
-
         if (Input.GetKeyDown(KeyCode.D))
-            StartSwing(false);
+            StartCoroutine(Stab(1));   // 오른쪽
+
+        if (Input.GetKeyDown(KeyCode.A))
+            StartCoroutine(Stab(-1));  // 왼쪽
     }
 
-    void StartSwing(bool isLeft)
+    IEnumerator Stab(int dir)
     {
-        if (swingRoutine != null)
-            StopCoroutine(swingRoutine);
-
-        swingRoutine = StartCoroutine(Swing(isLeft));
-    }
-
-    IEnumerator Swing(bool isLeft)
-    {
+        isAttacking = true;
         action.isAttacking = true;
-        penRenderer.enabled = true;
 
-        // 🔹 위치 (플레이어 바로 앞)
-        attackPoint.localPosition = isLeft
-            ? new Vector3(-0.25f, 0f, 0f)
-            : new Vector3(0.25f, 0f, 0f);
+        // Shooter랑 동일: 생성
+        GameObject pen = Instantiate(
+            penPrefab,
+            attackPoint.position,
+            Quaternion.identity
+        );
 
-        float startAngle = 60f;
-        float endAngle = -60f;
+        // 방향에 맞게 회전 (수직 스프라이트 기준)
+        float angle = dir == 1 ? -90f : 90f;
+        pen.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        attackPoint.localRotation = Quaternion.Euler(0, 0, startAngle);
+        Vector3 startPos = attackPoint.position;
+        Vector3 endPos = startPos + Vector3.right * dir * stabDistance;
 
         float t = 0f;
-        while (t < attackDuration)
+        while (t < stabDuration)
         {
-            float angle = Mathf.Lerp(startAngle, endAngle, t / attackDuration);
-            attackPoint.localRotation = Quaternion.Euler(0, 0, angle);
+            pen.transform.position =
+                Vector3.Lerp(startPos, endPos, t / stabDuration);
             t += Time.deltaTime;
             yield return null;
         }
 
-        attackPoint.localRotation = Quaternion.identity;
-        penRenderer.enabled = false;
+        Destroy(pen); // 끝나면 제거
+
         action.isAttacking = false;
+        isAttacking = false;
     }
 }

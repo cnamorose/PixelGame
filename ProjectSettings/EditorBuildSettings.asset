@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Keyboard_boss.unity
     guid: 4703195c7c1361f4294add23a079bb58
+  - enabled: 1
+    path: Assets/Scenes/DevilMonster.unity
+    guid: 481ea726f6cc96b4588524754c5e452c
   m_configObjects: {}

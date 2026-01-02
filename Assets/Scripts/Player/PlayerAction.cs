@@ -47,6 +47,14 @@ public class PlayerAction : MonoBehaviour
     public Transform RespawnPoint_GameOver;
     public Transform PlayerPoint;
 
+    public bool isAttacking = false;
+    bool isDevilMonsterScene = false;
+
+    SpriteRenderer sr;
+
+
+
+
     public void LockControl()
     {
         forceIdle = true;
@@ -105,6 +113,7 @@ public class PlayerAction : MonoBehaviour
 
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
 
         originalScale = transform.localScale;
 
@@ -167,9 +176,33 @@ public class PlayerAction : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SceneManager.LoadScene("DevilMonster");
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("Room");
+            return;
+        }
+
+        if (isDevilMonsterScene)
+        {
+            rigid.velocity = Vector2.zero;
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                idleDir = -1;
+                sr.flipX = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                idleDir = 1;
+                sr.flipX = false;
+            }
+
             return;
         }
 
@@ -298,47 +331,7 @@ public class PlayerAction : MonoBehaviour
             isInventoryOpen = false;
         }
 
-        // =========================
-        // Room 진입 처리
-        // =========================
-        /**if (scene.name == "Room")
-        {
-            if (GameOverManager.Instance != null &&
-                GameOverManager.Instance.fromGameOver)
-            {
-                // 🔴 게임오버 리스폰
-                Transform respawn =
-                    GameObject.Find("RespawnPoint_GameOver")?.transform;
 
-                if (respawn != null)
-                    transform.position = respawn.position;
-
-                if (PlayerLifeManager.Instance != null)
-                {
-                    PlayerLifeManager.Instance.FullHeal();
-
-                    // ⭐ 여기 추가
-                    GameObject lifeUI = GameObject.Find("LifeUI");
-                    if (lifeUI != null)
-                        lifeUI.SetActive(false);
-                }
-
-                forceIdle = false;
-                UnlockControl();
-
-                // GameOver 처리 끝
-                GameOverManager.Instance.fromGameOver = false;
-            }
-            else
-            {
-                // 일반 Room 진입 (퀴즈 클리어 포함)
-                Transform spawn =
-                    GameObject.Find("PlayerPoint")?.transform;
-
-                if (spawn != null)
-                    transform.position = spawn.position;
-            }
-        }**/
 
         if (scene.name == "Room")
         {
@@ -398,6 +391,13 @@ public class PlayerAction : MonoBehaviour
             rigid.velocity = Vector2.zero;
             transform.localScale = originalScale * 0.5f;
         }
+        else if (scene.name == "DevilMonster")
+        {
+            moveMode = PlayerMoveMode.TopDown;
+            rigid.gravityScale = 0f;
+            rigid.velocity = Vector2.zero;
+            transform.localScale = originalScale * 0.5f;
+        }
         else
         {
             moveMode = PlayerMoveMode.TopDown;
@@ -405,6 +405,39 @@ public class PlayerAction : MonoBehaviour
             rigid.velocity = Vector2.zero;
             transform.localScale = originalScale;
         }
+
+        if (scene.name == "DevilMonster")
+        {
+            isDevilMonsterScene = true;
+
+            h = 0; 
+            v = 0;
+
+            // 측면 상태 강제 전이
+            anim.enabled = true;
+            anim.SetInteger("hAxisRaw", 1);
+            anim.SetInteger("vAxisRaw", 0);
+            anim.SetBool("isChange", true);
+            anim.Update(0f);   // 즉시 반영
+
+            // Animator 꺼도 측면 스프라이트가 고정됨
+            anim.enabled = false;
+
+            idleDir = 1;
+            sr.flipX = false;
+
+            Transform devilSpawn =
+                GameObject.Find("PlayerSpawnPoint")?.transform;
+
+            if (devilSpawn != null)
+                transform.position = devilSpawn.position;
+        }
+        else
+        {
+            isDevilMonsterScene = false;
+            anim.enabled = true;
+        }
+
 
     }
 

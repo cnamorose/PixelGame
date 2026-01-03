@@ -26,11 +26,10 @@ public class PlayerAttack : MonoBehaviour
         if (action.forceIdle || isAttacking)
             return;
 
-        if (Input.GetKeyDown(KeyCode.D))
-            StartCoroutine(Stab(1));   // 오른쪽
-
-        if (Input.GetKeyDown(KeyCode.A))
-            StartCoroutine(Stab(-1));  // 왼쪽
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        {
+            StartCoroutine(Stab(action.idleDir));
+        }
     }
 
     IEnumerator Stab(int dir)

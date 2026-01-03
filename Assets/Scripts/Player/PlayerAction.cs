@@ -195,12 +195,16 @@ public class PlayerAction : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.A))
             {
                 idleDir = -1;
-                sr.flipX = true;
+                sr.flipX = true;              // ⭐ 왼쪽
+                anim.Play("SideWalk", 0, 0f);
+                anim.speed = 0f;
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
                 idleDir = 1;
-                sr.flipX = false;
+                sr.flipX = false;             // ⭐ 오른쪽
+                anim.Play("SideWalk", 0, 0f);
+                anim.speed = 0f;
             }
 
             return;
@@ -410,18 +414,14 @@ public class PlayerAction : MonoBehaviour
         {
             isDevilMonsterScene = true;
 
-            h = 0; 
+            h = 0;
             v = 0;
 
-            // 측면 상태 강제 전이
+            // Animator 유지
             anim.enabled = true;
             anim.SetInteger("hAxisRaw", 1);
             anim.SetInteger("vAxisRaw", 0);
-            anim.SetBool("isChange", true);
-            anim.Update(0f);   // 즉시 반영
-
-            // Animator 꺼도 측면 스프라이트가 고정됨
-            anim.enabled = false;
+            anim.SetBool("isChange", false);
 
             idleDir = 1;
             sr.flipX = false;
@@ -435,7 +435,16 @@ public class PlayerAction : MonoBehaviour
         else
         {
             isDevilMonsterScene = false;
+
             anim.enabled = true;
+            anim.speed = 1f;
+
+            // 🔒 방향 꼬임 방지용 초기화
+            idleDir = 1;
+            sr.flipX = false;
+            anim.SetInteger("hAxisRaw", 1);
+            anim.SetInteger("vAxisRaw", 0);
+            anim.SetBool("isChange", false);
         }
 
 
@@ -464,6 +473,12 @@ public class PlayerAction : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
         transform.position = pos;
+    }
+
+    IEnumerator ResetChange()
+    {
+        yield return null; // 한 프레임
+        anim.SetBool("isChange", false);
     }
 
 }

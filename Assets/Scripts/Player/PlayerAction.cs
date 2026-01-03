@@ -195,19 +195,15 @@ public class PlayerAction : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.A))
             {
                 idleDir = -1;
-                sr.flipX = true;              // ⭐ 왼쪽
-                anim.Play("SideWalk", 0, 0f);
-                anim.speed = 0f;
+                sr.flipX = true;
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
                 idleDir = 1;
-                sr.flipX = false;             // ⭐ 오른쪽
-                anim.Play("SideWalk", 0, 0f);
-                anim.speed = 0f;
+                sr.flipX = false;
             }
 
-            return;
+            return; // ⭐ Animator 로직 완전 차단
         }
 
         // 강제 Idle 상태
@@ -400,6 +396,9 @@ public class PlayerAction : MonoBehaviour
             moveMode = PlayerMoveMode.TopDown;
             rigid.gravityScale = 0f;
             rigid.velocity = Vector2.zero;
+
+            rigid.bodyType = RigidbodyType2D.Kinematic;
+
             transform.localScale = originalScale * 0.5f;
         }
         else
@@ -407,6 +406,7 @@ public class PlayerAction : MonoBehaviour
             moveMode = PlayerMoveMode.TopDown;
             rigid.gravityScale = 0f;
             rigid.velocity = Vector2.zero;
+            rigid.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale = originalScale;
         }
 
@@ -417,14 +417,20 @@ public class PlayerAction : MonoBehaviour
             h = 0;
             v = 0;
 
-            // Animator 유지
+            // ⭐ 항상 옆모습으로 시작
+            idleDir = 1;          // 기본 오른쪽
+            sr.flipX = false;
+
+            // ⭐ Animator를 사이드 상태로 강제
             anim.enabled = true;
+            anim.speed = 0f;                      // 애니 정지
+            anim.Play("Player_R", 0, 0f);          // 사이드 걷기 첫 프레임
+            anim.Update(0f);                       // 즉시 반영
+
+            // 파라미터 정리 (기존 유지)
             anim.SetInteger("hAxisRaw", 1);
             anim.SetInteger("vAxisRaw", 0);
             anim.SetBool("isChange", false);
-
-            idleDir = 1;
-            sr.flipX = false;
 
             Transform devilSpawn =
                 GameObject.Find("PlayerSpawnPoint")?.transform;
@@ -439,7 +445,7 @@ public class PlayerAction : MonoBehaviour
             anim.enabled = true;
             anim.speed = 1f;
 
-            // 🔒 방향 꼬임 방지용 초기화
+            // 🔒 기존 초기화 유지
             idleDir = 1;
             sr.flipX = false;
             anim.SetInteger("hAxisRaw", 1);

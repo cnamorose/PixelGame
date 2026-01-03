@@ -12,6 +12,9 @@ public class DialogueLine
     public bool requiresName;
     public bool shakeCamera;
 
+    public bool changeDevilSpriteOnEnd;
+    public Sprite devilSpriteOnEnd;
+
     public bool weakShake;
 }
 

@@ -216,6 +216,16 @@ public class DialogueManager : MonoBehaviour
 
     void NextLine()
     {
+        // ⭐ 지금 줄이 끝나는 순간
+        var prevLine = currentLines[index];
+
+        if (prevLine.changeDevilSpriteOnEnd && prevLine.devilSpriteOnEnd != null)
+        {
+            DevilVisual devil = FindObjectOfType<DevilVisual>();
+            if (devil != null)
+                devil.SetSprite(prevLine.devilSpriteOnEnd);
+        }
+
         index++;
 
         if (index < currentLines.Count)
@@ -302,7 +312,8 @@ public class DialogueManager : MonoBehaviour
         None,
         SchoolIntro,
         QuizClear,
-        KeyMonster
+        KeyMonster,
+        DevilMonster
     }
 
     public CutsceneType currentCutscene = CutsceneType.None;
@@ -354,6 +365,15 @@ public class DialogueManager : MonoBehaviour
         if (currentCutscene == CutsceneType.QuizClear)
         {
             yield return new WaitForSeconds(0.5f);
+        }
+
+        // =====================
+        // DevilMonster 컷신 전용
+        // =====================
+        if (currentCutscene == CutsceneType.DevilMonster)
+        {
+            yield return new WaitForSeconds(0.5f);
+            //SceneManager.LoadScene("DevilPhase2");
         }
 
         // =====================

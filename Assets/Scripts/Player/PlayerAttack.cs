@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public GameObject penPrefab;   //Pen 프리팹
-    public Transform attackPoint;  // 공격 기준점
-    public float stabDistance = 0.3f;
-    public float stabDuration = 0.1f;
+    public GameObject penHitboxPrefab;
+    public Transform attackPoint;
+    public float attackDuration = 0.15f;
 
     PlayerAction action;
     bool isAttacking = false;
@@ -28,41 +27,31 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
-            StartCoroutine(Stab(action.idleDir));
+            StartCoroutine(Stab());
         }
     }
 
-    IEnumerator Stab(int dir)
+    IEnumerator Stab()
     {
         isAttacking = true;
         action.isAttacking = true;
 
-        // Shooter랑 동일: 생성
-        GameObject pen = Instantiate(
-            penPrefab,
-            attackPoint.position,
-            Quaternion.identity
+        Vector3 offset = Vector3.right * action.idleDir * 0.5f;
+
+        Quaternion rot =
+            action.idleDir == 1
+            ? Quaternion.Euler(0, 0, -90f)   // 오른쪽
+            : Quaternion.Euler(0, 0, 90f);   // 왼쪽
+
+        Instantiate(
+            penHitboxPrefab,
+            attackPoint.position + offset,
+            rot
         );
 
-        // 방향에 맞게 회전 (수직 스프라이트 기준)
-        float angle = dir == 1 ? -90f : 90f;
-        pen.transform.rotation = Quaternion.Euler(0, 0, angle);
+        yield return new WaitForSeconds(attackDuration);
 
-        Vector3 startPos = attackPoint.position;
-        Vector3 endPos = startPos + Vector3.right * dir * stabDistance;
-
-        float t = 0f;
-        while (t < stabDuration)
-        {
-            pen.transform.position =
-                Vector3.Lerp(startPos, endPos, t / stabDuration);
-            t += Time.deltaTime;
-            yield return null;
-        }
-
-        Destroy(pen); // 끝나면 제거
-
-        action.isAttacking = false;
         isAttacking = false;
+        action.isAttacking = false;
     }
 }

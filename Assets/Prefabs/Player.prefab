@@ -463,10 +463,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad82693da5fe2047852ecb52df97a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  penPrefab: {fileID: 5391504351608299366, guid: 49f2404148ea3854ebcc1c1ef76dbd4b, type: 3}
+  penHitboxPrefab: {fileID: 5391504351608299366, guid: e9642e9d2084c2049b890ce435721a54, type: 3}
   attackPoint: {fileID: 1371009176075623718}
-  stabDistance: 0.3
-  stabDuration: 0.08
+  attackDuration: 0.15
 --- !u!1 &8343828109057962186
 GameObject:
   m_ObjectHideFlags: 0

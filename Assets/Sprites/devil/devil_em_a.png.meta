@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 517d22f2e2143ed438e4bb90434bd546
+guid: 8e9e6cd20d04497479f83dfb473cb463
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,66 +93,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: devil_em_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f6df93538873cf14aa834590d96c22b7
-      internalID: 1504132060
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: devil_em_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ac4a897a5302a247b60bdb27c020bc7
-      internalID: 1710687366
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: devil_em_2
+      name: devil_em_a_0
       rect:
         serializedVersion: 2
         x: 0
@@ -166,29 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee7277ffac833a14f8b7ac1fb9c7a818
-      internalID: -1864005028
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: devil_em_3
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 26055db062f938c44a56275af8fea3cb
-      internalID: 2085000551
+      spriteID: 2c712d9f17f5b4e46bf36f267375b379
+      internalID: 998323314
       vertices: []
       indices: 
       edges: []
@@ -204,10 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      devil_em_0: 1504132060
-      devil_em_1: 1710687366
-      devil_em_2: -1864005028
-      devil_em_3: 2085000551
+      devil_em_a_0: 998323314
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

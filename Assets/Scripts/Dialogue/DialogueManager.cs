@@ -279,6 +279,7 @@ public class DialogueManager : MonoBehaviour
         mode = DialogueMode.None;
     }
 
+
     IEnumerator AutoCloseDialogue(float time)
     {
         yield return new WaitForSeconds(time);
@@ -317,7 +318,6 @@ public class DialogueManager : MonoBehaviour
     }
 
     public CutsceneType currentCutscene = CutsceneType.None;
-
 
     IEnumerator EndSequence()
     {
@@ -373,7 +373,8 @@ public class DialogueManager : MonoBehaviour
         if (currentCutscene == CutsceneType.DevilMonster)
         {
             yield return new WaitForSeconds(0.5f);
-            //SceneManager.LoadScene("DevilPhase2");
+            SceneManager.LoadScene("DevilBoss");
+            yield break;
         }
 
         // =====================

@@ -18,31 +18,43 @@ MonoBehaviour:
     text: "\uB0B4..\uB300\uD559\uC6D0\uC0DD\uB4E4.."
     requiresName: 0
     shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
     text: "\uB0B4 \uB300\uD559\uC6D0\uC0DD\uC744 \uB2E4 \uBB3C\uB9AC\uCE58\uB2E4\uB2C8..!!!!"
     requiresName: 0
     shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
     text: "\uB0B4 \uAD50\uC218 \uC2B9\uC9C4\uC774 \uCF54 \uC55E\uC778\uB370"
     requiresName: 0
     shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
     text: "\uC774\uB807\uAC8C \uBB34\uB108\uC9C8 \uC218\uB294 \uC5C6\uC5B4..!!"
     requiresName: 0
     shakeCamera: 1
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
     weakShake: 1
   - speaker: Devil
     text: "\uB098\uB97C \uBB3C\uB9AC\uCE58\uAE30 \uC804\uAE4C\uC9C0\\n\uB05D\uB09C\uAC8C
       \uC544\uB2C8\uB2E4"
     requiresName: 0
     shakeCamera: 0
+    changeDevilSpriteOnEnd: 1
+    devilSpriteOnEnd: {fileID: 998323314, guid: 8e9e6cd20d04497479f83dfb473cb463, type: 3}
     weakShake: 0
   - speaker: Devil
     text: "\uC878\uC5C5\uC744 \uD558\uACE0 \uC2F6\uB2E4\uBA74 ..\\n\uB098\uB97C \uC4F0\uB7EC\uD2B8\uB9AC\uACE0
       \uAC00\uB77C!"
     requiresName: 0
     shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
     weakShake: 0

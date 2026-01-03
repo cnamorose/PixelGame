@@ -60,44 +60,12 @@ public class DevilLifeBarController : MonoBehaviour
         }
     }
 
-    void ClearAllMonsters()
-    {
-        GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
-
-        foreach (GameObject m in monsters)
-        {
-            Destroy(m);
-        }
-    }
-
     void OnBossPhaseEnd()
     {
-        Debug.Log("Devil Phase 1 종료");
+        DevilPhaseManager phase =
+            FindObjectOfType<DevilPhaseManager>();
 
-        ClearAllMonsters();
-
-        MonsterSpawner spawner = FindObjectOfType<MonsterSpawner>();
-        if (spawner != null)
-            spawner.enabled = false;
-
-        StartCoroutine(DevilPhaseEndSequence());
-    }
-
-    IEnumerator DevilPhaseEndSequence()
-    {
-        // ▶ 플레이어 조작 잠금
-        PlayerAction player = FindObjectOfType<PlayerAction>();
-        if (player != null)
-            player.LockControl();
-
-        // ▶ 컷신 타입 지정
-        DialogueManager.Instance.currentCutscene =
-            DialogueManager.CutsceneType.KeyMonster;
-        // 또는 DevilPhase 같은 enum 추가해도 됨
-
-        // ▶ 대사 시작
-        DialogueManager.Instance.StartDialogue(devilPhase1EndDialogue);
-
-        yield return null;
+        if (phase != null)
+            phase.StartPhaseEnd();
     }
 }

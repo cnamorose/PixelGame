@@ -1,19 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DevilVisual : MonoBehaviour
 {
-    SpriteRenderer sr;
+    Image img;
 
     void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
+        img = GetComponent<Image>();
+        img.enabled = false;
+    }
+
+    public void Show()
+    {
+        img.enabled = true;
     }
 
     public void SetSprite(Sprite sprite)
     {
-        sr.sprite = sprite;
+        img.sprite = sprite;
     }
 }
 

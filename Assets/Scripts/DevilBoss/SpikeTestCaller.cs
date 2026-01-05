@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpikeTestCaller : MonoBehaviour
+{
+    GroundSpikeManager groundSpike;
+    SideTridentAttack sideTrident;
+    BouncingBallAttack bouncingBall;
+
+    void Start()
+    {
+        // ¹Ù´Ú °¡½Ã ¸Å´ÏÀú
+        groundSpike = GroundSpikeManager.Instance;
+        if (groundSpike == null)
+            Debug.LogError("GroundSpikeManager ¾øÀ½!");
+
+        // ¾ç¿· »ïÁöÃ¢
+        sideTrident = GetComponent<SideTridentAttack>();
+        if (sideTrident == null)
+            Debug.LogError("SideTridentAttack ÄÄÆ÷³ÍÆ® ¾øÀ½!");
+
+        // °ø Æ¢±â±â °ø°Ý
+        bouncingBall = GetComponent<BouncingBallAttack>();
+        if (bouncingBall == null)
+            Debug.LogError("BouncingBallAttack ÄÄÆ÷³ÍÆ® ¾øÀ½!");
+    }
+
+    void Update()
+    {
+        // ¹Ù´Ú °¡½Ã
+        if (Input.GetKeyDown(KeyCode.G) && groundSpike != null)
+        {
+            groundSpike.StartEvenOddWave();
+        }
+
+        // ¾ç¿· »ïÁöÃ¢
+        if (Input.GetKeyDown(KeyCode.T) && sideTrident != null)
+        {
+            sideTrident.StartSideAttack();
+        }
+
+        // °ø Æ¢±â±â
+        if (Input.GetKeyDown(KeyCode.B) && bouncingBall != null)
+        {
+            bouncingBall.StartBouncingAttack();
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            GetComponent<SkyTridentAttack>().StartSkyAttack();
+        }
+    }
+}

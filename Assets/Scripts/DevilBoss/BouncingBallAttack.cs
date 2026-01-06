@@ -2,48 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BouncingBallAttack : MonoBehaviour
+public class BouncingBallAttack : MonoBehaviour, IDevilAttack
 {
     [Header("References")]
     public GameObject ballPrefab;
     public Transform[] spawnPoints;
 
-    [Header("Attack Settings")]
-    public float attackDuration = 10f;
+    List<GameObject> spawnedBalls = new();
+    bool isRunning = false;
 
-    List<GameObject> spawnedBalls = new List<GameObject>();
-
-    // 외부에서 호출
-    public void StartBouncingAttack()
+    // 공격 시작 (컨트롤러가 호출)
+    public void StartAttack()
     {
-        StartCoroutine(BouncingRoutine());
-    }
+        if (isRunning) return;
+        isRunning = true;
 
-    IEnumerator BouncingRoutine()
-    {
-        // 동시 생성
         foreach (Transform point in spawnPoints)
         {
             GameObject ball =
                 Instantiate(ballPrefab, point.position, Quaternion.identity);
-
             spawnedBalls.Add(ball);
         }
+    }
 
-        // 공격 지속
-        yield return new WaitForSeconds(attackDuration);
+    // 공격 종료 (컨트롤러가 호출)
+    public void EndAttack()
+    {
+        if (!isRunning) return;
+        isRunning = false;
 
-        // 공격 종료 → 전부 제거
         ClearBalls();
     }
 
     void ClearBalls()
     {
         foreach (GameObject ball in spawnedBalls)
-        {
-            if (ball != null)
-                Destroy(ball);
-        }
+            if (ball != null) Destroy(ball);
 
         spawnedBalls.Clear();
     }

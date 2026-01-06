@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundSpikeManager : MonoBehaviour
+public class GroundSpikeManager : MonoBehaviour, IDevilAttack
 {
     public static GroundSpikeManager Instance;
 
@@ -11,10 +11,11 @@ public class GroundSpikeManager : MonoBehaviour
     public Transform spikePointsParent;
 
     [Header("Wave Settings")]
-    public float waveInterval = 0.08f;   // 포인트 간 웨이브 간격
-    public float groupDelay = 0.6f;      // 짝수 → 홀수 사이 딜레이
+    public float waveInterval = 0.08f;
+    public float groupDelay = 0.6f;
 
     Transform[] spikePoints;
+    Coroutine runningRoutine;
 
     void Awake()
     {
@@ -24,34 +25,38 @@ public class GroundSpikeManager : MonoBehaviour
         spikePoints = new Transform[count];
 
         for (int i = 0; i < count; i++)
-        {
             spikePoints[i] = spikePointsParent.GetChild(i);
+    }
+
+    // 공격 시작 (컨트롤러가 호출)
+    public void StartAttack()
+    {
+        if (runningRoutine != null) return;
+        runningRoutine = StartCoroutine(WaveLoop());
+    }
+
+    // 공격 종료 (컨트롤러가 호출)
+    public void EndAttack()
+    {
+        if (runningRoutine != null)
+        {
+            StopCoroutine(runningRoutine);
+            runningRoutine = null;
         }
     }
 
-    // ================================
-    // 외부에서 호출할 함수 (공격 1세트)
-    // ================================
-    public void StartEvenOddWave()
+    // 무한 루프 (시간 관리는 컨트롤러)
+    IEnumerator WaveLoop()
     {
-        StartCoroutine(EvenOddWaveRoutine());
+        while (true)
+        {
+            yield return StartCoroutine(SpawnWaveByParity(0));
+            yield return new WaitForSeconds(groupDelay);
+            yield return StartCoroutine(SpawnWaveByParity(1));
+            yield return new WaitForSeconds(groupDelay);
+        }
     }
 
-    IEnumerator EvenOddWaveRoutine()
-    {
-        // 1️⃣ 짝수 포인트 웨이브
-        yield return StartCoroutine(SpawnWaveByParity(0));
-
-        yield return new WaitForSeconds(groupDelay);
-
-        // 2️⃣ 홀수 포인트 웨이브
-        yield return StartCoroutine(SpawnWaveByParity(1));
-    }
-
-    // ================================
-    // 짝수 / 홀수 웨이브
-    // parity: 0 = 짝수, 1 = 홀수
-    // ================================
     IEnumerator SpawnWaveByParity(int parity)
     {
         for (int i = 0; i < spikePoints.Length; i++)

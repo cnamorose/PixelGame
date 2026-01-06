@@ -8,8 +8,6 @@ public class SkyTrident : MonoBehaviour
     public float warningTime = 0.6f;
     public float fallSpeed = 18f;
 
-    bool isFalling = false;
-
     Rigidbody2D rb;
     Collider2D col;
 
@@ -17,6 +15,9 @@ public class SkyTrident : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+
+        rb.gravityScale = 0f;              // 중력 OFF
+        rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
     public void StartDrop()
@@ -29,7 +30,7 @@ public class SkyTrident : MonoBehaviour
         Vector3 startPos = transform.position;
         Vector3 warningPos = startPos + Vector3.down * warningDropDistance;
 
-        // 예고 이동
+        // 🔔 예고 이동 (이건 Transform OK)
         float t = 0f;
         while (t < 1f)
         {
@@ -41,28 +42,22 @@ public class SkyTrident : MonoBehaviour
         transform.position = warningPos;
         yield return new WaitForSeconds(warningTime);
 
-        isFalling = true;
+        // ⬇️ 낙하 시작 (여기서부터 물리)
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.velocity = Vector2.down * fallSpeed;
     }
 
-    void Update()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isFalling) return;
-
-        transform.position += Vector3.down * fallSpeed * Time.deltaTime;
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            // 🔥 완전 종료 세트
-            isFalling = false;
-
+            // 🛑 완전 정지
             rb.velocity = Vector2.zero;
-            rb.simulated = false;   // 물리 OFF
-            col.enabled = false;    // ⭐ 충돌 OFF (이게 핵심)
+            rb.bodyType = RigidbodyType2D.Kinematic;
 
-            // 살짝 위로 스냅 (바닥 파묻힘 방지)
+            col.enabled = false; // 더 이상 충돌 안 함
+
+            // 바닥 파묻힘 방지
             transform.position += Vector3.up * 0.01f;
         }
     }

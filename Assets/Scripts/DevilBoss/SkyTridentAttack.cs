@@ -1,19 +1,20 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkyTridentAttack : MonoBehaviour
+public class SkyTridentAttack : MonoBehaviour, IDevilAttack
 {
     [Header("References")]
     public GameObject tridentPrefab;
     public Transform skyPointsParent;
 
     [Header("Attack Settings")]
-    public float attackDuration = 6f;
-    public float spawnInterval = 0.5f;
+    public float spawnInterval = 0.5f; // 간격만 유지
 
     Transform[] spawnPoints;
-    List<GameObject> spawnedTridents = new List<GameObject>();
+    List<GameObject> spawnedTridents = new();
+
+    Coroutine runningRoutine;
 
     void Awake()
     {
@@ -21,28 +22,32 @@ public class SkyTridentAttack : MonoBehaviour
         spawnPoints = new Transform[count];
 
         for (int i = 0; i < count; i++)
-        {
             spawnPoints[i] = skyPointsParent.GetChild(i);
-        }
     }
 
-    public void StartSkyAttack()
+    // 공격 시작 (컨트롤러가 호출)
+    public void StartAttack()
     {
-        StartCoroutine(SkyAttackRoutine());
+        runningRoutine = StartCoroutine(SkyAttackLoop());
     }
 
-    IEnumerator SkyAttackRoutine()
+    // 공격 종료 (컨트롤러가 호출)
+    public void EndAttack()
     {
-        float elapsed = 0f;
+        if (runningRoutine != null)
+            StopCoroutine(runningRoutine);
 
-        while (elapsed < attackDuration)
+        ClearTridents();
+    }
+
+    // 무한 루프 (언제 멈출지는 컨트롤러가 결정)
+    IEnumerator SkyAttackLoop()
+    {
+        while (true)
         {
             SpawnOne();
             yield return new WaitForSeconds(spawnInterval);
-            elapsed += spawnInterval;
         }
-
-        ClearTridents();
     }
 
     void SpawnOne()
@@ -60,10 +65,9 @@ public class SkyTridentAttack : MonoBehaviour
     void ClearTridents()
     {
         foreach (var t in spawnedTridents)
-        {
-            if (t != null)
-                Destroy(t);
-        }
+            if (t != null) Destroy(t);
+
         spawnedTridents.Clear();
     }
 }
+

@@ -1,8 +1,8 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SideTridentAttack : MonoBehaviour
+public class SideTridentAttack : MonoBehaviour, IDevilAttack
 {
     [Header("References")]
     public GameObject tridentPrefab;
@@ -10,39 +10,47 @@ public class SideTridentAttack : MonoBehaviour
     public Transform[] rightPoints;
 
     [Header("Attack Settings")]
-    public float attackDuration = 4f;
     public float spawnInterval = 0.25f;
 
     [Header("Speed")]
     public float minSpeed = 10f;
     public float maxSpeed = 14f;
 
-    // ============================
-    // ¿ÜºÎ¿¡¼­ È£ÃâÇÒ ÇÔ¼ö
-    // ============================
-    public void StartSideAttack()
+    Coroutine runningRoutine;
+    List<GameObject> spawnedTridents = new List<GameObject>();
+
+    // ê³µê²© ì‹œìž‘
+    public void StartAttack()
     {
-        StartCoroutine(SideAttackRoutine());
+        if (runningRoutine != null) return;
+        runningRoutine = StartCoroutine(AttackLoop());
     }
 
-    IEnumerator SideAttackRoutine()
+    // ê³µê²© ì¢…ë£Œ
+    public void EndAttack()
     {
-        float startTime = Time.time;
+        if (runningRoutine != null)
+        {
+            StopCoroutine(runningRoutine);
+            runningRoutine = null;
+        }
 
-        while (Time.time - startTime < attackDuration)
+        // ì´ë¯¸ ìƒì„±ëœ ì‚¼ì§€ì°½ ì „ë¶€ ì œê±°
+        ClearTridents();
+    }
+
+    IEnumerator AttackLoop()
+    {
+        while (true)
         {
             SpawnRandomTrident();
             yield return new WaitForSeconds(spawnInterval);
         }
     }
 
-    // ============================
-    // »ïÁöÃ¢ ÇÏ³ª »ý¼º
-    // ============================
     void SpawnRandomTrident()
     {
         bool spawnFromLeft = Random.value < 0.5f;
-
         Transform[] points = spawnFromLeft ? leftPoints : rightPoints;
         if (points.Length == 0) return;
 
@@ -52,6 +60,8 @@ public class SideTridentAttack : MonoBehaviour
         GameObject trident =
             Instantiate(tridentPrefab, spawnPoint.position, Quaternion.identity);
 
+        spawnedTridents.Add(trident); // ì¶”ì 
+
         Rigidbody2D rb = trident.GetComponent<Rigidbody2D>();
         SpriteRenderer sr = trident.GetComponent<SpriteRenderer>();
 
@@ -59,15 +69,24 @@ public class SideTridentAttack : MonoBehaviour
 
         if (spawnFromLeft)
         {
-            // ¿ÞÂÊ ¡æ ¿À¸¥ÂÊ
             rb.velocity = Vector2.right * speed;
             sr.flipX = false;
         }
         else
         {
-            // ¿À¸¥ÂÊ ¡æ ¿ÞÂÊ
             rb.velocity = Vector2.left * speed;
-            sr.flipX = true; // ÁÂ¿ì ¹ÝÀü
+            sr.flipX = true;
         }
+    }
+
+    void ClearTridents()
+    {
+        foreach (var t in spawnedTridents)
+        {
+            if (t != null)
+                Destroy(t);
+        }
+
+        spawnedTridents.Clear();
     }
 }

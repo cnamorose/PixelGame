@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +12,24 @@ public class DevilHealth : MonoBehaviour
     public GameObject npcPhase2;
     public GameObject npcPhase3;
 
+    [Header("Hit Flash")]
+    public float flashDuration = 0.1f;
+    public int flashCount = 2;
+
     DevilAttackController attackController;
+
+
+    SpriteRenderer[] GetActivePhaseRenderers()
+    {
+        if (npcPhase1.activeSelf)
+            return npcPhase1.GetComponentsInChildren<SpriteRenderer>();
+        if (npcPhase2.activeSelf)
+            return npcPhase2.GetComponentsInChildren<SpriteRenderer>();
+        if (npcPhase3.activeSelf)
+            return npcPhase3.GetComponentsInChildren<SpriteRenderer>();
+
+        return null;
+    }
 
     enum DevilPhase
     {
@@ -29,7 +46,7 @@ public class DevilHealth : MonoBehaviour
         currentHP = maxHP;
         attackController = GetComponent<DevilAttackController>();
 
-        // √ ±‚ ∆‰¿Ã¡Ó
+        // Ï¥àÍ∏∞ ÌéòÏù¥Ï¶à
         npcPhase1.SetActive(true);
         npcPhase2.SetActive(false);
         npcPhase3.SetActive(false);
@@ -37,10 +54,14 @@ public class DevilHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log("Devil HP: " + currentHP);
+
         if (isTransitioning) return;
 
         currentHP -= damage;
         Debug.Log("Devil HP: " + currentHP);
+
+        StartCoroutine(HitFlash());
 
         if (currentHP <= 0)
         {
@@ -48,7 +69,7 @@ public class DevilHealth : MonoBehaviour
             return;
         }
 
-        // ∆‰¿Ã¡Ó √º≈©
+        // ÌéòÏù¥Ï¶à Ï≤¥ÌÅ¨
         if (currentHP <= 70 && currentPhase == DevilPhase.Phase1)
         {
             StartCoroutine(Phase2Transition());
@@ -64,17 +85,17 @@ public class DevilHealth : MonoBehaviour
         isTransitioning = true;
         currentPhase = DevilPhase.Phase2;
 
-        // ∞¯∞› øœ¿¸ ¡§¡ˆ
+        // Í≥µÍ≤© ÏôÑÏ†Ñ Ï†ïÏßÄ
         attackController.StopAttackLoop();
 
-        // ¥‹πﬂ ¥ÎªÁ
-        yield return ShowDialogue("¿Ã∑∏∞‘ ΩÍ¥Ÿ∞Ì?");
+        // Îã®Î∞ú ÎåÄÏÇ¨
+        yield return ShowDialogue("Ïù¥Î†áÍ≤å ÏéÑÎã§Í≥†?");
 
-        // NPC ±≥√º
+        // NPC ÍµêÏ≤¥
         npcPhase1.SetActive(false);
         npcPhase2.SetActive(true);
 
-        // ∞¯∞› ¿Á∞≥
+        // Í≥µÍ≤© Ïû¨Í∞ú
         attackController.BeginAttackLoop();
 
         isTransitioning = false;
@@ -87,7 +108,7 @@ public class DevilHealth : MonoBehaviour
 
         attackController.StopAttackLoop();
 
-        yield return ShowDialogue("æ∆¡˜ ≥°≥™¡ˆ æ æ“¥Ÿ");
+        yield return ShowDialogue("ÏïÑÏßÅ ÎÅùÎÇòÏßÄ ÏïäÏïòÎã§");
 
         npcPhase2.SetActive(false);
         npcPhase3.SetActive(true);
@@ -107,7 +128,57 @@ public class DevilHealth : MonoBehaviour
     {
         Debug.Log("Devil Dead");
 
+        StartCoroutine(DieRoutine());
+    }
+
+    IEnumerator HitFlash()
+    {
+        SpriteRenderer[] renderers = GetActivePhaseRenderers();
+        if (renderers == null) yield break;
+
+        for (int i = 0; i < flashCount; i++)
+        {
+            foreach (var r in renderers)
+                r.enabled = false;
+
+            yield return new WaitForSeconds(flashDuration);
+
+            foreach (var r in renderers)
+                r.enabled = true;
+
+            yield return new WaitForSeconds(flashDuration);
+        }
+    }
+
+    IEnumerator DeathHitStop(float duration)
+    {
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1f;
+    }
+
+    IEnumerator DeathSlowMotion(float slowScale, float realTimeDuration)
+    {
+        float originalScale = Time.timeScale;
+
+        Time.timeScale = slowScale;
+        yield return new WaitForSecondsRealtime(realTimeDuration);
+
+        Time.timeScale = originalScale;
+    }
+
+    IEnumerator DieRoutine()
+    {
+        Debug.Log("Devil Dead");
+
+        // Í≥µÍ≤© Ï¶âÏãú Ï†ïÏßÄ
         attackController.StopAttackLoop();
+
+        // 1Ï¥à ÌûàÌä∏Ïä§ÌÜ±
+        yield return StartCoroutine(DeathSlowMotion(0.15f, 1f));
+
+        // Ïù¥ÌõÑ Ï≤òÎ¶¨
         gameObject.SetActive(false);
     }
+
 }

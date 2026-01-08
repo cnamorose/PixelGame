@@ -54,6 +54,8 @@ public class PlayerAction : MonoBehaviour
 
     PlayerPenAttackController penAttack;
 
+    bool isRecoiling = false;
+
 
     public void LockControl()
     {
@@ -257,6 +259,15 @@ public class PlayerAction : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isRecoiling)
+            return;
+
+        if (forceIdle || isQuizScene || isInventoryOpen)
+        {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
+
         if (forceIdle || isQuizScene || isInventoryOpen)
         {
             rigid.velocity = Vector2.zero;
@@ -554,6 +565,27 @@ public class PlayerAction : MonoBehaviour
     public int GetFacingDir()
     {
         return idleDir; // 1 = 오른쪽, -1 = 왼쪽
+    }
+
+    public void ApplyAttackRecoil()
+    {
+        if (isRecoiling) return;
+        StartCoroutine(AttackRecoilRoutine());
+    }
+
+    IEnumerator AttackRecoilRoutine()
+    {
+        isRecoiling = true;
+
+        rigid.velocity = Vector2.zero;
+        rigid.AddForce(
+            new Vector2(-idleDir * 2.5f, 0f),
+            ForceMode2D.Impulse
+        );
+
+        yield return new WaitForSeconds(0.1f);
+
+        isRecoiling = false;
     }
 
 

@@ -1634,6 +1634,8 @@ MonoBehaviour:
   npcPhase1: {fileID: 1881977067}
   npcPhase2: {fileID: 1623326239}
   npcPhase3: {fileID: 1809569396}
+  flashDuration: 0.1
+  flashCount: 2
 --- !u!114 &930613249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2697,6 +2699,7 @@ GameObject:
   - component: {fileID: 1623326245}
   - component: {fileID: 1623326244}
   - component: {fileID: 1623326243}
+  - component: {fileID: 1623326246}
   m_Layer: 0
   m_Name: DevilNPC2
   m_TagString: Untagged
@@ -2792,6 +2795,93 @@ Transform:
   m_Children: []
   m_Father: {fileID: 930613250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &1623326246
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623326239}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.029834181, y: 0.0508456}
+      - {x: -0.06101451, y: 0.05063764}
+      - {x: -0.06976455, y: 0.04055245}
+      - {x: -0.08032535, y: 0.03908787}
+      - {x: -0.09976034, y: 0.030818518}
+      - {x: -0.10045486, y: 0.010102704}
+      - {x: -0.08905493, y: 0.00022751838}
+      - {x: -0.0793779, y: -0.019210864}
+      - {x: -0.09048327, y: -0.01955919}
+      - {x: -0.090071075, y: -0.05034861}
+      - {x: -0.08075025, y: -0.050430857}
+      - {x: -0.08134009, y: -0.05926658}
+      - {x: -0.08079744, y: -0.12996155}
+      - {x: -0.06969473, y: -0.12966564}
+      - {x: -0.05065188, y: -0.0904065}
+      - {x: -0.019776536, y: -0.15063597}
+      - {x: 0.0002225053, y: -0.15050997}
+      - {x: -0.0011953413, y: -0.12957442}
+      - {x: 0.009102653, y: -0.12946919}
+      - {x: 0.010528054, y: -0.14898384}
+      - {x: 0.03011377, y: -0.1486458}
+      - {x: 0.029438287, y: -0.119509235}
+      - {x: 0.039977532, y: -0.11928452}
+      - {x: 0.040025808, y: -0.11070035}
+      - {x: 0.04939836, y: -0.1101644}
+      - {x: 0.05009017, y: -0.09063267}
+      - {x: 0.060832676, y: -0.090544246}
+      - {x: 0.061031602, y: -0.08098538}
+      - {x: 0.07068833, y: -0.080401406}
+      - {x: 0.07109808, y: -0.06997442}
+      - {x: 0.08037299, y: -0.070589334}
+      - {x: 0.089909144, y: -0.06984929}
+      - {x: 0.08965764, y: -0.060402326}
+      - {x: 0.10084793, y: -0.060049914}
+      - {x: 0.10038727, y: -0.020271897}
+      - {x: 0.08994826, y: -0.020122688}
+      - {x: 0.08975219, y: -0.03010898}
+      - {x: 0.080284335, y: -0.029899418}
+      - {x: 0.07139718, y: -0.038939707}
+      - {x: 0.07112091, y: 0.020537114}
+      - {x: 0.060755685, y: 0.020868048}
+      - {x: 0.060070954, y: 0.061336286}
+  m_UseDelaunayMesh: 0
 --- !u!1 &1641727398
 GameObject:
   m_ObjectHideFlags: 0
@@ -2989,6 +3079,7 @@ GameObject:
   - component: {fileID: 1809569402}
   - component: {fileID: 1809569401}
   - component: {fileID: 1809569400}
+  - component: {fileID: 1809569403}
   m_Layer: 0
   m_Name: DevilNPC3
   m_TagString: Untagged
@@ -3084,6 +3175,100 @@ Transform:
   m_Children: []
   m_Father: {fileID: 930613250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &1809569403
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809569396}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.039667126, y: 0.050052848}
+      - {x: -0.049742278, y: 0.040255334}
+      - {x: -0.06082138, y: 0.029652975}
+      - {x: -0.06976455, y: 0.04055245}
+      - {x: -0.08032535, y: 0.03908787}
+      - {x: -0.09976034, y: 0.019546293}
+      - {x: -0.10045486, y: 0.010102704}
+      - {x: -0.08905493, y: 0.00022751838}
+      - {x: -0.0793779, y: -0.019210864}
+      - {x: -0.080723606, y: -0.03834472}
+      - {x: -0.09048327, y: -0.03943391}
+      - {x: -0.090071075, y: -0.05034861}
+      - {x: -0.08075025, y: -0.050430857}
+      - {x: -0.08134009, y: -0.05926658}
+      - {x: -0.07990753, y: -0.10029779}
+      - {x: -0.069991365, y: -0.10029851}
+      - {x: -0.05065188, y: -0.0904065}
+      - {x: -0.03061395, y: -0.09000873}
+      - {x: -0.03057801, y: -0.119310625}
+      - {x: -0.02094691, y: -0.11992089}
+      - {x: -0.019776536, y: -0.15063597}
+      - {x: 0.0002225053, y: -0.15050997}
+      - {x: -0.0011953413, y: -0.12957442}
+      - {x: 0.009102653, y: -0.12946919}
+      - {x: 0.010528054, y: -0.14898384}
+      - {x: 0.03011377, y: -0.1486458}
+      - {x: 0.029438287, y: -0.119509235}
+      - {x: 0.039977532, y: -0.11928452}
+      - {x: 0.040025808, y: -0.11070035}
+      - {x: 0.04939836, y: -0.1101644}
+      - {x: 0.05009017, y: -0.09063267}
+      - {x: 0.060832676, y: -0.090544246}
+      - {x: 0.061031602, y: -0.08098538}
+      - {x: 0.07068833, y: -0.080401406}
+      - {x: 0.07109808, y: -0.06997442}
+      - {x: 0.08037299, y: -0.070589334}
+      - {x: 0.07952682, y: -0.06866273}
+      - {x: 0.08046187, y: -0.060402326}
+      - {x: 0.08037993, y: -0.05026087}
+      - {x: 0.09000494, y: -0.048155837}
+      - {x: 0.08965162, y: -0.0391075}
+      - {x: 0.08263289, y: -0.038711473}
+      - {x: 0.07924117, y: -0.039031163}
+      - {x: 0.07108856, y: -0.049180865}
+      - {x: 0.07139718, y: -0.038939707}
+      - {x: 0.07112091, y: 0.020537114}
+      - {x: 0.060755685, y: 0.020868048}
+      - {x: 0.05961545, y: 0.039898932}
+      - {x: 0.049392004, y: 0.050657332}
+  m_UseDelaunayMesh: 0
 --- !u!1 &1817851515
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,6 +3342,7 @@ GameObject:
   - component: {fileID: 1881977071}
   - component: {fileID: 1881977070}
   - component: {fileID: 1881977069}
+  - component: {fileID: 1881977072}
   m_Layer: 0
   m_Name: DevilNPC1
   m_TagString: Untagged
@@ -3252,6 +3438,88 @@ Transform:
   m_Children: []
   m_Father: {fileID: 930613250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &1881977072
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881977067}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.050335553, y: 0.061019957}
+      - {x: -0.10007095, y: 0.050387293}
+      - {x: -0.10045486, y: 0.010102704}
+      - {x: -0.08905493, y: 0.00022751838}
+      - {x: -0.0793779, y: -0.019210864}
+      - {x: -0.09048327, y: -0.01955919}
+      - {x: -0.090071075, y: -0.059045836}
+      - {x: -0.08134009, y: -0.05926658}
+      - {x: -0.08203991, y: -0.14890909}
+      - {x: -0.069073506, y: -0.15016626}
+      - {x: -0.05065188, y: -0.0904065}
+      - {x: -0.019776536, y: -0.15063597}
+      - {x: 0.0002225053, y: -0.15050997}
+      - {x: -0.0011953413, y: -0.12957442}
+      - {x: 0.009102653, y: -0.12946919}
+      - {x: 0.010528054, y: -0.14898384}
+      - {x: 0.03011377, y: -0.1486458}
+      - {x: 0.029438287, y: -0.119509235}
+      - {x: 0.039977532, y: -0.11928452}
+      - {x: 0.040025808, y: -0.11070035}
+      - {x: 0.04939836, y: -0.1101644}
+      - {x: 0.05009017, y: -0.09063267}
+      - {x: 0.060832676, y: -0.090544246}
+      - {x: 0.061031602, y: -0.08098538}
+      - {x: 0.07979531, y: -0.08084596}
+      - {x: 0.08037299, y: -0.070589334}
+      - {x: 0.089909144, y: -0.06984929}
+      - {x: 0.08965764, y: -0.060402326}
+      - {x: 0.10084793, y: -0.060049914}
+      - {x: 0.10038727, y: -0.020271897}
+      - {x: 0.08994826, y: -0.020122688}
+      - {x: 0.08975219, y: -0.03010898}
+      - {x: 0.080284335, y: -0.029899418}
+      - {x: 0.07139718, y: -0.038939707}
+      - {x: 0.07112091, y: 0.020537114}
+      - {x: 0.060755685, y: 0.020868048}
+      - {x: 0.060070954, y: 0.061336286}
+  m_UseDelaunayMesh: 0
 --- !u!1 &1883460432
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,7 +52,7 @@ public class PlayerAction : MonoBehaviour
 
     SpriteRenderer sr;
 
-
+    PlayerPenAttackController penAttack;
 
 
     public void LockControl()
@@ -116,6 +116,10 @@ public class PlayerAction : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
 
         originalScale = transform.localScale;
+
+        penAttack = GetComponent<PlayerPenAttackController>();
+        if (penAttack != null)
+            penAttack.enabled = false; // 기본은 꺼둠
 
         DontDestroyOnLoad(gameObject);
 
@@ -188,7 +192,7 @@ public class PlayerAction : MonoBehaviour
             return;
         }
 
-        if (isDevilMonsterScene)
+        if (isDevilMonsterScene && SceneManager.GetActiveScene().name == "DevilMonster")
         {
             rigid.velocity = Vector2.zero;
 
@@ -227,6 +231,14 @@ public class PlayerAction : MonoBehaviour
         else
             HandlePlatformerInput();
 
+        if (SceneManager.GetActiveScene().name == "DevilBoss")
+        {
+            anim.SetInteger("hAxisRaw", idleDir);
+            anim.SetInteger("vAxisRaw", 0);
+            anim.SetBool("isChange", false);
+            return; 
+        }
+
         // 애니메이션 갱신 (기존 코드 그대로 유지)
         if (anim.GetInteger("hAxisRaw") != h)
         {
@@ -240,6 +252,7 @@ public class PlayerAction : MonoBehaviour
         }
         else
             anim.SetBool("isChange", false);
+
     }
 
     private void FixedUpdate()
@@ -295,6 +308,20 @@ public class PlayerAction : MonoBehaviour
         // 점프
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
             Jump();
+
+        if (SceneManager.GetActiveScene().name == "DevilBoss")
+        {
+            if (h > 0)
+            {
+                idleDir = 1;
+                sr.flipX = false;
+            }
+            else if (h < 0)
+            {
+                idleDir = -1;
+                sr.flipX = true;
+            }
+        }
     }
 
     void Jump()
@@ -322,7 +349,10 @@ public class PlayerAction : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-       
+
+        if (penAttack != null)
+            penAttack.enabled = false;
+
         inventoryUI = GameObject.Find("InventoryUI");
 
         if (inventoryUI != null)
@@ -391,6 +421,7 @@ public class PlayerAction : MonoBehaviour
             rigid.velocity = Vector2.zero;
             transform.localScale = originalScale * 0.5f;
         }
+
         else if (scene.name == "DevilMonster")
         {
             moveMode = PlayerMoveMode.TopDown;
@@ -398,6 +429,37 @@ public class PlayerAction : MonoBehaviour
             rigid.velocity = Vector2.zero;
 
             rigid.bodyType = RigidbodyType2D.Kinematic;
+
+            transform.localScale = originalScale * 0.5f;
+        }
+
+        else if (scene.name == "DevilBoss")
+        {
+            if (penAttack != null)
+            {
+                penAttack.penPivot =
+                    GameObject.Find("PenAttackPivot")?.transform;
+
+                penAttack.penHitBox =
+                    GameObject.Find("PenHitBox")?.GetComponent<PlayerPenHitBox>();
+
+                if (penAttack.penHitBox != null)
+                    penAttack.penHitBox.EnableHitBox(false);
+
+                //if (penAttack.penPivot != null)
+                    //penAttack.penPivot.localRotation = Quaternion.identity;
+            }
+
+            if (penAttack != null)
+                penAttack.enabled = true;
+
+            moveMode = PlayerMoveMode.Platformer;
+            rigid.gravityScale = 1f;
+            rigid.velocity = Vector2.zero;
+            rigid.bodyType = RigidbodyType2D.Dynamic;
+
+            forceIdle = false;
+            UnlockControl();
 
             transform.localScale = originalScale * 0.5f;
         }
@@ -417,11 +479,11 @@ public class PlayerAction : MonoBehaviour
             h = 0;
             v = 0;
 
-            // ⭐ 항상 옆모습으로 시작
+            // 항상 옆모습으로 시작
             idleDir = 1;          // 기본 오른쪽
             sr.flipX = false;
 
-            // ⭐ Animator를 사이드 상태로 강제
+            // Animator를 사이드 상태로 강제
             anim.enabled = true;
             anim.speed = 0f;                      // 애니 정지
             anim.Play("Player_R", 0, 0f);          // 사이드 걷기 첫 프레임
@@ -445,14 +507,16 @@ public class PlayerAction : MonoBehaviour
             anim.enabled = true;
             anim.speed = 1f;
 
-            // 🔒 기존 초기화 유지
-            idleDir = 1;
-            sr.flipX = false;
-            anim.SetInteger("hAxisRaw", 1);
-            anim.SetInteger("vAxisRaw", 0);
-            anim.SetBool("isChange", false);
+            // 방향 관련 초기화는 DevilBoss에서는 하지 않음
+            if (scene.name != "DevilBoss")
+            {
+                idleDir = 1;
+                sr.flipX = false;
+                anim.SetInteger("hAxisRaw", 1);
+                anim.SetInteger("vAxisRaw", 0);
+                anim.SetBool("isChange", false);
+            }
         }
-
 
     }
 
@@ -486,5 +550,11 @@ public class PlayerAction : MonoBehaviour
         yield return null; // 한 프레임
         anim.SetBool("isChange", false);
     }
+
+    public int GetFacingDir()
+    {
+        return idleDir; // 1 = 오른쪽, -1 = 왼쪽
+    }
+
 
 }

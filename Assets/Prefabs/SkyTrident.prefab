@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: -227041228309978682}
   - component: {fileID: 1616685634827905979}
   - component: {fileID: 5789221223749975293}
+  - component: {fileID: -3162101719213298903}
+  - component: {fileID: 5587019318835259348}
+  - component: {fileID: 7917159557419100394}
   m_Layer: 13
   m_Name: SkyTrident
   m_TagString: Untagged
@@ -116,7 +119,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -198,3 +201,98 @@ MonoBehaviour:
   warningDropDistance: 0.8
   warningTime: 0.6
   fallSpeed: 18
+--- !u!114 &-3162101719213298903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410085001234601110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071d31fba6cb7a940a599364e480cf09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5587019318835259348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410085001234601110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac332d3b831386a439a114cdfa61ccd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHit: 2
+  breakEffect: {fileID: 0}
+--- !u!60 &7917159557419100394
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410085001234601110}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.1, y: 0.31}
+    newSize: {x: 0.1, y: 0.31}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.010760251, y: -0.034373283}
+      - {x: -0.03034074, y: -0.034394115}
+      - {x: -0.030403402, y: -0.044709645}
+      - {x: -0.04063929, y: -0.04449617}
+      - {x: -0.04059813, y: -0.05448645}
+      - {x: -0.049937963, y: -0.054821637}
+      - {x: -0.050320353, y: -0.14538927}
+      - {x: -0.039620306, y: -0.14554946}
+      - {x: -0.02231908, y: -0.14520715}
+      - {x: -0.0126447445, y: -0.14471748}
+      - {x: -0.00045657158, y: -0.14533295}
+      - {x: 0.010331099, y: -0.1446869}
+      - {x: 0.029770542, y: -0.14468148}
+      - {x: 0.039645214, y: -0.14505695}
+      - {x: 0.050320353, y: -0.14490874}
+      - {x: 0.050222892, y: -0.054541424}
+      - {x: 0.040933937, y: -0.054716736}
+      - {x: 0.040144943, y: -0.044620965}
+      - {x: 0.030610774, y: -0.044616267}
+      - {x: 0.030543145, y: -0.03430096}
+      - {x: 0.010745058, y: -0.034327902}
+      - {x: 0.010545403, y: 0.15608992}
+      - {x: -0.010790521, y: 0.15587191}
+      - {x: -0.011663519, y: 0.06416659}
+  m_UseDelaunayMesh: 0

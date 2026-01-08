@@ -318,7 +318,17 @@ public class DialogueManager : MonoBehaviour
     }
 
     public CutsceneType currentCutscene = CutsceneType.None;
+    public void ForceShutdownForSceneChange()
+    {
 
+        dialoguePanel.SetActive(false);
+        choicePanel.SetActive(false);
+        nameInputPanel.SetActive(false);
+
+        mode = DialogueMode.None;
+        currentLines = null;
+        index = 0;
+    }
     IEnumerator EndSequence()
     {
         // ⭐ KeyMonster 컷신 전용: 먼저 흔들림 시작
@@ -372,6 +382,7 @@ public class DialogueManager : MonoBehaviour
         // =====================
         if (currentCutscene == CutsceneType.DevilMonster)
         {
+            ForceShutdownForSceneChange();
             yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene("DevilBoss");
             yield break;

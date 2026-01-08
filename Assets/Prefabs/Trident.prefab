@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5241560119057858585}
   - component: {fileID: 7547667202121881231}
   - component: {fileID: 7482001868030128485}
+  - component: {fileID: -6822047368794178794}
   m_Layer: 11
   m_Name: Trident
   m_TagString: Untagged
@@ -115,7 +116,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -181,3 +182,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &-6822047368794178794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9056754737093469888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071d31fba6cb7a940a599364e480cf09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

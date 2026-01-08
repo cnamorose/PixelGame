@@ -40,7 +40,7 @@ public class DevilPhaseManager : MonoBehaviour
         fadePanel.gameObject.SetActive(true);
         fadePanel.color = Color.black;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);
 
         Color devilRed = new Color(0.2f, 0f, 0f, 1f);
         yield return StartCoroutine(

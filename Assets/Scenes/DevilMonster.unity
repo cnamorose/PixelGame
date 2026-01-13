@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   devilPhase1EndDialogue: {fileID: 11400000, guid: 15344f3d8e5552c49a1b017089b17fa8, type: 2}
-  maxHP: 100
+  maxHP: 10
   currentHP: 100
   hp100Sprite: {fileID: 1240808697, guid: 094d1007da9acb34da8be34abb9f590b, type: 3}
   hp70Sprite: {fileID: -1668047377, guid: 094d1007da9acb34da8be34abb9f590b, type: 3}
@@ -1191,14 +1191,14 @@ RectTransform:
   m_GameObject: {fileID: 1192546408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 28660608}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 100}
+  m_AnchoredPosition: {x: 10, y: 62}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1192546410

@@ -18,6 +18,11 @@ public class DevilHealth : MonoBehaviour
 
     DevilAttackController attackController;
 
+    [Header("Death Dialogue")]
+    public DialogueSequence devilDeathDialogue;
+
+    [Header("After Death")]
+    public GameObject elevator;
 
     SpriteRenderer[] GetActivePhaseRenderers()
     {
@@ -118,17 +123,23 @@ public class DevilHealth : MonoBehaviour
         isTransitioning = false;
     }
 
-    IEnumerator ShowDialogue(string text)
+    IEnumerator ShowDialogue(string text, float duration = 2f)
     {
-        Debug.Log(text);
-        yield return new WaitForSeconds(2f);
+        DialogueManager.Instance.ShowSimpleDialogueAutoClose(
+            text,
+            duration,
+            "#AB0116"
+        );
+        yield return new WaitForSeconds(duration);
     }
 
     void Die()
     {
+        if (isTransitioning) return;
+        isTransitioning = true;
         Debug.Log("Devil Dead");
 
-        StartCoroutine(DieRoutine());
+        StartCoroutine(DevilDeathSequence());
     }
 
     IEnumerator HitFlash()
@@ -150,13 +161,6 @@ public class DevilHealth : MonoBehaviour
         }
     }
 
-    IEnumerator DeathHitStop(float duration)
-    {
-        Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1f;
-    }
-
     IEnumerator DeathSlowMotion(float slowScale, float realTimeDuration)
     {
         float originalScale = Time.timeScale;
@@ -167,18 +171,36 @@ public class DevilHealth : MonoBehaviour
         Time.timeScale = originalScale;
     }
 
-    IEnumerator DieRoutine()
+    IEnumerator DevilDeathSequence()
     {
-        Debug.Log("Devil Dead");
-
-        // 공격 즉시 정지
+        // 공격 즉시 중단
         attackController.StopAttackLoop();
 
-        // 1초 히트스톱
-        yield return StartCoroutine(DeathSlowMotion(0.15f, 1f));
+        // 슬로우
+        yield return StartCoroutine(DeathSlowMotion(0.15f, 0.6f));
 
-        // 이후 처리
+        // 컷신 종료 후 콜백 등록
+        DialogueManager.Instance.onCutsceneEnd = OnDevilDeathDialogueEnd;
+
+        // 컷신 시작 (씬 이동 없음)
+        DialogueManager.Instance.StartDialogue(devilDeathDialogue);
+    }
+
+    void OnDevilDeathDialogueEnd()
+    {
+        if (elevator != null)
+            elevator.SetActive(true);
+
+        StartCoroutine(DevilDisappear());
+    }
+
+    IEnumerator DevilDisappear()
+    {
+        yield return new WaitForSeconds(0.3f);
         gameObject.SetActive(false);
     }
+
+
+
 
 }

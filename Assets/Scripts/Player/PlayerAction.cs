@@ -59,13 +59,19 @@ public class PlayerAction : MonoBehaviour
 
     public void LockControl()
     {
+        Debug.Log("Player Locked");
         forceIdle = true;
         rigid.velocity = Vector2.zero;
+        if (anim != null)
+            anim.speed = 0f;
     }
 
     public void UnlockControl()
     {
+        Debug.Log("Player Unlocked");
         forceIdle = false;
+        if (anim != null)
+            anim.speed = 1f;
     }
 
     public enum PlayerMoveMode
@@ -209,7 +215,7 @@ public class PlayerAction : MonoBehaviour
                 sr.flipX = false;
             }
 
-            return; // ⭐ Animator 로직 완전 차단
+            return; // Animator 로직 완전 차단
         }
 
         // 강제 Idle 상태
@@ -233,13 +239,13 @@ public class PlayerAction : MonoBehaviour
         else
             HandlePlatformerInput();
 
-        if (SceneManager.GetActiveScene().name == "DevilBoss")
+        /**if (SceneManager.GetActiveScene().name == "DevilBoss")
         {
             anim.SetInteger("hAxisRaw", idleDir);
             anim.SetInteger("vAxisRaw", 0);
             anim.SetBool("isChange", false);
             return; 
-        }
+        }**/
 
         // 애니메이션 갱신 (기존 코드 그대로 유지)
         if (anim.GetInteger("hAxisRaw") != h)
@@ -254,6 +260,22 @@ public class PlayerAction : MonoBehaviour
         }
         else
             anim.SetBool("isChange", false);
+
+        if (SceneManager.GetActiveScene().name == "DevilBoss" && moveMode == PlayerMoveMode.Platformer)
+        {
+            if (h != 0)
+            {
+                // KeyboardMonster 방식: 항상 같은 걷기 애니메이션
+                anim.SetInteger("hAxisRaw", 1);
+                anim.SetInteger("vAxisRaw", 0);
+                anim.SetBool("isChange", true);
+            }
+            else
+            {
+                // 키 입력 없으면 Idle
+                anim.SetBool("isChange", false);
+            }
+        }
 
     }
 

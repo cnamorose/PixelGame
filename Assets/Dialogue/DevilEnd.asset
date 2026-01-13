@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249731c3981dc69468efe9e0a7db29d6, type: 3}
+  m_Name: DevilEnd
+  m_EditorClassIdentifier: 
+  id: 
+  lines:
+  - speaker: Devil
+    text: ...
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uB0B4\uAC00 \uC774\uB807\uAC8C \uC8FD\uB294\uB2E4\uACE0\\n\uB108\uC758
+      \uC878\uC5C5\uC774 \uD655\uC815\uC77C \uAC83 \uAC19\uB098?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "\uC120\uBC30\uB3C4 \uAD6C\uD588\uACE0, \uCEF4\uD4E8\uD130\uB3C4 \uACE0\uCCE4\uACE0,\\n\uB17C\uBB38\uB3C4
+      \uB2E4 \uC791\uC131\uD588\uC5B4."
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "\uC774\uC81C \uB0A8\uC740 \uAC74 \uC81C\uCD9C\uBFD0\uC774\uC57C."
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0

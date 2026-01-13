@@ -46,6 +46,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI missionText;
     [SerializeField] float fadeDuration = 1.5f;
 
+    public Action onCutsceneEnd;
+
     void Awake()
     {
         if (Instance == null)
@@ -70,6 +72,17 @@ public class DialogueManager : MonoBehaviour
             fadeImage.color = new Color(0, 0, 0, 0);
     }
 
+    void EnsurePlayer()
+    {
+        if (player == null)
+        {
+            player = FindObjectOfType<PlayerAction>();
+
+            if (player == null)
+                Debug.LogWarning("DialogueManager: PlayerAction not found");
+        }
+    }
+
     /* =========================
        대화 시작 함수들
        ========================= */
@@ -77,6 +90,8 @@ public class DialogueManager : MonoBehaviour
     // 컷신 대화 시작
     public void StartDialogue(DialogueSequence sequence)
     {
+        EnsurePlayer();
+
         StopAllCoroutines();
 
         mode = DialogueMode.Cutscene;
@@ -86,12 +101,17 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
 
+        if (player != null)
+            player.LockControl();
+
         ShowLine();
     }
 
     // 단발 대사
     public void ShowSimpleDialogue(string text, string color = "#000000")
     {
+        EnsurePlayer();
+
         StopAllCoroutines();
 
         mode = DialogueMode.Simple;
@@ -99,6 +119,9 @@ public class DialogueManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
+
+        if (player != null)
+            player.LockControl();
 
         dialogueText.text = $"<color={color}>{text}</color>";
     }
@@ -106,6 +129,8 @@ public class DialogueManager : MonoBehaviour
     // 자동 닫힘 단발 대사
     public void ShowSimpleDialogueAutoClose(string text, float closeTime = 2f, string color = "#000000")
     {
+        EnsurePlayer();
+
         StopAllCoroutines();
 
         mode = DialogueMode.Simple;
@@ -113,6 +138,9 @@ public class DialogueManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
+
+        if (player != null)
+            player.LockControl();
 
         dialogueText.text = $"<color={color}>{text}</color>";
         StartCoroutine(AutoCloseDialogue(closeTime));
@@ -121,6 +149,8 @@ public class DialogueManager : MonoBehaviour
     // 선택지 대사
     public void ShowChoiceDialogue(string text, Action onYes, Action onNo, string color = "#000000")
     {
+        EnsurePlayer();
+
         StopAllCoroutines();
 
         mode = DialogueMode.Choice;
@@ -128,6 +158,9 @@ public class DialogueManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(true);
+
+        if (player != null)
+            player.LockControl();
 
         dialogueText.text = $"<color={color}>{text}</color>";
 
@@ -263,8 +296,17 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         choicePanel.SetActive(false);
 
+        if (mode == DialogueMode.Cutscene && onCutsceneEnd != null)
+        {
+            onCutsceneEnd.Invoke();
+            onCutsceneEnd = null;
+        }
+
         mode = DialogueMode.None;
         currentLines = null;
+
+        if (player != null)
+            player.UnlockControl();
     }
 
     void EndDialogue()
@@ -273,10 +315,21 @@ public class DialogueManager : MonoBehaviour
 
         if (mode == DialogueMode.Cutscene)
         {
-            StartCoroutine(EndSequence());
+            if(onCutsceneEnd != null)
+            {
+                onCutsceneEnd.Invoke();
+                onCutsceneEnd = null;
+            }
+            else
+            {
+                StartCoroutine(EndSequence());
+            }
         }
 
         mode = DialogueMode.None;
+
+        if (player != null)
+            player.UnlockControl();
     }
 
 

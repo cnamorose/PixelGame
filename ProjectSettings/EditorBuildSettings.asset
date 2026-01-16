@@ -38,4 +38,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/devil_end.unity
     guid: b8927e5bbd0a33f469693a85fd3d07c1
+  - enabled: 1
+    path: Assets/Scenes/school_run.unity
+    guid: bde436fd8d24ce34b903ac48fb352979
   m_configObjects: {}

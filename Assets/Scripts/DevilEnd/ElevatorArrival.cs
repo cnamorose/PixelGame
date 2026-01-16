@@ -11,20 +11,33 @@ enum ElevatorState
 
 public class ElevatorArrival : Interactable
 {
-    public Animator closeAnim;
+    public GameObject open;
+    public GameObject close;
+
+    public string openStateName = "Open";
     public string closeStateName = "Close";
 
     public Transform spawnPoint;
+
+    public float openDelay = 1f; // 씬 시작 후 열리기 전 딜레이
+
     PlayerAction player;
-
-    public float openAnimTime = 0.4f;   // 닫힘 애니 길이와 동일하게
-
     ElevatorState state = ElevatorState.Opening;
 
     void Start()
     {
         player = FindObjectOfType<PlayerAction>();
         StartCoroutine(SceneStartSequence());
+    }
+
+    void OnEnable()
+    {
+        if (open != null) open.SetActive(true);
+        if (close != null) close.SetActive(false);
+
+        Animator openAnim = open != null ? open.GetComponent<Animator>() : null;
+        if (openAnim != null)
+            openAnim.enabled = false;
     }
 
     IEnumerator SceneStartSequence()
@@ -35,26 +48,36 @@ public class ElevatorArrival : Interactable
             player.LockControl();
         }
 
-        // ✅ Animator 준비 한 프레임 대기 (중요)
-        yield return null;
+        yield return new WaitForSeconds(openDelay);
 
-        // 닫힌 상태에서 시작 → 역재생으로 열기
-        closeAnim.enabled = true;
-        closeAnim.speed = -1f;
-        closeAnim.Play(closeStateName, 0, 1f);
+        Animator openAnim = open != null ? open.GetComponent<Animator>() : null;
+        if (openAnim == null)
+            yield break;
 
-        // ❌ normalizedTime 쓰지 말고 시간으로 기다림
-        yield return new WaitForSeconds(openAnimTime);
+        openAnim.enabled = true;
+        openAnim.speed = 1f;
+        openAnim.Play(openStateName, 0, 0f);
+
+        yield return new WaitForSeconds(
+            openAnim.GetCurrentAnimatorStateInfo(0).length
+        );
 
         // 마지막 프레임 고정
-        closeAnim.speed = 0f;
-        state = ElevatorState.Opened;
+        openAnim.speed = 0f;
 
+        // 바로 숨김
+        if (open != null)
+            open.SetActive(false);
+
+        // 플레이어 이동 허용
         if (player != null)
             player.UnlockControl();
+
+        state = ElevatorState.Opened;
     }
 
-    // 트리거에서 호출
+
+    // Exit 트리거에서만 호출
     public void OnPlayerExit()
     {
         if (state != ElevatorState.Opened) return;
@@ -65,11 +88,23 @@ public class ElevatorArrival : Interactable
     {
         state = ElevatorState.Closing;
 
+        // 여기서 open을 완전히 숨김
+        if (open != null) open.SetActive(false);
+        if (close != null) close.SetActive(true);
+
+        Animator closeAnim = close != null ? close.GetComponent<Animator>() : null;
+        if (closeAnim == null)
+            yield break;
+
+        closeAnim.enabled = true;
         closeAnim.speed = 1f;
         closeAnim.Play(closeStateName, 0, 0f);
 
-        yield return new WaitForSeconds(openAnimTime);
+        yield return new WaitForSeconds(
+            closeAnim.GetCurrentAnimatorStateInfo(0).length
+        );
 
+        // 닫힌 마지막 프레임 고정
         closeAnim.speed = 0f;
         state = ElevatorState.Closed;
     }
@@ -78,7 +113,8 @@ public class ElevatorArrival : Interactable
     {
         if (state == ElevatorState.Closed)
         {
-            DialogueManager.Instance.ShowSimpleDialogueAutoClose("수리중입니다.");
+            DialogueManager.Instance
+                .ShowSimpleDialogueAutoClose("수리중입니다.");
         }
     }
 }

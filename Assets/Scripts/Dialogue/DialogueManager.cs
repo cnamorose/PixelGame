@@ -367,7 +367,9 @@ public class DialogueManager : MonoBehaviour
         SchoolIntro,
         QuizClear,
         KeyMonster,
-        DevilMonster
+        DevilMonster,
+        DevilEnd,
+        PfRoom
     }
 
     public CutsceneType currentCutscene = CutsceneType.None;
@@ -441,6 +443,14 @@ public class DialogueManager : MonoBehaviour
             yield break;
         }
 
+        if (currentCutscene == CutsceneType.DevilEnd)
+        {
+            yield return new WaitForSeconds(0.5f);
+            SceneManager.LoadScene("school_run");
+            StartCoroutine(FadeInAfterSceneLoad());
+            yield break;
+        }
+
         // =====================
         // 공통: 씬 이동 + 페이드 인
         // =====================
@@ -457,6 +467,15 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(FadeInAfterSceneLoad());
     }
 
+    public void PlayCutsceneFadeOnly(CutsceneType type)
+    {
+        StopAllCoroutines();
+
+        currentCutscene = type;
+        mode = DialogueMode.Cutscene;
+
+        StartCoroutine(EndSequence());
+    }
 
 
 }

@@ -190,7 +190,7 @@ public class PlayerAction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            SceneManager.LoadScene("DevilMonster");
+            SceneManager.LoadScene("DevilBoss");
             return;
         }
 
@@ -495,6 +495,34 @@ public class PlayerAction : MonoBehaviour
             UnlockControl();
 
             transform.localScale = originalScale * 0.5f;
+        }
+        else if (scene.name == "devil_end")
+        {
+            // 공격 완전 비활성화
+            if (penAttack != null)
+                penAttack.enabled = false;
+
+            // 점프맵 설정 (KeyboardMonster와 동일)
+            moveMode = PlayerMoveMode.Platformer;
+            rigid.gravityScale = 1f;
+            rigid.velocity = Vector2.zero;
+            rigid.bodyType = RigidbodyType2D.Dynamic;
+
+            // 데빌보스와 동일한 크기 유지
+            transform.localScale = originalScale * 0.5f;
+
+            forceIdle = false;
+            UnlockControl();
+
+            // 방향 초기화
+            idleDir = 1;
+            sr.flipX = false;
+
+            anim.enabled = true;
+            anim.speed = 1f;
+            anim.SetInteger("hAxisRaw", 1);
+            anim.SetInteger("vAxisRaw", 0);
+            anim.SetBool("isChange", false);
         }
         else
         {

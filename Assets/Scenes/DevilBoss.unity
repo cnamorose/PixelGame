@@ -1250,8 +1250,7 @@ MonoBehaviour:
   close: {fileID: 808141093}
   openStateName: Open
   closeStateName: Close
-  openWait: 0.4
-  closeWait: 0.4
+  nextSceneName: devil_end
 --- !u!61 &543032160
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -451,6 +451,14 @@ public class DialogueManager : MonoBehaviour
             yield break;
         }
 
+        if (currentCutscene == CutsceneType.PfRoom)
+        {
+            yield return new WaitForSeconds(0.5f);
+            SceneManager.LoadScene("PfRoom");
+            StartCoroutine(FadeInAfterSceneLoad());
+            yield break;
+        }
+
         // =====================
         // 공통: 씬 이동 + 페이드 인
         // =====================

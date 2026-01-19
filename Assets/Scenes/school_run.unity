@@ -538,7 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119f6af55a01fcd49a80ebe177a33795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 8
+  runSpeed: 10
   runSprites:
   - {fileID: -399427127, guid: 31f85a30365c3464b97ea5dbd8b06b3b, type: 3}
   - {fileID: -813433828, guid: 31f85a30365c3464b97ea5dbd8b06b3b, type: 3}
@@ -1037,7 +1037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119f6af55a01fcd49a80ebe177a33795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 8
+  runSpeed: 10
   runSprites:
   - {fileID: 1101825539, guid: dea00285287c26b4bae277716953d9b0, type: 3}
   - {fileID: -1918463493, guid: dea00285287c26b4bae277716953d9b0, type: 3}

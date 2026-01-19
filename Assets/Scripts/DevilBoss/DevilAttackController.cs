@@ -81,10 +81,29 @@ public class DevilAttackController : MonoBehaviour
         bagIndex = 0;
     }
 
+    public void ForceStopAllAttacks()
+    {
+        // 공격 루프 정지
+        StopAttackLoop();
+
+        // 현재 공격 중인 것들 강제 종료
+        foreach (var entry in attacks)
+        {
+            if (entry.attack is IDevilAttack atk)
+            {
+                atk.EndAttack();
+            }
+        }
+    }
+
+
     IEnumerator AttackLoop()
     {
         while (true)
         {
+            if (!gameObject.activeInHierarchy)
+                yield break;
+
             if (!isAttacking)
             {
                 isAttacking = true;

@@ -1,34 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DisappearingBlocks : MonoBehaviour
 {
-    public List<GameObject> blocks;   // 사라질 블럭들
-    public float interval = 2f;       // 각 블럭 간 시간 간격
+    public List<GameObject> blocks;
+    public float interval = 2f;
+
+    public enum Mode
+    {
+        Normal, 
+        Two    
+    }
+
+    [Header("Block Mode")]
+    public Mode mode;
 
     void Start()
     {
-        StartCoroutine(BlockSequence());
-    }
+        switch (mode)
+        {
+            case Mode.Normal:
+                StartCoroutine(NormalSequence());
+                break;
 
-    IEnumerator BlockSequence()
+            case Mode.Two:
+                StartCoroutine(TwoBlockSequence());
+                break;
+        }
+    }
+    IEnumerator NormalSequence()
     {
         while (true)
         {
-            // 하나씩 순서대로 사라짐
             foreach (GameObject block in blocks)
             {
                 block.SetActive(false);
                 yield return new WaitForSeconds(interval);
             }
 
-            // 다시 하나씩 순서대로 나타남
             foreach (GameObject block in blocks)
             {
                 block.SetActive(true);
                 yield return new WaitForSeconds(interval);
             }
+        }
+    }
+
+    IEnumerator TwoBlockSequence()
+    {
+        Queue<GameObject> activeBlocks = new Queue<GameObject>();
+
+        foreach (GameObject block in blocks)
+            block.SetActive(false);
+
+        int index = 0;
+
+        while (true)
+        {
+            GameObject block = blocks[index];
+            block.SetActive(true);
+            activeBlocks.Enqueue(block);
+
+            if (activeBlocks.Count > 2)
+            {
+                GameObject oldBlock = activeBlocks.Dequeue();
+                oldBlock.SetActive(false);
+            }
+
+            index = (index + 1) % blocks.Count;
+            yield return new WaitForSeconds(interval);
         }
     }
 }

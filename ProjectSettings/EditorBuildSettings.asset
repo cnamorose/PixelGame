@@ -41,4 +41,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/school_run.unity
     guid: bde436fd8d24ce34b903ac48fb352979
+  - enabled: 1
+    path: Assets/Scenes/PfRoom.unity
+    guid: 33b4dc1c14b56674580435fd8114d6d1
+  - enabled: 1
+    path: Assets/Scenes/DevilStart.unity
+    guid: f15cae9971a94e04683ffafaf19a2bfb
   m_configObjects: {}

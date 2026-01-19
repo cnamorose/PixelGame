@@ -3359,7 +3359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warningText: {fileID: 915885374}
   playerData: {fileID: 11400000, guid: e5457224feb74b34ea6dcd243ea4e275, type: 2}
-  nextSceneName: Ending
+  nextSceneName: DevilStart
 --- !u!1 &2012879104
 GameObject:
   m_ObjectHideFlags: 0

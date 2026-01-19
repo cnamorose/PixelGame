@@ -9,7 +9,7 @@ public class EndRunTrigger : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         DialogueManager.Instance.PlayCutsceneFadeOnly(
-            DialogueManager.CutsceneType.DevilEnd
+            DialogueManager.CutsceneType.PfRoom
         );
     }
 }

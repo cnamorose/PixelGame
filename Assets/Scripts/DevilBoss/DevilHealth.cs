@@ -137,7 +137,10 @@ public class DevilHealth : MonoBehaviour
     {
         if (isTransitioning) return;
         isTransitioning = true;
+
         Debug.Log("Devil Dead");
+
+        attackController.ForceStopAllAttacks();
 
         StartCoroutine(DevilDeathSequence());
     }
@@ -197,10 +200,10 @@ public class DevilHealth : MonoBehaviour
     IEnumerator DevilDisappear()
     {
         yield return new WaitForSeconds(0.3f);
+
+        attackController.ForceStopAllAttacks();
+
         gameObject.SetActive(false);
     }
-
-
-
 
 }

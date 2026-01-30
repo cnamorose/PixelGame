@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f3771ab4283da841ae21e4838c74db5, type: 3}
+  m_Name: Q9
+  m_EditorClassIdentifier: 
+  question: "\uC0AC\uB78C\uC758 \uD608\uC561\uC5D0\uC11C \uC0B0\uC18C\uB97C \uC6B4\uBC18\uD558\uB294
+    \uAC83\uC740?"
+  answers:
+  - "\uBC31\uD608\uAD6C"
+  - "\uD608\uC7A5"
+  - "\uD5E4\uBAA8\uAE00\uB85C\uBE48"
+  - "\uD608\uC18C\uD310"
+  correctIndex: 2

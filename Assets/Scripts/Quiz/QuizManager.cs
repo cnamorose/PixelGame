@@ -34,11 +34,14 @@ public class QuizManager : MonoBehaviour
     [Header("Fade UI")]
     public Image fadePanel;
 
+    [Header("UI Block")]
+    public GameObject questionPanel;
+
     public GameObject timerUI;
 
 
     private int quizCount = 0;
-    private int maxQuizCount = 4;
+    private int maxQuizCount = 6;
 
     void Start()
     {
@@ -122,6 +125,9 @@ public class QuizManager : MonoBehaviour
 
     void ShowQuizClear()
     {
+        if (questionPanel != null)
+            questionPanel.SetActive(true);
+
         StartCoroutine(QuizClearSequence());
     }
 

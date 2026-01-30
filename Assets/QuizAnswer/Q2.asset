@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3771ab4283da841ae21e4838c74db5, type: 3}
   m_Name: Q2
   m_EditorClassIdentifier: 
-  question: "\uC9C0\uAD6C\uC5D0\uC11C \uAC00\uC7A5 \uAE4A\uC740 \uBC14\uB2E4\uB294?"
+  question: "\uBB3C\uC774 0\uB3C4\uC5D0\uC11C \uC5BC \uB54C \uC0C1\uD0DC\uB294? \r\n"
   answers:
-  - "\uC778\uB3C4\uC591"
-  - "\uB300\uC11C\uC591"
-  - "\uD0DC\uD3C9\uC591"
-  - "\uBD81\uADF9\uD574"
+  - "\uAE30\uCCB4"
+  - "\uC561\uCCB4"
+  - "\uACE0\uCCB4"
+  - "\uD50C\uB77C\uC988\uB9C8"
   correctIndex: 2

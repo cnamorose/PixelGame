@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f3771ab4283da841ae21e4838c74db5, type: 3}
-  m_Name: NewQuiz
+  m_Name: Q51
   m_EditorClassIdentifier: 
-  question: "\uD30C\uC2A4\uD0C0\uBA74\uC744 \uC0B6\uC744 \uB54C \uB123\uB294 \uC18C\uAE08\uC758
-    \uC5ED\uD560\uC740?"
+  question: "\uC774\uD0C8\uB9AC\uC544\uC758 \uD654\uD3D0 \uB2E8\uC704\uB294?"
   answers:
-  - "\uBA74\uC744 \uBE68\uB9AC \uC775\uAC8C \uD55C\uB2E4"
-  - "\uBA74\uC758 \uC0C9\uC744 \uBC14\uAFC8"
-  - "\uBA74\uC758 \uAE30\uBCF8 \uAC04\uC744 \uD574\uC900\uB2E4"
-  - "\uBA74\uC758 \uB053\uC5B4 \uB118\uCE58\uB294 \uAC83\uC744 \uB9C9\uB294\uB2E4"
+  - "\uD30C\uC6B4\uB4DC"
+  - "\uC5D4"
+  - "\uC720\uB85C"
+  - "\uB2EC\uB7EC"
   correctIndex: 2

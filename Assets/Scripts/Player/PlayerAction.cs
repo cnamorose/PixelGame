@@ -429,8 +429,18 @@ public class PlayerAction : MonoBehaviour
             }
         }
 
+        else if (scene.name == "DevilStart")
+        {
+            moveMode = PlayerMoveMode.TopDown;
+            rigid.gravityScale = 0f;
+            rigid.velocity = Vector2.zero;
+            rigid.bodyType = RigidbodyType2D.Dynamic;
+
+            transform.localScale = originalScale * 0.5f;
+        }
+
         // =========================
-        // 🎮 Quiz 씬 처리 (기존 유지)
+        // Quiz씬 처리 (기존 유지)
         // =========================
         if (scene.name == "Quiz")
         {
@@ -445,7 +455,7 @@ public class PlayerAction : MonoBehaviour
         }
 
         // =========================
-        // 🕹 이동 모드 전환 (중요!!!)
+        // 이동 모드 전환 
         // =========================
         if (scene.name == "KeyboardMonster" || scene.name == "Keyboard_boss")
         {
@@ -524,14 +534,25 @@ public class PlayerAction : MonoBehaviour
             anim.SetInteger("vAxisRaw", 0);
             anim.SetBool("isChange", false);
         }
-        else
+
+        else if (scene.name != "DevilStart")
+        {
+            moveMode = PlayerMoveMode.TopDown;
+            rigid.gravityScale = 0f;
+            rigid.velocity = Vector2.zero;
+            rigid.bodyType = RigidbodyType2D.Dynamic;
+
+            transform.localScale = originalScale;
+        }
+
+        /**else
         {
             moveMode = PlayerMoveMode.TopDown;
             rigid.gravityScale = 0f;
             rigid.velocity = Vector2.zero;
             rigid.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale = originalScale;
-        }
+        }**/
 
         if (scene.name == "DevilMonster")
         {

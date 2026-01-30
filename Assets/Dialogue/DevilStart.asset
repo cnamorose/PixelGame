@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249731c3981dc69468efe9e0a7db29d6, type: 3}
+  m_Name: DevilStart
+  m_EditorClassIdentifier: 
+  id: 
+  lines:
+  - speaker: Devil
+    text: ...
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: ...
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uBC8C\uC368 \uB17C\uBB38\uC744 \uB2E4 \uC791\uC131\uD588\uB2E8 \uB9D0\uC778\uAC00"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "\uB2E4 \uC791\uC131\uD588\uC73C\uB2C8, \uC878\uC5C5\uD558\uAC8C \uD574\uC918."
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\u314B\u314B\u314B\u314B \uD558!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uB17C\uBB38\uB9CC \uC791\uC131\uD558\uBA74 \uB2E4 \uC778\uC904 \uC544\uB098?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uADF8\uAC78 \uCEE8\uD38C\uD574\uC904 \uAD50\uC218\uB2D8\uC774 \uC5B4\uB514\uC788\uB294
+      \uC904 \uC54C\uACE0?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "\uC124\uB9C8.. \uAD50\uC218\uB2D8\uAE4C\uC9C0 \uAC00\uB454\uAC70\uC57C?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uB0B4\uAC00 \uB110 \uADF8\uB9AC \uC27D\uAC8C \uBCF4\uB0B4\uC904\uAC70\uB77C
+      \uC0DD\uAC01\uD588\uB098?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uB9C8\uC9C0\uB9C9\uC740 \uB098\uB2E4. "
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uB098\uB97C \uC774\uACA8\uC57C \uC878\uC5C5\uC744 \uD560 \uC218 \uC788\uC744\uAC83\uC774\uB2E4!!!!"
+    requiresName: 0
+    shakeCamera: 1
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "\uB2C8\uAE4C\uC9D3\uAEBC \uAE08\uBC29 \uCE58\uC6B8 \uC218 \uC788\uC5B4."
+    requiresName: 0
+    shakeCamera: 1
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0

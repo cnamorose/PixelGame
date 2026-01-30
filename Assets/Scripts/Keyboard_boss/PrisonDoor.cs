@@ -18,6 +18,9 @@ public class PrisonDoor : Interactable
 
     bool isOpened = false;
 
+    [Header("Objects To Hide")]
+    public GameObject[] objectsToHide;
+
     public override void Interact()
     {
 
@@ -43,6 +46,12 @@ public class PrisonDoor : Interactable
         // 감옥 스프라이트 전환
         if (closedPrison != null) closedPrison.SetActive(false);
         if (openedPrison != null) openedPrison.SetActive(true);
+
+        foreach (GameObject obj in objectsToHide)
+        {
+            if (obj != null)
+                obj.SetActive(false);
+        }
 
         isOpened = true;
 

@@ -369,6 +369,7 @@ public class DialogueManager : MonoBehaviour
         KeyMonster,
         DevilMonster,
         DevilEnd,
+        DevilStart,
         PfRoom
     }
 
@@ -455,6 +456,14 @@ public class DialogueManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene("PfRoom");
+            StartCoroutine(FadeInAfterSceneLoad());
+            yield break;
+        }
+
+        if (currentCutscene == CutsceneType.DevilStart)
+        {
+            yield return new WaitForSeconds(0.5f);
+            SceneManager.LoadScene("DevilMonster");
             StartCoroutine(FadeInAfterSceneLoad());
             yield break;
         }

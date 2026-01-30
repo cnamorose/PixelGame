@@ -15,6 +15,9 @@ public class PrisonDoorPerson2 : Interactable
     public DialogueManager.CutsceneType cutsceneType
         = DialogueManager.CutsceneType.QuizClear;
 
+    [Header("Objects To Hide")]
+    public GameObject[] objectsToHide;
+
     bool isOpened = false;
 
     public override void Interact()
@@ -24,6 +27,12 @@ public class PrisonDoorPerson2 : Interactable
         // 감옥 스프라이트 전환
         if (closedPrison != null) closedPrison.SetActive(false);
         if (openedPrison != null) openedPrison.SetActive(true);
+
+        foreach (GameObject obj in objectsToHide)
+        {
+            if (obj != null)
+                obj.SetActive(false);
+        }
 
         isOpened = true;
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   playerName: "\uD50C\uB808\uC774\uC5B4"
-  quizCleared: 0
+  quizCleared: 1
   pcCleared: 0
   paperclear: 1
   hasPen: 0

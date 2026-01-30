@@ -15,6 +15,9 @@ public class BossCameraTrigger : MonoBehaviour
     PlayerAction player;
     bool triggered = false;
 
+    [Header("Dialogue")]
+    public DialogueSequence bossIntroDialogue;
+
     void Start()
     {
         cam = Camera.main.GetComponent<Cameramove>();
@@ -55,19 +58,26 @@ public class BossCameraTrigger : MonoBehaviour
         targetPos.x += 2.0f;
         targetPos.z = unityCam.transform.position.z;
 
-        // ⭐ 컷씬 시작 (여기까지만!)
         cam.StartCutscene(targetPos);
 
         yield return new WaitForSeconds(moveDuration);
 
-        // ❌ 여기서 절대 cutsceneMode / cutsceneTarget 건들지 마
+        DialogueManager.Instance.onCutsceneEnd = OnBossDialogueEnd;
+        DialogueManager.Instance.StartDialogue(bossIntroDialogue);
+    }
+
+    void OnBossDialogueEnd()
+    {
 
         if (player != null)
+        {
             player.forceIdle = false;
+        }
 
         if (bossController != null)
             bossController.StartBoss();
     }
+
 
     Vector3 ClampToBackground(Vector3 pos)
     {

@@ -62,6 +62,9 @@ public class KBossController : MonoBehaviour
     public float dropHeight = 6f;        
     public float dropRangeX = 6f;
 
+    [Header("Dialogue")]
+    public DialogueSequence bossDeathDialogue;
+
     private bool isDead = false;
     private bool isAttacking = false;
     private int lastAttackIndex = -1;
@@ -458,9 +461,12 @@ public class KBossController : MonoBehaviour
 
     [SerializeField] float keyDropYOffset = -0.5f;
 
-    IEnumerator DestroyAfterDeath()
+    /**IEnumerator DestroyAfterDeath()
     {
         PlayerAction player = FindObjectOfType<PlayerAction>();
+
+        Time.timeScale = 0.25f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         float waitTime = deathClip != null ? deathClip.length : 0.8f;
         yield return new WaitForSeconds(waitTime);
@@ -470,6 +476,53 @@ public class KBossController : MonoBehaviour
             Vector3 dropPos = transform.position;
             dropPos.y += keyDropYOffset;
 
+            Instantiate(keyPrefab, dropPos, Quaternion.identity);
+        }
+
+        if (player != null)
+            player.UnlockControl();
+
+        Destroy(gameObject);
+    }**/
+
+    IEnumerator DestroyAfterDeath()
+    {
+        PlayerAction player = FindObjectOfType<PlayerAction>();
+
+        Time.timeScale = 0.25f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        anim.speed = 0.5f;
+
+        DialogueManager.Instance.onCutsceneEnd = () =>
+        {
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
+
+            StartCoroutine(FinishDeathAnimation(player));
+        };
+
+        DialogueManager.Instance.StartDialogue(bossDeathDialogue);
+        yield break;
+    }
+
+    IEnumerator FinishDeathAnimation(PlayerAction player)
+    {
+        anim.speed = 2.5f;
+
+        AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);
+
+        if (state.normalizedTime < 1f)
+        {
+            float remainingTime =
+                (1f - state.normalizedTime) * state.length;
+
+            yield return new WaitForSecondsRealtime(remainingTime);
+        }
+
+        if (keyPrefab != null)
+        {
+            Vector3 dropPos = transform.position;
+            dropPos.y += keyDropYOffset;
             Instantiate(keyPrefab, dropPos, Quaternion.identity);
         }
 

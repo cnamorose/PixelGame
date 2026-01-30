@@ -242,6 +242,8 @@ public class DialogueManager : MonoBehaviour
             color = "#AB0116";
         else if (line.speaker == "person")
             color = "#3a6b4f";
+        else if (line.speaker == "cboss")
+            color = "#6f7d84";
 
 
         dialogueText.text = $"<color={color}>{text}</color>";

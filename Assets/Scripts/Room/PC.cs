@@ -43,7 +43,7 @@ public class PC : Interactable
         if (!playerdata.quizCleared)
         {
             DialogueManager.Instance.ShowSimpleDialogueAutoClose(
-                "다른 스테이지를 클리어해야 한다..."
+                "접근 권한이 없습니다"
             );
             return;
         }
@@ -64,19 +64,22 @@ public class PC : Interactable
             return;
         }
 
-        if (playerdata.pcCleared)
+        if (playerdata.pcCleared && !playerdata.paperclear)
         {
+            string question = playerdata.paperTried
+                ? "논문을 다시 작성하시겠습니까?"
+                : "논문을 작성하시겠습니까?";
+
             DialogueManager.Instance.ShowChoiceDialogue(
-                "논문을 작성하시겠습니까?",
+                question,
                 onYes: () =>
                 {
-                    StartCoroutine(WritePaperSequence());
-
+                    playerdata.paperTried = true;
+                    SceneManager.LoadScene("TypingGame"); // 타이핑 게임 씬
                 },
                 onNo: () => { }
             );
             return;
-
         }
 
         if (playerdata.paperclear)
@@ -85,28 +88,5 @@ public class PC : Interactable
             "이미 논문은 완성되어 있다.");
             return;
         }
-    }
-    IEnumerator WritePaperSequence()
-    {
-        DialogueManager.Instance.CloseDialogue();
-
-        yield return StartCoroutine(
-            redFade.Play()
-        );
-
-        DialogueManager.Instance.ShowSimpleDialogue(
-            "3초가 지난 것 같지만,\n사실은 1주일이 지났다."
-        );
-
-        yield return new WaitForSeconds(2.5f);
-
-        DialogueManager.Instance.ShowSimpleDialogue(
-            "논문 작성을 완료했다!"
-        );
-
-        yield return new WaitForSeconds(2f);
-
-        playerdata.paperclear = true;
-        DialogueManager.Instance.playerData.hasPen = true;
     }
 }

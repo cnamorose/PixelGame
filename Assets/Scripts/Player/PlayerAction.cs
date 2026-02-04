@@ -56,6 +56,8 @@ public class PlayerAction : MonoBehaviour
 
     bool isRecoiling = false;
 
+    public static bool inputLocked = false;
+
 
     public void LockControl()
     {
@@ -154,6 +156,9 @@ public class PlayerAction : MonoBehaviour
 
     void Update()
     {
+
+        if (inputLocked) return;
+
         if (GameOverManager.Instance != null &&
         GameOverManager.Instance.isGameOverSequenceRunning)
             return;

@@ -822,6 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595000ad47a94c649a1e5e537fc4a68a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: e5457224feb74b34ea6dcd243ea4e275, type: 2}
   posterGirl: {fileID: 133790290}
   posterBoy: {fileID: 620492432}
 --- !u!4 &1037011403

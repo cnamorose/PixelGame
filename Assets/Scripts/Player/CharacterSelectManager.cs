@@ -7,6 +7,8 @@ public class CharacterSelectManager : MonoBehaviour
 {
     public static CharacterSelectManager instance;
 
+    public PlayerData playerData;
+
     [Header("Posters")]
     public GameObject posterGirl;   // poG
     public GameObject posterBoy;    // poB
@@ -42,9 +44,14 @@ public class CharacterSelectManager : MonoBehaviour
             return;
         }
 
+        playerData.ResetForNewGame();
+
+        // 캐릭터 선택 저장
         PlayerPrefs.SetString("SelectedCharacter", selectedCharacter);
+
         GameObject player = GameManager.instance.SpawnPlayer(selectedCharacter);
         player.SetActive(false);
+
         SceneManager.LoadScene("school_1");
     }
 }

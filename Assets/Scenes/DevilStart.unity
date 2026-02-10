@@ -1315,10 +1315,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraFocus: {fileID: 253516180}
-  dialogue: {fileID: 11400000, guid: bf20a4f179d478f4d8f3b6219affe3ad, type: 2}
   cutsceneType: 6
   objectsToHide:
   - {fileID: 1852129079}
+  bossDeathDialogue: {fileID: 11400000, guid: bf20a4f179d478f4d8f3b6219affe3ad, type: 2}
+  bossDeathDialogue_EN: {fileID: 11400000, guid: e836c2c6a14094d488ddc9685be8a991, type: 2}
 --- !u!1 &782839523
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class SimpleDialogueTrigger : MonoBehaviour
 {
+    [Header("Dialogue Text")]
     [TextArea]
-    public string message;
+    public string messageKR;
+
+    [TextArea]
+    public string messageEN;
 
     private bool triggered = false;
 
@@ -15,6 +19,13 @@ public class SimpleDialogueTrigger : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         triggered = true;
+
+        bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
+        string message =
+            isEN && !string.IsNullOrEmpty(messageEN)
+                ? messageEN
+                : messageKR;
 
         DialogueManager.Instance.ShowSimpleDialogueAutoClose(message);
     }

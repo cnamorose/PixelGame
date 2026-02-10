@@ -7,11 +7,14 @@ public class DialogueSceneTrigger : MonoBehaviour
     Cameramove cam;
 
     public Transform cameraFocus;
-    public DialogueSequence dialogue;
 
     public DialogueManager.CutsceneType cutsceneType; 
 
     public GameObject[] objectsToHide;
+
+    [Header("Dialogue")]
+    public DialogueSequence bossDeathDialogue;
+    public DialogueSequence bossDeathDialogue_EN;
 
     bool triggered = false;
 
@@ -42,6 +45,12 @@ public class DialogueSceneTrigger : MonoBehaviour
 
         DialogueManager.Instance.currentCutscene = cutsceneType;
         DialogueManager.Instance.player = player;
-        DialogueManager.Instance.StartDialogue(dialogue);
+        DialogueSequence selectedDialogue =
+    GameManager_L.Instance.currentLanguage == Language.EN
+    && bossDeathDialogue_EN != null
+        ? bossDeathDialogue_EN
+        : bossDeathDialogue;
+
+        DialogueManager.Instance.StartDialogue(selectedDialogue);
     }
 }

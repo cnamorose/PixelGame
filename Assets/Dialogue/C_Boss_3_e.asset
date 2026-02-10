@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249731c3981dc69468efe9e0a7db29d6, type: 3}
+  m_Name: C_Boss_3_e
+  m_EditorClassIdentifier: 
+  id: 
+  lines:
+  - speaker: Player
+    text: "S-senior\u2026"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: '{name}, thank you so much!'
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "Did you get captured by the demon too\u2026?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: "Yeah\u2026 and I\u2019ve got a ton of things to do!\r\nI blinked once
+      and boom\u2014prison~"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "Apparently the demon ruins graduations,\nso he smashed my PC\u2026"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "I found the computer parts, but\u2026"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "I think all my data\u2019s gone \u315C\u315C\u315C"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: "Don\u2019t worry!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: I backed everything up on a USB!
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: 'M-my data???
+
+      Really???'
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: Of course!!
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: "You\u2019re my junior!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "Senior\u2026!!!!!!!!!!!!!!!!!!!!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: "There\u2019s no time, {name}."
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: 'Take the USB, go back,
+
+      write your thesis and submit it!!!'
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: Thank you, senior!
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: "Oh\u2014looks like this place is closing."
+    requiresName: 0
+    shakeCamera: 1
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: You have to get back safely!
+    requiresName: 0
+    shakeCamera: 1
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: person
+    text: "Yeah, let\u2019s meet outside.\nThanks for saving me!!!"
+    requiresName: 0
+    shakeCamera: 1
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: Y-yes!!!!
+    requiresName: 0
+    shakeCamera: 1
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0

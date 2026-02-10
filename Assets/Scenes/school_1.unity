@@ -212,7 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd57697fe29b00549bec7de2974bf54d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 11400000, guid: bf332b4860e51aa4d80d76f1586154b3, type: 2}
+  dialogueKR: {fileID: 11400000, guid: bf332b4860e51aa4d80d76f1586154b3, type: 2}
+  dialogueEN: {fileID: 11400000, guid: 67243811074bb4143ab44063a14d6c26, type: 2}
   Demon: {fileID: 1839217035}
   mainCamera: {fileID: 171932847}
   dialogueManagerObj: {fileID: 697422905}

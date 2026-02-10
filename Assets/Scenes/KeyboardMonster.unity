@@ -487,7 +487,7 @@ Transform:
   m_GameObject: {fileID: 44736670}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.2, y: -0.16, z: 0.1625952}
+  m_LocalPosition: {x: 126.03, y: -0.16, z: 0.1625952}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1440,7 +1440,7 @@ GameObject:
   - component: {fileID: 246663870}
   - component: {fileID: 246663869}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameManager_K
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1943,7 +1943,8 @@ MonoBehaviour:
   npcPhase3: {fileID: 1809569396}
   flashDuration: 0.1
   flashCount: 2
-  devilDeathDialogue: {fileID: 11400000, guid: 7eee527ae5addcb4aa84b6e9a1739504, type: 2}
+  bossDeathDialogue: {fileID: 11400000, guid: 7eee527ae5addcb4aa84b6e9a1739504, type: 2}
+  bossDeathDialogue_EN: {fileID: 11400000, guid: 9666983383332874d83e7ce79eac2b89, type: 2}
   elevator: {fileID: 1763344144}
 --- !u!114 &930613249
 MonoBehaviour:

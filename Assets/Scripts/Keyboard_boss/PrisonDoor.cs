@@ -12,7 +12,10 @@ public class PrisonDoor : Interactable
     public Person1NPC senior;
     public PlayerKeyHolder keyHolder;
 
-    public DialogueSequence rescueDialogue;
+    [Header("Dialogue")]
+    public DialogueSequence bossDeathDialogue;
+    public DialogueSequence bossDeathDialogue_EN;
+
     public DialogueManager.CutsceneType cutsceneType
         = DialogueManager.CutsceneType.QuizClear;
 
@@ -102,6 +105,12 @@ public class PrisonDoor : Interactable
         // 대화 시작
         DialogueManager.Instance.currentCutscene = cutsceneType;
         DialogueManager.Instance.player = player;
-        DialogueManager.Instance.StartDialogue(rescueDialogue);
+        DialogueSequence selectedDialogue =
+    GameManager_L.Instance.currentLanguage == Language.EN
+    && bossDeathDialogue_EN != null
+        ? bossDeathDialogue_EN
+        : bossDeathDialogue;
+
+        DialogueManager.Instance.StartDialogue(selectedDialogue);
     }
 }

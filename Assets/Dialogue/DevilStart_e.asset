@@ -10,76 +10,92 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 249731c3981dc69468efe9e0a7db29d6, type: 3}
-  m_Name: C_Boss 1
+  m_Name: DevilStart_e
   m_EditorClassIdentifier: 
   id: 
   lines:
-  - speaker: cboss
-    text: "\uBB50\uC57C? \uBC8C\uC368 \uCEF4\uD4E8\uD130 \uBD80\uD488\uC744 \uB2E4
-      \uCC3E\uC740\uAC70\uC57C?"
+  - speaker: Devil
+    text: ...
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: cboss
-    text: "\uD398\uC77C\uD55C\uD14C \uD55C\uC18C\uB9AC \uB4E3\uACA0\uAD70."
+  - speaker: Devil
+    text: ...
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: Player
-    text: "\uB204\uAD6C\uC57C?"
-    requiresName: 0
-    shakeCamera: 0
-    changeDevilSpriteOnEnd: 0
-    devilSpriteOnEnd: {fileID: 0}
-    weakShake: 0
-  - speaker: cboss
-    text: "\uB531 \uBCF4\uBA74 \uBAB0\uB77C?"
-    requiresName: 0
-    shakeCamera: 0
-    changeDevilSpriteOnEnd: 0
-    devilSpriteOnEnd: {fileID: 0}
-    weakShake: 0
-  - speaker: cboss
-    text: "\uB108 \uC55E\uAE38 \uB9C9\uC744\uAD34\uBB3C\uC774\uC9C0 "
+  - speaker: Devil
+    text: "You\u2019ve already finished your thesis\u2026?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Player
-    text: "...\uADF8\uB798\uBD24\uC790 \uD0A4\uBCF4\uB4DC \uC8FC\uC81C\uC5D0"
+    text: "I\u2019m done, so let me graduate."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: cboss
-    text: "\uD0A4\uBCF4\uB4DC.... \uC8FC\uC81C\uC5D0...?"
+  - speaker: Devil
+    text: "Hahahaha!  \r\nYou really think that\u2019s all it takes?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: cboss
-    text: "\uAC10\uD788!!!! \uB2C8\uAC00!!!!!!!!!"
+  - speaker: Devil
+    text: You wrote a thesis, sure.
     requiresName: 0
-    shakeCamera: 1
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "But do you even know where the professor\nwho\u2019s supposed to approve
+      it is?"
+    requiresName: 0
+    shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Player
-    text: "\uC11C\uB860\uC774 \uAE38\uB2E4. \uB098 \uBC14\uBE60"
+    text: "Don\u2019t tell me\u2026\nYou locked up the professor too?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: cboss
-    text: "\uACF1\uAC8C\uB294 \uBABB\uAC08\uAC70\uB2E4."
+  - speaker: Devil
+    text: "Did you really think I\u2019d let you go that easily?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "I\u2019m the final step."
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: 'You will not graduate
+
+      unless you defeat me!!!!'
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "Someone like you?\nI\u2019ll wipe you out in no time."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

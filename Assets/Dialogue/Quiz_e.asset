@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249731c3981dc69468efe9e0a7db29d6, type: 3}
+  m_Name: Quiz_e
+  m_EditorClassIdentifier: 
+  id: 
+  lines:
+  - speaker: Devil
+    text: "To think you solved all these difficult problems\u2026"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "How irritating\u2026"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "A promise is a promise.\nI\u2019ll give you a pen and some paper."
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "But\u2026"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "The next one won\u2019t be so easy, {name}."
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0

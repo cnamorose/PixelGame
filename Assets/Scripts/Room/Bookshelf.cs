@@ -9,26 +9,33 @@ public class Bookshelf : Interactable
 
     public override void Interact()
     {
+        bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
         if (!playerdata.quizCleared)
         {
+            string question = isEN
+                ? "Do you want to enter the quiz stage?"
+                : "퀴즈 스테이지에 입장하시겠습니까?";
+
             DialogueManager.Instance.ShowChoiceDialogue(
-                "퀴즈 스테이지에 입장하시겠습니까?",
+                question,
                 onYes: () =>
                 {
                     SceneManager.LoadScene("Quiz");
                 },
                 onNo: () =>
                 {
+                    // 아무 것도 안 함
                 }
             );
-            return;
         }
         else
         {
-            DialogueManager.Instance.ShowSimpleDialogueAutoClose(
-                "책장이다."
-            );
-            return;
+            string text = isEN
+                ? "It's a bookshelf."
+                : "책장이다.";
+
+            DialogueManager.Instance.ShowSimpleDialogueAutoClose(text);
         }
     }
 }

@@ -19,7 +19,8 @@ public class DevilHealth : MonoBehaviour
     DevilAttackController attackController;
 
     [Header("Death Dialogue")]
-    public DialogueSequence devilDeathDialogue;
+    public DialogueSequence bossDeathDialogue;
+    public DialogueSequence bossDeathDialogue_EN;
 
     [Header("After Death")]
     public GameObject elevator;
@@ -186,7 +187,13 @@ public class DevilHealth : MonoBehaviour
         DialogueManager.Instance.onCutsceneEnd = OnDevilDeathDialogueEnd;
 
         // 컷신 시작 (씬 이동 없음)
-        DialogueManager.Instance.StartDialogue(devilDeathDialogue);
+        DialogueSequence selectedDialogue =
+GameManager_L.Instance.currentLanguage == Language.EN
+&& bossDeathDialogue_EN != null
+    ? bossDeathDialogue_EN
+    : bossDeathDialogue;
+
+        DialogueManager.Instance.StartDialogue(selectedDialogue);
     }
 
     void OnDevilDeathDialogueEnd()

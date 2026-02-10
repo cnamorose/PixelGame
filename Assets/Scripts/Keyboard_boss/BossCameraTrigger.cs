@@ -16,7 +16,8 @@ public class BossCameraTrigger : MonoBehaviour
     bool triggered = false;
 
     [Header("Dialogue")]
-    public DialogueSequence bossIntroDialogue;
+    public DialogueSequence bossDeathDialogue;
+    public DialogueSequence bossDeathDialogue_EN;
 
     void Start()
     {
@@ -63,7 +64,13 @@ public class BossCameraTrigger : MonoBehaviour
         yield return new WaitForSeconds(moveDuration);
 
         DialogueManager.Instance.onCutsceneEnd = OnBossDialogueEnd;
-        DialogueManager.Instance.StartDialogue(bossIntroDialogue);
+        DialogueSequence selectedDialogue =
+    GameManager_L.Instance.currentLanguage == Language.EN
+    && bossDeathDialogue_EN != null
+        ? bossDeathDialogue_EN
+        : bossDeathDialogue;
+
+        DialogueManager.Instance.StartDialogue(selectedDialogue);
     }
 
     void OnBossDialogueEnd()

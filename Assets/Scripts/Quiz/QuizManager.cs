@@ -9,7 +9,8 @@ using static DialogueManager;
 public class QuizManager : MonoBehaviour
 {
     [Header("Dialogue")]
-    public DialogueSequence quizClearDialogue;
+    public DialogueSequence quizClearDialogue;     
+    public DialogueSequence quizClearDialogue_EN;
 
     [Header("Devil")]
     public GameObject devilObject;
@@ -111,9 +112,6 @@ public class QuizManager : MonoBehaviour
     void TimeOut()
     {
         isAnswering = false;
-
-        Debug.Log("시간 초과! 목숨 감소");
-
         playerLife.LoseLife();
 
         if (playerLife.currentLife > 0)
@@ -164,7 +162,13 @@ public class QuizManager : MonoBehaviour
 
         DialogueManager.Instance.currentCutscene = CutsceneType.QuizClear;
 
-        DialogueManager.Instance.StartDialogue(quizClearDialogue);
+        DialogueSequence selectedDialogue =
+    GameManager_L.Instance.currentLanguage == Language.EN
+    && quizClearDialogue_EN != null
+        ? quizClearDialogue_EN
+        : quizClearDialogue;
+
+        DialogueManager.Instance.StartDialogue(selectedDialogue);
     }
 
 }

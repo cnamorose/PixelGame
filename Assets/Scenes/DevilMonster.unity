@@ -1453,7 +1453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4baaba86762263141be40a48e54aba0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phaseEndDialogue: {fileID: 11400000, guid: 15344f3d8e5552c49a1b017089b17fa8, type: 2}
+  bossDeathDialogue: {fileID: 11400000, guid: 15344f3d8e5552c49a1b017089b17fa8, type: 2}
+  bossDeathDialogue_EN: {fileID: 11400000, guid: 0adfa278e4643b24db40a18ac8544f2b, type: 2}
   fadePanel: {fileID: 301716550}
   devilObject: {fileID: 1192546408}
 --- !u!4 &1684552033

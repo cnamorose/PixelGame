@@ -8,7 +8,8 @@ using static DialogueManager;
 public class DevilPhaseManager : MonoBehaviour
 {
     [Header("Dialogue")]
-    public DialogueSequence phaseEndDialogue;
+    public DialogueSequence bossDeathDialogue;
+    public DialogueSequence bossDeathDialogue_EN;
 
     [Header("Fade UI")]
     public Image fadePanel;
@@ -56,7 +57,13 @@ public class DevilPhaseManager : MonoBehaviour
         DialogueManager.Instance.currentCutscene =
             DialogueManager.CutsceneType.DevilMonster;
 
-        DialogueManager.Instance.StartDialogue(phaseEndDialogue);
+        DialogueSequence selectedDialogue =
+GameManager_L.Instance.currentLanguage == Language.EN
+&& bossDeathDialogue_EN != null
+    ? bossDeathDialogue_EN
+    : bossDeathDialogue;
+
+        DialogueManager.Instance.StartDialogue(selectedDialogue);
     }
 
     IEnumerator FadeColor(Color from, Color to, float duration)

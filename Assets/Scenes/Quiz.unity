@@ -2195,6 +2195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quizClearDialogue: {fileID: 11400000, guid: 273210d2987ed464f856c3c1900a6dfe, type: 2}
+  quizClearDialogue_EN: {fileID: 11400000, guid: 9d6eb61a62f1be0439d202458e1555b2, type: 2}
   devilObject: {fileID: 1063676501}
   playerLife: {fileID: 0}
   timerText: {fileID: 226712621}

@@ -10,33 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 249731c3981dc69468efe9e0a7db29d6, type: 3}
-  m_Name: C_Boss 2
+  m_Name: C_Boss_2_e
   m_EditorClassIdentifier: 
   id: 
   lines:
   - speaker: cboss
-    text: "\uAC10\uD788.. \uB2C8 \uAE4C\uC9D3\uAC8C... "
+    text: "How dare you\u2026\nSomeone like you\u2026"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: cboss
-    text: "\uB098\uB294 \uC774\uB807\uAC8C \uB2F9\uD574\uB3C4..."
+    text: "Even if I end up like this\u2026"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: cboss
-    text: "\uC774 \uB4A4\uB294 \uC27D\uC9C0 \uC54A\uC744\uAC70\uB2E4......"
+    text: "What comes next won\u2019t be easy\u2026\u2026"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Player
-    text: "\uBB50\uB798, \uC26C\uC6B8\uB4EF? "
+    text: "Yeah, sure.  \r\nStill looks easy."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

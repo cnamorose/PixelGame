@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249731c3981dc69468efe9e0a7db29d6, type: 3}
+  m_Name: DevilMonster_e
+  m_EditorClassIdentifier: 
+  id: 
+  lines:
+  - speaker: Devil
+    text: "No\u2026 no\u2026 no\u2026!!!!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "My graduate students\u2026\r\nThey were mine\u2026!!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "My promotion\u2026 my title\u2026\r\nIt was all mine!!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "It\u2019s over?\r\nNo\u2014It can\u2019t be!!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "It\u2019s not over\r\nNot yet! Not yet!!!"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: 'You want to graduate?
+
+      Then defeat me!!!'
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0

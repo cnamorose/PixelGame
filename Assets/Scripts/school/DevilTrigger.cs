@@ -5,7 +5,10 @@ using static DialogueManager;
 
 public class DevilTrigger : MonoBehaviour
 {
-    public DialogueSequence dialogue; // ★ ScriptableObject
+    [Header("Dialogue")]
+    public DialogueSequence dialogueKR;
+    public DialogueSequence dialogueEN;
+
     public Transform Demon;
     public Camera mainCamera;
     public GameObject dialogueManagerObj;
@@ -40,7 +43,9 @@ public class DevilTrigger : MonoBehaviour
 
     IEnumerator StartDevilEvent()
     {
-        Rigidbody2D rigid = player.GetComponent<Rigidbody2D>(); rigid.velocity = Vector2.zero;
+        Rigidbody2D rigid = player.GetComponent<Rigidbody2D>();
+        rigid.velocity = Vector2.zero;
+
         player.anim.enabled = false;
         player.forceIdle = true;
         player.idleDir = 1;
@@ -57,7 +62,12 @@ public class DevilTrigger : MonoBehaviour
 
         DialogueManager.Instance.currentCutscene = CutsceneType.SchoolIntro;
 
-        dlg.StartDialogue(dialogue); // ScriptableObject 넘기기
+        DialogueSequence selectedDialogue =
+            GameManager_L.Instance.currentLanguage == Language.KR
+            ? dialogueKR
+            : dialogueEN;
+
+        dlg.StartDialogue(selectedDialogue);
     }
 
     public void EndCutscene(PlayerAction player)

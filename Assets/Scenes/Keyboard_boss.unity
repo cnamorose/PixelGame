@@ -167,7 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4785a2a53a38063468b6fc942d769d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: "\uD0C0\uB2E5.. \uD0C0\uB2E5.. "
+  messageKR: "\uD0C0\uB2E5..\uD0C0\uB2E5.."
+  messageEN: "Tap\u2026 tap\u2026"
 --- !u!61 &80061300
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -465,6 +466,7 @@ MonoBehaviour:
   dropHeight: 7
   dropRangeX: 10
   bossDeathDialogue: {fileID: 11400000, guid: b468deabc375006449ffb9abfb0b2b01, type: 2}
+  bossDeathDialogue_EN: {fileID: 11400000, guid: 0d5e19b15ebc3794389bce4a65c61e06, type: 2}
   burstCount: 4
   keyDropYOffset: -0.5
 --- !u!50 &213649642
@@ -584,7 +586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4785a2a53a38063468b6fc942d769d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: "\uAC70\uAE30 \uB204\uAD6C \uC788\uC5B4\uC694~~???"
+  messageKR: "\uAC70\uAE30 \uC544\uBB34\uB3C4 \uC5C6\uC5B4\uC694~???"
+  messageEN: Hellooo~? Anyone there~???
 --- !u!61 &321620425
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -827,8 +830,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4785a2a53a38063468b6fc942d769d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: "(\uC5B4\uB514\uC120\uAC00 \uD0A4\uBCF4\uB4DC \uB450\uB4DC\uB9AC\uB294
-    \uC18C\uB9AC\uAC00 \uB4E4\uB9B0\uB2E4)"
+  messageKR: "(\uC5B4\uB514\uC120\uAC00 \uD0C0\uC790\uC18C\uB9AC\uAC00 \uC6B8\uB824
+    \uD37C\uC9C4\uB2E4.)"
+  messageEN: (Somewhere, the sound of typing echoes.)
 --- !u!61 &534309833
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -992,7 +996,8 @@ MonoBehaviour:
   openedPrison: {fileID: 1534960142}
   senior: {fileID: 1800826521}
   keyHolder: {fileID: 0}
-  rescueDialogue: {fileID: 11400000, guid: 9283933b967d62441af56001aafbdf34, type: 2}
+  bossDeathDialogue: {fileID: 11400000, guid: 9283933b967d62441af56001aafbdf34, type: 2}
+  bossDeathDialogue_EN: {fileID: 11400000, guid: b7bd0480c0b786545a14b01f005a7d78, type: 2}
   cutsceneType: 2
   objectsToHide:
   - {fileID: 1483225164}
@@ -1108,7 +1113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4785a2a53a38063468b6fc942d769d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: "\uB538\uAE4D... \uD0C0\uB2E5\uD0C0\uB2E5..."
+  messageKR: "\uB538\uAE4D, \uB538\uAE4D, \uD0C0\uB2E4\uB2E5"
+  messageEN: Click. Click. Tap-tap.
 --- !u!61 &629558307
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1542,7 +1548,8 @@ MonoBehaviour:
   background: {fileID: 681055233}
   biasToPlayer: 0.3
   moveDuration: 0.6
-  bossIntroDialogue: {fileID: 11400000, guid: 060d157a52c0ace4fb312ff2eb7897b6, type: 2}
+  bossDeathDialogue: {fileID: 11400000, guid: 060d157a52c0ace4fb312ff2eb7897b6, type: 2}
+  bossDeathDialogue_EN: {fileID: 11400000, guid: f5ce3259bac84654a99a992b618045b6, type: 2}
 --- !u!61 &971615502
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3267,7 +3274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4785a2a53a38063468b6fc942d769d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: "\uD751\uD751.. \uD751\uD751..."
+  messageKR: "\uD0C0\uB2E4\uB2E4\uB2E4\uB2E5"
+  messageEN: Tap-tap-tap-tap-tap
 --- !u!61 &1755115378
 BoxCollider2D:
   m_ObjectHideFlags: 0

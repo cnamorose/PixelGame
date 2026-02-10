@@ -63,7 +63,8 @@ public class KBossController : MonoBehaviour
     public float dropRangeX = 6f;
 
     [Header("Dialogue")]
-    public DialogueSequence bossDeathDialogue;
+    public DialogueSequence bossDeathDialogue;     
+    public DialogueSequence bossDeathDialogue_EN;
 
     private bool isDead = false;
     private bool isAttacking = false;
@@ -501,7 +502,13 @@ public class KBossController : MonoBehaviour
             StartCoroutine(FinishDeathAnimation(player));
         };
 
-        DialogueManager.Instance.StartDialogue(bossDeathDialogue);
+        DialogueSequence selectedDialogue =
+    GameManager_L.Instance.currentLanguage == Language.EN
+    && bossDeathDialogue_EN != null
+        ? bossDeathDialogue_EN
+        : bossDeathDialogue;
+
+        DialogueManager.Instance.StartDialogue(selectedDialogue);
         yield break;
     }
 

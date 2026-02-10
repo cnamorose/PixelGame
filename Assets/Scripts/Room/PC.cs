@@ -9,8 +9,8 @@ public class PC : Interactable
     public PlayerData playerdata;
 
     [Header("PC Screens")]
-    public Sprite screen1_Locked;  
-    public Sprite screen2_Blue;     
+    public Sprite screen1_Locked;
+    public Sprite screen2_Blue;
     public Sprite screen3_Clear;
 
     SpriteRenderer sr;
@@ -21,6 +21,7 @@ public class PC : Interactable
         sr = GetComponent<SpriteRenderer>();
         UpdateScreen();
     }
+
     void UpdateScreen()
     {
         if (playerdata.pcCleared)
@@ -36,22 +37,33 @@ public class PC : Interactable
             sr.sprite = screen1_Locked;
         }
     }
+
     public override void Interact()
     {
         Debug.Log("PC Interact 호출됨");
 
+        bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
+        // 1️⃣ 퀴즈 미클리어 → 접근 불가
         if (!playerdata.quizCleared)
         {
-            DialogueManager.Instance.ShowSimpleDialogueAutoClose(
-                "접근 권한이 없습니다"
-            );
+            string text = isEN
+                ? "Access denied."
+                : "접근 권한이 없습니다";
+
+            DialogueManager.Instance.ShowSimpleDialogueAutoClose(text);
             return;
         }
 
+        // 2️⃣ PC 미클리어 → 블루스크린 해결?
         if (!playerdata.pcCleared)
         {
+            string question = isEN
+                ? "It's a blue screen.\nDo you want to fix it?"
+                : "블루스크린이다.\n해결하겠습니까?";
+
             DialogueManager.Instance.ShowChoiceDialogue(
-                "블루스크린이다.\n해결하겠습니까?",
+                question,
                 onYes: () =>
                 {
                     SceneManager.LoadScene("KeyboardMonster");
@@ -64,28 +76,44 @@ public class PC : Interactable
             return;
         }
 
+        // 3️⃣ PC 클리어 + 논문 미완성
         if (playerdata.pcCleared && !playerdata.paperclear)
         {
-            string question = playerdata.paperTried
-                ? "논문을 다시 작성하시겠습니까?"
-                : "논문을 작성하시겠습니까?";
+            string question;
+
+            if (playerdata.paperTried)
+            {
+                question = isEN
+                    ? "Do you want to rewrite the thesis?"
+                    : "논문을 다시 작성하시겠습니까?";
+            }
+            else
+            {
+                question = isEN
+                    ? "Do you want to write the thesis?"
+                    : "논문을 작성하시겠습니까?";
+            }
 
             DialogueManager.Instance.ShowChoiceDialogue(
                 question,
                 onYes: () =>
                 {
                     playerdata.paperTried = true;
-                    SceneManager.LoadScene("TypingGame"); // 타이핑 게임 씬
+                    SceneManager.LoadScene("TypingGame");
                 },
                 onNo: () => { }
             );
             return;
         }
 
+        // 4️⃣ 논문 완료
         if (playerdata.paperclear)
         {
-            DialogueManager.Instance.ShowSimpleDialogueAutoClose(
-            "이미 논문은 완성되어 있다.");
+            string text = isEN
+                ? "The thesis is already complete."
+                : "이미 논문은 완성되어 있다.";
+
+            DialogueManager.Instance.ShowSimpleDialogueAutoClose(text);
             return;
         }
     }

@@ -22,8 +22,30 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
+    text: "\uB0B4\uAC00 \uC84C\uB2E4\uACE0...?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uB0B4\uAC00? \uB0B4\uAC00?? \uB0B4\uAC00???"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
     text: "\uB0B4\uAC00 \uC774\uB807\uAC8C \uC8FD\uB294\uB2E4\uACE0\\n\uB108\uC758
       \uC878\uC5C5\uC774 \uD655\uC815\uC77C \uAC83 \uAC19\uB098?"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Devil
+    text: "\uC6C3\uAE30\uC9C0 \uB9C8, \uADF8\uB807\uAC8C \uC878\uC5C5\uC774 \uC26C\uC6B8
+      \uB9AC \uC5C6\uB2E4\uACE0!!!"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

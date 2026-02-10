@@ -28,15 +28,23 @@ public class RoomManager : MonoBehaviour
         // 논문 완료 처리
         playerdata.paperclear = true;
 
-        DialogueManager.Instance.ShowSimpleDialogueAutoClose(
-            "논문을 다 작성했다!"
-        );
+        bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
+        string text = isEN
+            ? "The thesis is finally complete!"
+            : "논문을 다 작성했다!";
+
+        DialogueManager.Instance.ShowSimpleDialogueAutoClose(text);
     }
 
     void OnPaperError()
     {
-        DialogueManager.Instance.ShowSimpleDialogueAutoClose(
-            "처음부터 다시 작성해야 한다니..."
-        );
+        bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
+        string text = isEN
+            ? "I have to start all over again..."
+            : "처음부터 다시 작성해야 한다니...";
+
+        DialogueManager.Instance.ShowSimpleDialogueAutoClose(text);
     }
 }

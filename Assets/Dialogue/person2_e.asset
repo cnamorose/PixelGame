@@ -9,15 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2d8a7f8dff87f144b99f2d824b6ec8f, type: 3}
-  m_Name: PlayerData
+  m_Script: {fileID: 11500000, guid: 249731c3981dc69468efe9e0a7db29d6, type: 3}
+  m_Name: person2_e
   m_EditorClassIdentifier: 
-  playerName: "\uAE40\uD574\uB9BC"
-  quizCleared: 0
-  pcCleared: 0
-  paperclear: 1
-  hasPen: 0
-  hasPaper: 0
-  hasUsb: 0
-  hasPaper2: 0
-  paperTried: 0
+  id: 
+  lines: []

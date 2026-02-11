@@ -87,8 +87,8 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: "I need one last requirement to become a \u201Cprofessor\u201D \\n\r\nin
-      the demon world."
+    text: "I need one last requirement to become a \u201Cprofessor\u201D \nin the
+      demon world."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Player
-    text: "So\u2026 you\u2019re gonna kill me and write a paper about it?!?"
+    text: "So\u2026 you\u2019re gonna kill me \\nand write a paper about it?!?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
@@ -194,8 +194,7 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: "Hehehe\u2026  \r\nNow then, can you overcome this trial\\n and actually
-      graduate?"
+    text: "Hehehe\u2026 Now then, \ncan you overcome this trial and actually graduate?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

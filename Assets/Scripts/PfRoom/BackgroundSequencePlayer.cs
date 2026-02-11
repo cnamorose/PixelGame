@@ -16,8 +16,6 @@ public class BackgroundSequencePlayer : MonoBehaviour
     {
         if (sr == null)
             sr = GetComponent<SpriteRenderer>();
-
-        StartCoroutine(PlaySequence());
     }
 
     IEnumerator PlaySequence()
@@ -27,5 +25,10 @@ public class BackgroundSequencePlayer : MonoBehaviour
             sr.sprite = sprites[i];
             yield return new WaitForSeconds(frameTime);
         }
+    }
+    public void Play()
+    {
+        StopAllCoroutines();
+        StartCoroutine(PlaySequence());
     }
 }

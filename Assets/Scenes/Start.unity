@@ -211,7 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106573316563cf64691d4a7780cc7363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howToPlayUI: {fileID: 0}
+  howToPlayUI_KR: {fileID: 30582548}
+  howToPlayUI_EN: {fileID: 1339498331}
 --- !u!1 &38430351
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +240,7 @@ RectTransform:
   m_GameObject: {fileID: 38430351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 961761486}
@@ -249,7 +250,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000015259, y: 29}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 318, y: 197}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &38430353
 MonoBehaviour:
@@ -271,7 +272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 472184640, guid: 798ee335932ced442af172baa0d00cd2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a06059165ae8dc245a878bc1bfbca36f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -547,7 +548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106573316563cf64691d4a7780cc7363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howToPlayUI: {fileID: 30582548}
+  howToPlayUI_KR: {fileID: 30582548}
+  howToPlayUI_EN: {fileID: 1339498331}
 --- !u!1 &103939245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,7 +1480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.334946, y: 36.79492}
+  m_AnchoredPosition: {x: 123, y: 87.5}
   m_SizeDelta: {x: 30.1208, y: 27.1793}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &367247105
@@ -1525,7 +1527,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 103691945}
         m_TargetAssemblyTypeName: StartMenuUI, Assembly-CSharp
         m_MethodName: Hide
         m_Mode: 1
@@ -1977,8 +1979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E \uC0C1\uD638\uC791\uC6A9\nB \uC778\uBCA4\uD1A0\uB9AC\nF \uACF5\uACA9\na,w,s,d
-    \uBC29\uD5A5\uD0A4\nEsc \uBA48\uCD94\uAE30"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4dd9b3f0ba47ffa4b9ceca2fb67fe9ed, type: 2}
   m_sharedMaterial: {fileID: -9211099997254135401, guid: 4dd9b3f0ba47ffa4b9ceca2fb67fe9ed, type: 2}
@@ -2750,8 +2751,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E \uC0C1\uD638\uC791\uC6A9\nB \uC778\uBCA4\uD1A0\uB9AC\nF \uACF5\uACA9\na,w,s,d
-    \uBC29\uD5A5\uD0A4\nEsc \uBA48\uCD94\uAE30"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4dd9b3f0ba47ffa4b9ceca2fb67fe9ed, type: 2}
   m_sharedMaterial: {fileID: -9211099997254135401, guid: 4dd9b3f0ba47ffa4b9ceca2fb67fe9ed, type: 2}
@@ -4154,7 +4154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106573316563cf64691d4a7780cc7363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howToPlayUI: {fileID: 0}
+  howToPlayUI_KR: {fileID: 30582548}
+  howToPlayUI_EN: {fileID: 1339498331}
 --- !u!114 &1339498334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4313,7 +4314,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.334946, y: 36.79492}
+  m_AnchoredPosition: {x: 123.3, y: 88.1}
   m_SizeDelta: {x: 30.1208, y: 27.1793}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1467799150
@@ -4868,7 +4869,7 @@ RectTransform:
   m_GameObject: {fileID: 1995908055}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 499828245}
@@ -4878,7 +4879,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000015259, y: 29}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 318, y: 197}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1995908057
 MonoBehaviour:
@@ -4900,7 +4901,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 472184640, guid: 798ee335932ced442af172baa0d00cd2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f2b5bfce2ad9ed45a627f707c4f2022, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

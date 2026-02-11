@@ -1977,7 +1977,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC878\uC5C5\uD558\uAE30 \uC804\uC5D0\uB294 \uB098\uAC08 \uC218 \uC5C6\uB2E4..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 33e6eabd7ac7f4944a3b83795cb8ba92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d371b03ad3966d74594869883f5230d7, type: 2}
   m_sharedMaterial: {fileID: -6985383782216826370, guid: a5d038aaebdad0441a6c8b73526d291f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

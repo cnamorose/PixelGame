@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TypingGame.unity
     guid: 87dac9f6ca4d86a4db4d3fe7333c7806
+  - enabled: 1
+    path: Assets/Scenes/ending.unity
+    guid: 81cc6da24ad5e754cbae6af87d105289
   m_configObjects: {}

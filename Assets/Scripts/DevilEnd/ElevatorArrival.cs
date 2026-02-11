@@ -113,8 +113,14 @@ public class ElevatorArrival : Interactable
     {
         if (state == ElevatorState.Closed)
         {
+            bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
+            string msg = isEN
+                ? "Repairing."
+                : "수리중입니다.";
+
             DialogueManager.Instance
-                .ShowSimpleDialogueAutoClose("수리중입니다.");
+                .ShowSimpleDialogueAutoClose(msg);
         }
     }
 }

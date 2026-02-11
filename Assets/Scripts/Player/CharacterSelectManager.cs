@@ -10,8 +10,12 @@ public class CharacterSelectManager : MonoBehaviour
     public PlayerData playerData;
 
     [Header("Posters")]
-    public GameObject posterGirl;   // poG
-    public GameObject posterBoy;    // poB
+    public GameObject posterGirl;
+    public GameObject posterBoy;
+
+    [Header("Language UI")]
+    public GameObject uiKR;
+    public GameObject uiEN;
 
     private string selectedCharacter;
 
@@ -19,9 +23,21 @@ public class CharacterSelectManager : MonoBehaviour
     {
         instance = this;
 
-        // 시작할 땐 포스터 숨김
         posterGirl.SetActive(false);
         posterBoy.SetActive(false);
+
+        ApplyLanguageUI();
+    }
+
+    void ApplyLanguageUI()
+    {
+        bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
+        if (uiKR != null)
+            uiKR.SetActive(!isEN);
+
+        if (uiEN != null)
+            uiEN.SetActive(isEN);
     }
 
     public void SelectCharacter(string name)
@@ -30,12 +46,10 @@ public class CharacterSelectManager : MonoBehaviour
 
         selectedCharacter = name;
 
-        // 해당 캐릭터 포스터만 켜기
         posterGirl.SetActive(name == "Girl");
         posterBoy.SetActive(name == "Boy");
     }
 
-    // 버튼에서 호출할 함수
     public void OnClickSelectButton()
     {
         if (string.IsNullOrEmpty(selectedCharacter))
@@ -46,7 +60,6 @@ public class CharacterSelectManager : MonoBehaviour
 
         playerData.ResetForNewGame();
 
-        // 캐릭터 선택 저장
         PlayerPrefs.SetString("SelectedCharacter", selectedCharacter);
 
         GameObject player = GameManager.instance.SpawnPlayer(selectedCharacter);

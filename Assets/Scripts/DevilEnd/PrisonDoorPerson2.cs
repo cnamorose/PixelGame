@@ -11,7 +11,9 @@ public class PrisonDoorPerson2 : Interactable
 
     public Person2NPC npc;
 
-    public DialogueSequence rescueDialogue;
+    [Header("Dialogue")]
+    public DialogueSequence rescueDialogue_KR;
+    public DialogueSequence rescueDialogue_EN;
     public DialogueManager.CutsceneType cutsceneType
         = DialogueManager.CutsceneType.QuizClear;
 
@@ -76,6 +78,12 @@ public class PrisonDoorPerson2 : Interactable
         // 대화 시작
         DialogueManager.Instance.currentCutscene = cutsceneType;
         DialogueManager.Instance.player = player;
-        DialogueManager.Instance.StartDialogue(rescueDialogue);
+        bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
+        DialogueSequence seq = isEN && rescueDialogue_EN != null
+            ? rescueDialogue_EN
+            : rescueDialogue_KR;
+
+        DialogueManager.Instance.StartDialogue(seq);
     }
 }

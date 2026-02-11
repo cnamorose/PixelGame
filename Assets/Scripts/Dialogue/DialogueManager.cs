@@ -419,8 +419,14 @@ public class DialogueManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1.5f);
 
+            bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
             missionText.gameObject.SetActive(true);
-            missionText.text = "악마의 졸업 방해를 이겨내고\n논문을 완성하자!";
+            missionText.text = isEN
+                ? "Overcome\nthe devil's interference\nand complete your thesis!"
+                : "악마의 졸업 방해를 이겨내고\n논문을 완성하자!";
+
+            missionText.fontSize = isEN ? 28 : 34;
 
             yield return new WaitForSeconds(2.5f);
 
@@ -494,6 +500,12 @@ public class DialogueManager : MonoBehaviour
         mode = DialogueMode.Cutscene;
 
         StartCoroutine(EndSequence());
+    }
+
+    public void ResetFade()
+    {
+        if (fadeImage != null)
+            fadeImage.color = new Color(0, 0, 0, 0);
     }
 
 

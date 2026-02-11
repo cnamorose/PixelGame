@@ -1280,7 +1280,8 @@ MonoBehaviour:
   closedPrison: {fileID: 1995396248}
   openedPrison: {fileID: 1174371652}
   npc: {fileID: 204790357}
-  rescueDialogue: {fileID: 11400000, guid: fbe14184fdeebae469b8a143b2e2fcc0, type: 2}
+  rescueDialogue_KR: {fileID: 11400000, guid: fbe14184fdeebae469b8a143b2e2fcc0, type: 2}
+  rescueDialogue_EN: {fileID: 11400000, guid: 74bfa59b8dd908942aa5ea56e6eb1833, type: 2}
   cutsceneType: 5
   objectsToHide:
   - {fileID: 569584943}
@@ -3157,7 +3158,7 @@ Transform:
   m_GameObject: {fileID: 1399180759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.9, y: -1.03, z: -0.4352664}
+  m_LocalPosition: {x: -24.16, y: 1.57, z: -0.4352664}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -217,6 +217,7 @@ MonoBehaviour:
   Demon: {fileID: 1839217035}
   mainCamera: {fileID: 171932847}
   dialogueManagerObj: {fileID: 697422905}
+  devilBGM: {fileID: 8300000, guid: 6bff138614744b143a6338ab91d39970, type: 3}
 --- !u!1 &154267511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,6 +1158,9 @@ MonoBehaviour:
   fadeImage: {fileID: 585947519}
   missionText: {fileID: 1080083778}
   fadeDuration: 1.5
+  typingSpeed: 0.05
+  autoNextDelay: 0.5
+  typingSFX: {fileID: 8300000, guid: ec2d08387b6a6f84d91849550dcb643e, type: 3}
   currentCutscene: 0
 --- !u!4 &697422907
 Transform:
@@ -2421,6 +2425,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1643586106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643586108}
+  - component: {fileID: 1643586107}
+  m_Layer: 0
+  m_Name: am
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1643586107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643586106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82651f4caf015a45b4522ac32ff4f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ambientClip: {fileID: 8300000, guid: a1cd55d3858bc654cad205c73a6716cd, type: 3}
+--- !u!4 &1643586108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643586106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1801193, y: 0.8498934, z: -0.045274485}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1656805219
 GameObject:
   m_ObjectHideFlags: 0
@@ -3145,3 +3194,4 @@ SceneRoots:
   - {fileID: 136593345}
   - {fileID: 1601029079}
   - {fileID: 697422907}
+  - {fileID: 1643586108}

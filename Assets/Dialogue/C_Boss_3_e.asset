@@ -21,7 +21,7 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: '{name}, thank you so much!'
     requiresName: 0
     shakeCamera: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: "Yeah\u2026 and I\u2019ve got a ton of things to do!\r\nI blinked once
       and boom\u2014prison~"
     requiresName: 0
@@ -64,14 +64,14 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: "Don\u2019t worry!"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: I backed everything up on a USB!
     requiresName: 0
     shakeCamera: 0
@@ -87,14 +87,14 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: Of course!!
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: "You\u2019re my junior!"
     requiresName: 0
     shakeCamera: 0
@@ -108,14 +108,14 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: "There\u2019s no time, {name}."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: 'Take the USB, go back,
 
       write your thesis and submit it!!!'
@@ -131,7 +131,7 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: "Oh\u2014looks like this place is closing."
     requiresName: 0
     shakeCamera: 1
@@ -145,7 +145,7 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Senior
     text: "Yeah, let\u2019s meet outside.\nThanks for saving me!!!"
     requiresName: 0
     shakeCamera: 1

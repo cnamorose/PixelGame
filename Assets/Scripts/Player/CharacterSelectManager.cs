@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -42,7 +42,7 @@ public class CharacterSelectManager : MonoBehaviour
 
     public void SelectCharacter(string name)
     {
-        Debug.Log("¼±ÅÃ ÇÔ¼ö ½ÇÇà: " + name);
+        Debug.Log("ì„ íƒ í•¨ìˆ˜ ì‹¤í–‰: " + name);
 
         selectedCharacter = name;
 
@@ -54,16 +54,35 @@ public class CharacterSelectManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(selectedCharacter))
         {
-            Debug.Log("Ä³¸¯ÅÍ ¾ÆÁ÷ ¾È °í¸§");
+            Debug.Log("ìºë¦­í„° ì•„ì§ ì•ˆ ê³ ë¦„");
             return;
         }
 
+        playerData.ResetForNewGame();
+        PlayerPrefs.SetString("SelectedCharacter", selectedCharacter);
+
+        GameObject player = GameManager.instance.SpawnPlayer(selectedCharacter);
+        player.SetActive(false);
+
+        AudioManager.Instance.FadeOutAndLoad("school_1", 1.5f);
+    }
+
+    private IEnumerator SelectAndLoad()
+    {
         playerData.ResetForNewGame();
 
         PlayerPrefs.SetString("SelectedCharacter", selectedCharacter);
 
         GameObject player = GameManager.instance.SpawnPlayer(selectedCharacter);
         player.SetActive(false);
+
+        // ğŸµ BGM ì„œì„œíˆ ì¤„ì´ê¸°
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.FadeOutBGM(1.5f);
+        }
+
+        yield return new WaitForSeconds(1.5f);
 
         SceneManager.LoadScene("school_1");
     }

@@ -48,6 +48,16 @@ public class DialogueManager : MonoBehaviour
 
     public Action onCutsceneEnd;
 
+    [Header("Typing Effect")]
+    [SerializeField] float typingSpeed = 1f;
+    [SerializeField] float autoNextDelay = 1.5f;
+    [SerializeField] AudioClip typingSFX;
+
+    Coroutine typingCoroutine;
+    bool isTyping = false;
+
+
+
     void Awake()
     {
         if (Instance == null)
@@ -198,11 +208,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (mode == DialogueMode.Cutscene)
-        {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-                NextLine();
-        }
     }
 
     /* =========================
@@ -240,14 +245,80 @@ public class DialogueManager : MonoBehaviour
             color = "#172646";
         else if (line.speaker == "Devil")
             color = "#AB0116";
-        else if (line.speaker == "person")
+        else if (line.speaker == "Senior")
+            color = "#ae75ff";
+        else if (line.speaker == "Professor")
             color = "#3a6b4f";
         else if (line.speaker == "cboss")
             color = "#6f7d84";
 
 
-        dialogueText.text = $"<color={color}>{text}</color>";
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        typingCoroutine = StartCoroutine(TypeText(text, color));
     }
+
+    IEnumerator TypeText(string fullText, string color)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+
+        string prefix = $"<color={color}>";
+        string suffix = "</color>";
+
+        for (int i = 0; i <= fullText.Length; i++)
+        {
+            dialogueText.text = prefix + fullText.Substring(0, i) + suffix;
+
+            // 🔊 글자 효과음
+            if (typingSFX != null && i < fullText.Length && fullText[i] != ' ' && i % 2 == 0)
+            {
+                float min = 1f;
+                float max = 1f;
+
+                switch (currentLines[index].speaker)
+                {
+                    case "Player":
+                        min = 0.95f;
+                        max = 1.05f;
+                        break;
+
+                    case "Devil":
+                        min = 1.1f;
+                        max = 1.3f;
+                        break;
+
+                    case "cboss": 
+                        min = 0.7f;
+                        max = 0.8f;
+                        break;
+
+                    case "Professor":
+                        min = 0.75f;
+                        max = 0.9f;
+                        break;
+
+                    case "Senior":
+                        min = 1.25f;
+                        max = 1.45f;
+                        break;
+                }
+
+                AudioManager.Instance?.PlaySFX(typingSFX, min, max);
+            }
+
+            yield return new WaitForSecondsRealtime(typingSpeed);
+        }
+
+        isTyping = false;
+
+        // ⏳ 자동 대기
+        yield return new WaitForSeconds(autoNextDelay);
+
+        NextLine();
+    }
+
 
     void NextLine()
     {
@@ -417,6 +488,9 @@ public class DialogueManager : MonoBehaviour
         // =====================
         if (currentCutscene == CutsceneType.SchoolIntro)
         {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.FadeOutBGM(1.5f);
+
             yield return new WaitForSeconds(1.5f);
 
             bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;

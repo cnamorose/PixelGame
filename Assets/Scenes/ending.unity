@@ -941,6 +941,7 @@ MonoBehaviour:
   debugMode: 1
   debugName: "\uD64D\uAE38\uB3D9"
   debugCharacter: Boy
+  phaseBGM: {fileID: 8300000, guid: e1c31a84dd0da734386c9a33c626d72b, type: 3}
 --- !u!4 &1513115979
 Transform:
   m_ObjectHideFlags: 0

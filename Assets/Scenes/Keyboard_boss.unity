@@ -1544,6 +1544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossController: {fileID: 213649640}
+  bossBGM: {fileID: 8300000, guid: a3f5fd2d872d4ef4294a713d0250bf13, type: 3}
   boss: {fileID: 213649639}
   background: {fileID: 681055233}
   biasToPlayer: 0.3

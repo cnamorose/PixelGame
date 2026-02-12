@@ -1938,6 +1938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
+  phaseBGM: {fileID: 8300000, guid: 8d4518d79c9998c42966bc3417fe0ec2, type: 3}
   npcPhase1: {fileID: 1881977067}
   npcPhase2: {fileID: 1623326239}
   npcPhase3: {fileID: 1809569396}

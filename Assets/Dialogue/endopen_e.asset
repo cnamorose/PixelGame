@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   lines:
-  - speaker: person
+  - speaker: Professor
     text: "You\u2019re late. Did something happen?"
     requiresName: 0
     shakeCamera: 0
@@ -35,14 +35,14 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: Remember?
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: 'You must be tired.
 
       Did you have some kind of dream?'
@@ -58,7 +58,7 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: Alright. Did you bring your thesis?
     requiresName: 0
     shakeCamera: 0
@@ -72,21 +72,21 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: ...
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: ...
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: Good.
     requiresName: 0
     shakeCamera: 0
@@ -100,14 +100,14 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: Submission accepted.
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: Congratulations on your graduation.
     requiresName: 0
     shakeCamera: 0

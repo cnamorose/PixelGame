@@ -6,6 +6,9 @@ public class BossCameraTrigger : MonoBehaviour
 {
     public KBossController bossController;
 
+    [Header("BGM")]
+    public AudioClip bossBGM;
+
     public Transform boss;
     public SpriteRenderer background;   //검은 배경 SpriteRenderer
     public float biasToPlayer = 0.3f;
@@ -75,6 +78,12 @@ public class BossCameraTrigger : MonoBehaviour
 
     void OnBossDialogueEnd()
     {
+
+        if (AudioManager.Instance != null && bossBGM != null)
+        {
+            AudioManager.Instance.PlayBGM(bossBGM);
+        }
+
 
         if (player != null)
         {

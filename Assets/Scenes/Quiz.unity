@@ -2194,6 +2194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b917dd540813947b791fbfd9a0d9b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quizBGM: {fileID: 8300000, guid: ba6b51cce8f1c4942a2ddcec189b0c4d, type: 3}
   quizClearDialogue: {fileID: 11400000, guid: 273210d2987ed464f856c3c1900a6dfe, type: 2}
   quizClearDialogue_EN: {fileID: 11400000, guid: 9d6eb61a62f1be0439d202458e1555b2, type: 2}
   devilObject: {fileID: 1063676501}

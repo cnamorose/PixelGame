@@ -28,7 +28,7 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: "\uB4E4\uC5B4\uC640"
     requiresName: 0
     shakeCamera: 0

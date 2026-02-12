@@ -8,6 +8,9 @@ using static DialogueManager;
 
 public class QuizManager : MonoBehaviour
 {
+    [Header("BGM")]
+    public AudioClip quizBGM;
+
     [Header("Dialogue")]
     public DialogueSequence quizClearDialogue;     
     public DialogueSequence quizClearDialogue_EN;
@@ -48,6 +51,15 @@ public class QuizManager : MonoBehaviour
     {
         quizPool = new List<QuizData>(quizList);
         playerLife = FindObjectOfType<PlayerLifeManager>();
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayBGM(quizBGM);
+        }
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopAmbient();
+            AudioManager.Instance.PlayBGM(quizBGM);
+        }
         LoadRandomQuiz();
     }
 
@@ -167,6 +179,12 @@ public class QuizManager : MonoBehaviour
     && quizClearDialogue_EN != null
         ? quizClearDialogue_EN
         : quizClearDialogue;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.FadeOutBGM(1f);
+        }
+        yield return new WaitForSeconds(1f);
 
         DialogueManager.Instance.StartDialogue(selectedDialogue);
     }

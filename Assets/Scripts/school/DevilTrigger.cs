@@ -17,6 +17,9 @@ public class DevilTrigger : MonoBehaviour
     DialogueManager dlg;
     bool eventStarted = false;
 
+    [Header("BGM")]
+    public AudioClip devilBGM;
+
     PlayerAction player;
 
     void Start()
@@ -41,8 +44,15 @@ public class DevilTrigger : MonoBehaviour
         StartCoroutine(StartDevilEvent());
     }
 
+
     IEnumerator StartDevilEvent()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayBGM(devilBGM);
+        }
+
+
         Rigidbody2D rigid = player.GetComponent<Rigidbody2D>();
         rigid.velocity = Vector2.zero;
 

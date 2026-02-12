@@ -28,7 +28,7 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: Come in.
     requiresName: 0
     shakeCamera: 0

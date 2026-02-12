@@ -13,4 +13,18 @@ MonoBehaviour:
   m_Name: person2_e
   m_EditorClassIdentifier: 
   id: 
-  lines: []
+  lines:
+  - speaker: Professor
+    text: 
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Professor
+    text: 
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0

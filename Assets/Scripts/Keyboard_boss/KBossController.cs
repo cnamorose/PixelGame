@@ -438,6 +438,11 @@ public class KBossController : MonoBehaviour
     {
         isDead = true;
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopBGM();
+        }
+
         Vector3 deathPos = transform.position;
 
         // 모든 행동 중지

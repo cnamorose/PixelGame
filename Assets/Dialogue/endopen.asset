@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   lines:
-  - speaker: person
+  - speaker: Professor
     text: "\uB2A6\uC5C8\uB124. \uBB34\uC2A8 \uC77C \uC788\uC5C8\uB098?"
     requiresName: 0
     shakeCamera: 0
@@ -35,14 +35,14 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: "\uAE30\uC5B5?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: "\uD53C\uACE4\uD588\uB098 \uBCF4\uAD70. \uAFC8\uC774\uB77C\uB3C4 \uAFB8\uACE0
       \uC628 \uAC74\uAC00?"
     requiresName: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: "\uADF8\uB798. \uB17C\uBB38\uC740 \uAC00\uC838\uC654\uB098?"
     requiresName: 0
     shakeCamera: 0
@@ -71,21 +71,21 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: ...
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: ...
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: "\uC88B\uB2E4. "
     requiresName: 0
     shakeCamera: 0
@@ -99,14 +99,14 @@ MonoBehaviour:
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: "\uC81C\uCD9C \uC644\uB8CC\uB2E4."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
-  - speaker: person
+  - speaker: Professor
     text: "\uC878\uC5C5 \uCD95\uD558\uD55C\uB2E4."
     requiresName: 0
     shakeCamera: 0

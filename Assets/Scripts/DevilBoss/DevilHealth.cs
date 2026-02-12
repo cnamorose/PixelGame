@@ -7,6 +7,9 @@ public class DevilHealth : MonoBehaviour
     public int maxHP = 100;
     int currentHP;
 
+    [Header("BGM")]
+    public AudioClip phaseBGM;
+
     [Header("Phase NPCs")]
     public GameObject npcPhase1;
     public GameObject npcPhase2;
@@ -46,6 +49,13 @@ public class DevilHealth : MonoBehaviour
 
     DevilPhase currentPhase = DevilPhase.Phase1;
     bool isTransitioning = false;
+    public void Start()
+    {
+        if (AudioManager.Instance != null && phaseBGM != null)
+        {
+            AudioManager.Instance.PlayBGM(phaseBGM);
+        }
+    }
 
     void Awake()
     {
@@ -179,6 +189,11 @@ public class DevilHealth : MonoBehaviour
     {
         // 공격 즉시 중단
         attackController.StopAttackLoop();
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopBGM();
+        }
+
 
         // 슬로우
         yield return StartCoroutine(DeathSlowMotion(0.15f, 0.6f));

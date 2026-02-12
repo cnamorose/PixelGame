@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   lines:
-  - speaker: person
+  - speaker: Professor
     text: "\uACE0\uB9D9\uB2E4, \uC601\uBB38\uB3C4 \uBAA8\uB978\uCC44 \uAC07\uD600\uC788\uC5C8\uB2E4"
     requiresName: 0
     shakeCamera: 0

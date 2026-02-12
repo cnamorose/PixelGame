@@ -41,6 +41,9 @@ public class GraduationApprovalSequence : MonoBehaviour
     public string debugName = "홍길동";
     public string debugCharacter = "Boy"; // Boy or Girl
 
+    [Header("BGM")]
+    public AudioClip phaseBGM;
+
 
     Cameramove cam;
 
@@ -90,6 +93,10 @@ public class GraduationApprovalSequence : MonoBehaviour
             StartCoroutine(cam.ShakeCamera(shakeDuration, shakePower));
 
         yield return new WaitForSeconds(0.5f);
+        if (AudioManager.Instance != null && phaseBGM != null)
+        {
+            AudioManager.Instance.PlayBGM(phaseBGM);
+        }
 
         string selected;
 

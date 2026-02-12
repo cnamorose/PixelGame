@@ -7,6 +7,10 @@ using static DialogueManager;
 
 public class DevilPhaseManager : MonoBehaviour
 {
+
+    [Header("BGM")]
+    public AudioClip phaseBGM;
+
     [Header("Dialogue")]
     public DialogueSequence bossDeathDialogue;
     public DialogueSequence bossDeathDialogue_EN;
@@ -17,6 +21,13 @@ public class DevilPhaseManager : MonoBehaviour
     [Header("Devil")]
     public GameObject devilObject;
 
+    public void Start()
+    {
+        if (AudioManager.Instance != null && phaseBGM != null)
+        {
+            AudioManager.Instance.PlayBGM(phaseBGM);
+        }
+    }
 
     public void StartPhaseEnd()
     {
@@ -41,6 +52,11 @@ public class DevilPhaseManager : MonoBehaviour
         fadePanel.gameObject.SetActive(true);
         fadePanel.color = Color.black;
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopBGM();
+        }
+
         yield return new WaitForSeconds(1f);
 
         Color devilRed = new Color(0.2f, 0f, 0f, 1f);
@@ -62,6 +78,11 @@ GameManager_L.Instance.currentLanguage == Language.EN
 && bossDeathDialogue_EN != null
     ? bossDeathDialogue_EN
     : bossDeathDialogue;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopBGM();
+        }
 
         DialogueManager.Instance.StartDialogue(selectedDialogue);
     }

@@ -246,6 +246,7 @@ MonoBehaviour:
   keyRigidbody: {fileID: 987830225}
   shakeDuration: 0.4
   shakeAmount: 0.05
+  shakeSFX: {fileID: 8300000, guid: a075df6d1f15228409fa32df09889c19, type: 3}
 --- !u!61 &12370813
 BoxCollider2D:
   m_ObjectHideFlags: 0

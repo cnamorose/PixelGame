@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: a
   quizCleared: 1
-  pcCleared: 1
-  paperclear: 1
-  hasPen: 1
-  hasPaper: 1
-  hasUsb: 1
+  pcCleared: 0
+  paperclear: 0
+  hasPen: 0
+  hasPaper: 0
+  hasUsb: 0
   hasPaper2: 0
-  paperTried: 1
+  paperTried: 0

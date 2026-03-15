@@ -7,6 +7,9 @@ public class KeyPickup : MonoBehaviour
     public float cameraReleaseDelay = 1f;
     bool picked = false;
 
+    [Header("SFX")]
+    public AudioClip keyPickupSFX;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (picked) return;
@@ -15,6 +18,11 @@ public class KeyPickup : MonoBehaviour
         if (holder == null) return;
 
         picked = true;
+
+        if (keyPickupSFX != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayOneShotSFX(keyPickupSFX);
+        }
 
         holder.AttachKey(gameObject);
 

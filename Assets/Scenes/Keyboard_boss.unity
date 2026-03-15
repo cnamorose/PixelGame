@@ -169,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageKR: "\uD0C0\uB2E5..\uD0C0\uB2E5.."
   messageEN: "Tap\u2026 tap\u2026"
+  dialogueSFX: {fileID: 8300000, guid: aa9459b15bee6cb4080c52687c7895cb, type: 3}
 --- !u!61 &80061300
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -588,6 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageKR: "\uAC70\uAE30 \uC544\uBB34\uB3C4 \uC5C6\uC5B4\uC694~???"
   messageEN: Hellooo~? Anyone there~???
+  dialogueSFX: {fileID: 0}
 --- !u!61 &321620425
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -833,6 +835,7 @@ MonoBehaviour:
   messageKR: "(\uC5B4\uB514\uC120\uAC00 \uD0C0\uC790\uC18C\uB9AC\uAC00 \uC6B8\uB824
     \uD37C\uC9C4\uB2E4.)"
   messageEN: (Somewhere, the sound of typing echoes.)
+  dialogueSFX: {fileID: 8300000, guid: 1d792d396d3ed194bbe3cbef447d0075, type: 3}
 --- !u!61 &534309833
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1115,6 +1118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageKR: "\uB538\uAE4D, \uB538\uAE4D, \uD0C0\uB2E4\uB2E5"
   messageEN: Click. Click. Tap-tap.
+  dialogueSFX: {fileID: 8300000, guid: 633526d5b49af9a4297ce93f15f677f9, type: 3}
 --- !u!61 &629558307
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3277,6 +3281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageKR: "\uD0C0\uB2E4\uB2E4\uB2E4\uB2E5"
   messageEN: Tap-tap-tap-tap-tap
+  dialogueSFX: {fileID: 8300000, guid: 116efba5747947e4a9a92a14800984de, type: 3}
 --- !u!61 &1755115378
 BoxCollider2D:
   m_ObjectHideFlags: 0

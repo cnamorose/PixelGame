@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +13,9 @@ public class KeyDropEvent : MonoBehaviour
     private bool triggered = false;
     private Vector3 originalPos;
     private bool keyShown = false;
+
+    [Header("SFX")]
+    public AudioClip shakeSFX;
 
 
     void Start()
@@ -36,7 +39,7 @@ public class KeyDropEvent : MonoBehaviour
             keyShown = true;
 
             keyRigidbody.gameObject.SetActive(true);
-            keyRigidbody.gravityScale = 0f; // ¾ÆÁ÷ ¾È ¶³¾îÁö°Ô
+            keyRigidbody.gravityScale = 0f; // ì•„ì§ ì•ˆ ë–¨ì–´ì§€ê²Œ
         }
     }
 
@@ -48,10 +51,10 @@ public class KeyDropEvent : MonoBehaviour
         if (triggered) return;
         if (!other.CompareTag("Player")) return;
 
-        // Á¶°Ç: ºÎÇ° 
+        // ì¡°ê±´: ë¶€í’ˆ 
         if (!GameManager_KM.Instance.HasAllParts())
         {
-            Debug.Log("ºÎÇ°ÀÌ ¾ÆÁ÷ ºÎÁ·ÇÕ´Ï´Ù!");
+            Debug.Log("ë¶€í’ˆì´ ì•„ì§ ë¶€ì¡±í•©ë‹ˆë‹¤!");
             return;
         }
 
@@ -63,15 +66,22 @@ public class KeyDropEvent : MonoBehaviour
     {
         float elapsed = 0f;
 
-        // Èçµé¸² ¿¬Ãâ
         while (elapsed < shakeDuration)
         {
             float x = Random.Range(-1f, 1f) * shakeAmount;
             disappearTilemap.transform.position =
                 originalPos + new Vector3(x, 0, 0);
 
-            elapsed += Time.deltaTime;
-            yield return null;
+            float dynamicPitch = Mathf.Lerp(1f, 1.3f, elapsed / shakeDuration);
+
+            AudioManager.Instance.PlayOneShotWithPitch(
+                shakeSFX,
+                1.6f,
+                dynamicPitch
+            );
+
+            elapsed += 0.1f; 
+            yield return new WaitForSeconds(0.1f);
         }
 
         disappearTilemap.transform.position = originalPos;

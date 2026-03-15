@@ -17,6 +17,9 @@ public class GameOverManager : MonoBehaviour
     public GameObject gameOverPanel;
     public TMP_Text extraGameOverText;
 
+    [Header("Audio")]
+    public AudioClip gameOverBGM;
+
     private void Awake()
     {
         if (Instance == null)
@@ -40,12 +43,16 @@ public class GameOverManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Room")
         {
             isGameOverSequenceRunning = false;
+
+            gameOverPanel.SetActive(false);
+            extraGameOverText.gameObject.SetActive(false);
+            fadePanel.gameObject.SetActive(false);
         }
     }
 
@@ -74,6 +81,8 @@ public class GameOverManager : MonoBehaviour
     {
         fadePanel.gameObject.SetActive(true);
 
+        AudioManager.Instance.PlayBGM(gameOverBGM);
+
         float fadeTime = 1f;
         Color c = fadePanel.color;
 
@@ -86,18 +95,15 @@ public class GameOverManager : MonoBehaviour
 
         fadePanel.color = new Color(c.r, c.g, c.b, 1f);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         gameOverPanel.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         extraGameOverText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
 
-    
-        SceneManager.LoadScene("Room");
-
-        StartCoroutine(CleanupAfterLoad());
+        AudioManager.Instance.FadeOutThenLoadScene("Room", 2f);
     }
 
     IEnumerator CleanupAfterLoad()

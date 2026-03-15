@@ -144,6 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 071d4ad7c50f8ab4c90446d28a5501fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraReleaseDelay: 1
+  keyPickupSFX: {fileID: 8300000, guid: 15396fc52ef8f2949a95682addf38ea7, type: 3}
 --- !u!114 &-5351570278845807498
 MonoBehaviour:
   m_ObjectHideFlags: 0

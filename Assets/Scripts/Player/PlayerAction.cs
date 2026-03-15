@@ -58,6 +58,14 @@ public class PlayerAction : MonoBehaviour
 
     public static bool inputLocked = false;
 
+    [Header("Footstep")]
+    public AudioClip footstepClip;
+    public float footstepInterval = 0.4f; // 발소리 간격
+    float footstepTimer = 0f;
+
+    [Header("Jump SFX")]
+    public AudioClip jumpClip;
+
 
     public void LockControl()
     {
@@ -156,6 +164,7 @@ public class PlayerAction : MonoBehaviour
 
     void Update()
     {
+        HandleFootstepSound();
 
         if (inputLocked) return;
 
@@ -284,6 +293,26 @@ public class PlayerAction : MonoBehaviour
 
     }
 
+    void HandleFootstepSound()
+    {
+        if (moveMode == PlayerMoveMode.Platformer)
+        {
+            AudioManager.Instance.StopLoopingSFX();
+            return;
+        }
+
+        bool isMoving = (h != 0 || v != 0);
+
+        if (isMoving)
+        {
+            AudioManager.Instance.PlayLoopingSFX(footstepClip);
+        }
+        else
+        {
+            AudioManager.Instance.StopLoopingSFX();
+        }
+    }
+
     private void FixedUpdate()
     {
         if (isRecoiling)
@@ -365,7 +394,11 @@ public class PlayerAction : MonoBehaviour
     void Jump()
     {
         rigid.velocity = new Vector2(rigid.velocity.x, jumpForce);
+
+        if (jumpClip != null)
+            AudioManager.Instance.PlaySFX(jumpClip);
     }
+
     void ToggleInventory()
     {
         if (inventoryUI == null)

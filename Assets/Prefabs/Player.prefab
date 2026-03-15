@@ -389,6 +389,9 @@ MonoBehaviour:
   RespawnPoint_GameOver: {fileID: 0}
   PlayerPoint: {fileID: 0}
   isAttacking: 0
+  footstepClip: {fileID: 8300000, guid: 6c8fe1c3b8fd3df4db6d8e3063e3ad6c, type: 3}
+  footstepInterval: 0.4
+  jumpClip: {fileID: 8300000, guid: cccb186d8b08ca142b9ac736382ee1bc, type: 3}
 --- !u!95 &329939879506514862
 Animator:
   serializedVersion: 5

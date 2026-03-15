@@ -15,6 +15,13 @@ public class NextSceneTrigger : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         triggered = true;
+
+        if (AudioManager.Instance != null &&
+            AudioManager.Instance.oneShotSFXSource != null)
+        {
+            AudioManager.Instance.oneShotSFXSource.Stop();
+        }
+
         fadeController.FadeAndLoadScene(nextSceneName);
     }
 }

@@ -14,28 +14,57 @@ public class PfRoomCutsceneController : MonoBehaviour
     public BackgroundSequencePlayer doorSequence;
     public float doorSequenceLength = 1.1f;
 
+    [Header("SFX")]
+    public AudioClip knockSFX;
+    public AudioClip doorOpenSFX;
+
+    [Header("Timing")]
+    public float sceneStartDelay = 2f;
+
     PlayerAction player;
 
     void Start()
     {
+        StartCoroutine(BeginSceneLoadedCutscene());
+    }
+
+    IEnumerator BeginSceneLoadedCutscene()
+    {
+        // 씬 완전 전환 안정화
+        yield return null;
+        yield return new WaitForEndOfFrame();
+        yield return null;
+
         player = FindObjectOfType<PlayerAction>();
 
         DialogueManager.Instance.ForceShutdownForSceneChange();
-        DialogueManager.Instance.ResetFade();
+        //DialogueManager.Instance.ResetFade();
 
-        StartCoroutine(BeginCutscene());
+        // 화면 전환 다 끝난 뒤 2초 대기
+        yield return new WaitForSeconds(sceneStartDelay);
+
+        yield return StartCoroutine(BeginCutscene());
     }
 
     IEnumerator BeginCutscene()
     {
-        player.LockControl();
+        if (player != null)
+            player.LockControl();
 
+        // 노크 소리 먼저 재생
+        if (AudioManager.Instance != null && knockSFX != null)
+        {
+            AudioManager.Instance.PlayOneShotSFX(knockSFX);
+
+            // 소리 끝날 때까지 기다렸다가
+            yield return new WaitForSeconds(knockSFX.length);
+        }
+
+        // 그 다음 대사 시작
         DialogueSequence intro = GetIntroDialogue();
 
         DialogueManager.Instance.onCutsceneEnd = OnIntroDialogueEnd;
         DialogueManager.Instance.StartDialogue(intro);
-
-        yield break;
     }
 
     DialogueSequence GetIntroDialogue()
@@ -57,6 +86,9 @@ public class PfRoomCutsceneController : MonoBehaviour
 
     IEnumerator OpenDoorSequence()
     {
+        if (AudioManager.Instance != null && doorOpenSFX != null)
+            AudioManager.Instance.PlayOneShotSFX(doorOpenSFX);
+
         if (doorSequence != null)
             doorSequence.Play();
 

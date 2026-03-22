@@ -589,7 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageKR: "\uAC70\uAE30 \uC544\uBB34\uB3C4 \uC5C6\uC5B4\uC694~???"
   messageEN: Hellooo~? Anyone there~???
-  dialogueSFX: {fileID: 0}
+  dialogueSFX: {fileID: 8300000, guid: bc51b7188cf836145aebb6ce33fb4403, type: 3}
 --- !u!61 &321620425
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1004,6 +1004,7 @@ MonoBehaviour:
   cutsceneType: 2
   objectsToHide:
   - {fileID: 1483225164}
+  dialogueSFX: {fileID: 8300000, guid: c96ed9b85be741f4eb348e1ec5c648d0, type: 3}
 --- !u!4 &613767757
 Transform:
   m_ObjectHideFlags: 0

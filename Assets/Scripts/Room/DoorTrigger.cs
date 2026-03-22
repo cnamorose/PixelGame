@@ -8,7 +8,12 @@ public class DoorTrigger : MonoBehaviour
 {
     public TMP_Text warningText;
     public PlayerData playerData;
-    public string nextSceneName = "DevilStart";
+
+    [Header("처음 보여줄 대화씬")]
+    public string firstDialogueSceneName = "DevilStart";
+
+    [Header("대화 본 후 이동할 1번 씬")]
+    public string firstStageSceneName = "Stage1";
 
     private Coroutine hideRoutine;
 
@@ -29,7 +34,15 @@ public class DoorTrigger : MonoBehaviour
                 question,
                 onYes: () =>
                 {
-                    SceneManager.LoadScene(nextSceneName);
+                    if (GameProgressManager.Instance != null &&
+                        GameProgressManager.Instance.hasSeenFirstDialogue)
+                    {
+                        SceneManager.LoadScene(firstStageSceneName);
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene(firstDialogueSceneName);
+                    }
                 },
                 onNo: () =>
                 {

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 78b1bf76d28e6bb4b9893f688a1be267
+guid: eebef075fac489348abf936dd17fccd0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -97,106 +97,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: QuizBoard_0
+      name: Printb1_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 37
-        width: 51
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b68a6d51e9b11547956d9de962a4be5
-      internalID: -1523171
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: QuizBoard_4
-      rect:
-        serializedVersion: 2
-        x: 1
+        x: 4
         y: 2
-        width: 30
-        height: 12
+        width: 42
+        height: 17
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28b2bc69012120a4395db8d6fad867ab
-      internalID: -568269710
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: QuizBoard_5
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 18
-        width: 30
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7fe0111677de5304abb98bb34bce89df
-      internalID: 219359434
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: QuizBoard_6
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 2
-        width: 30
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 12}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7ba561af07e6a864d9db099522aae795
-      internalID: 1306223320
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: QuizBoard_7
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 18
-        width: 30
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9b2db14495e41d245a19f2a17e6e1b22
-      internalID: -1564083854
+      spriteID: 8ffb8f68470072a46b1dcec6b449f70a
+      internalID: -1566550135
       vertices: []
       indices: 
       edges: []
@@ -212,14 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      QuizBoard_0: -1523171
-      QuizBoard_1: -1807561349
-      QuizBoard_2: -588505615
-      QuizBoard_3: 1873020853
-      QuizBoard_4: -568269710
-      QuizBoard_5: 219359434
-      QuizBoard_6: 1306223320
-      QuizBoard_7: -1564083854
+      Printb1_0: -1566550135
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

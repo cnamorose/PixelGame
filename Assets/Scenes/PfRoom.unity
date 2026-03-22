@@ -157,6 +157,9 @@ MonoBehaviour:
   afterEN: {fileID: 11400000, guid: 906818336191b9849836fd2a6b84708b, type: 2}
   doorSequence: {fileID: 1246076151}
   doorSequenceLength: 1.1
+  knockSFX: {fileID: 8300000, guid: cfa8eba0178e8ce4e892f6c49d29edaf, type: 3}
+  doorOpenSFX: {fileID: 8300000, guid: bb7f85db991f0c341a9921ceef27a209, type: 3}
+  knockDelay: 0.2
 --- !u!4 &1581768
 Transform:
   m_ObjectHideFlags: 0

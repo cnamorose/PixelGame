@@ -14,8 +14,12 @@ public class GraduationApprovalSequence : MonoBehaviour
     public float stampDelayAfterName = 1f;
 
     [Header("Camera Shake")]
-    public float shakeDuration = 0.4f;
-    public float shakePower = 0.15f;
+    public float shakeDuration = 0.5f;
+    public float shakePower = 1.0f;
+
+    [Header("Paper Shake")]
+    public RectTransform paperRoot;
+    public float paperShakePower = 15f;
 
     [Header("Graduation Photo")]
     public GameObject boyPhoto;
@@ -44,6 +48,8 @@ public class GraduationApprovalSequence : MonoBehaviour
     [Header("BGM")]
     public AudioClip phaseBGM;
 
+    [Header("SFX")]
+    public AudioClip stpSFX;
 
     Cameramove cam;
 
@@ -62,6 +68,22 @@ public class GraduationApprovalSequence : MonoBehaviour
             fadePanel.color = new Color(0, 0, 0, 0);
 
         StartCoroutine(Sequence());
+    }
+
+    IEnumerator ShakeUI(RectTransform target, float duration, float power)
+    {
+        Vector2 originalPos = target.anchoredPosition;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+            Vector2 offset = Random.insideUnitCircle * power;
+            target.anchoredPosition = originalPos + offset;
+            yield return null;
+        }
+
+        target.anchoredPosition = originalPos;
     }
 
     IEnumerator Sequence()
@@ -89,10 +111,17 @@ public class GraduationApprovalSequence : MonoBehaviour
 
         stamp.SetActive(true);
 
+        if (AudioManager.Instance != null && stpSFX != null)
+            AudioManager.Instance.PlayOneShotSFX(stpSFX);
+
         if (cam != null)
-            StartCoroutine(cam.ShakeCamera(shakeDuration, shakePower));
+            StartCoroutine(cam.ShakeCameraEnding(shakeDuration, shakePower));
+
+        if (paperRoot != null)
+            StartCoroutine(ShakeUI(paperRoot, shakeDuration, paperShakePower));
 
         yield return new WaitForSeconds(0.5f);
+
         if (AudioManager.Instance != null && phaseBGM != null)
         {
             AudioManager.Instance.PlayBGM(phaseBGM);
@@ -109,13 +138,11 @@ public class GraduationApprovalSequence : MonoBehaviour
             selected = PlayerPrefs.GetString("SelectedCharacter", "Boy");
         }
 
-        GameObject activePhoto =
-            selected == "Boy" ? boyPhoto : girlPhoto;
+        GameObject activePhoto = selected == "Boy" ? boyPhoto : girlPhoto;
 
         activePhoto.SetActive(true);
 
-        RectTransform photoRT =
-            activePhoto.GetComponent<RectTransform>();
+        RectTransform photoRT = activePhoto.GetComponent<RectTransform>();
 
         Vector2 startPos = new Vector2(0f, 1000f);
         Vector2 endPos = new Vector2(0f, 0f);
@@ -133,7 +160,6 @@ public class GraduationApprovalSequence : MonoBehaviour
 
         yield return new WaitForSeconds(photoStayDuration);
 
-        // ⭐ 배경 페이드
         float f = 0f;
         while (f < fadeDuration)
         {
@@ -143,7 +169,6 @@ public class GraduationApprovalSequence : MonoBehaviour
             yield return null;
         }
 
-        // ⭐ END 등장
         endText.gameObject.SetActive(true);
         endText.alpha = 0;
 
@@ -156,8 +181,6 @@ public class GraduationApprovalSequence : MonoBehaviour
         }
 
         yield return new WaitForSeconds(endStayDuration);
-
-        // ⭐ END 나오고 0.5초 후 이동 시작
         yield return new WaitForSeconds(0.5f);
 
         endText.gameObject.SetActive(false);
@@ -167,11 +190,8 @@ public class GraduationApprovalSequence : MonoBehaviour
 
         creditText.gameObject.SetActive(true);
 
-        Vector2 creditStart =
-            creditText.anchoredPosition + Vector2.right * moveDistance;
-
-        Vector2 creditEnd =
-            creditText.anchoredPosition;
+        Vector2 creditStart = creditText.anchoredPosition + Vector2.right * moveDistance;
+        Vector2 creditEnd = creditText.anchoredPosition;
 
         creditText.anchoredPosition = creditStart;
 
@@ -190,7 +210,6 @@ public class GraduationApprovalSequence : MonoBehaviour
             yield return null;
         }
 
-        // ⭐ 크레딧 재생
         CreditSequence cs = GetComponent<CreditSequence>();
         if (cs != null)
             cs.Play();

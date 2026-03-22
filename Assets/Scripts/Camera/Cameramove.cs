@@ -18,6 +18,8 @@ public class Cameramove : MonoBehaviour
 
     Camera cam;
 
+    Vector3 shakeOffset = Vector3.zero;
+
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -47,10 +49,10 @@ public class Cameramove : MonoBehaviour
             Vector3 targetPos = new Vector3(cx, cy, transform.position.z);
 
             transform.position = Vector3.Lerp(
-                transform.position,
-                targetPos,
-                Time.deltaTime * cutsceneSpeed
-            );
+    transform.position,
+    targetPos,
+    Time.deltaTime * cutsceneSpeed
+) + shakeOffset;
             return;
         }
 
@@ -75,7 +77,7 @@ public class Cameramove : MonoBehaviour
             y = Mathf.Clamp(y, minY, maxY);
         }
 
-        transform.position = new Vector3(x, y, transform.position.z);
+        transform.position = new Vector3(x, y, transform.position.z) + shakeOffset;
     }
 
     void CalculateLimits()
@@ -201,5 +203,24 @@ public class Cameramove : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public IEnumerator ShakeCameraEnding(float duration, float magnitude)
+    {
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            shakeOffset = new Vector3(x, y, 0f);
+
+            yield return null;
+        }
+
+        shakeOffset = Vector3.zero;
     }
 }

@@ -420,7 +420,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &312913490
 Transform:
   m_ObjectHideFlags: 0
@@ -1458,6 +1458,7 @@ MonoBehaviour:
   bossDeathDialogue_EN: {fileID: 11400000, guid: 0adfa278e4643b24db40a18ac8544f2b, type: 2}
   fadePanel: {fileID: 301716550}
   devilObject: {fileID: 1192546408}
+  nextSceneName: DevilBoss
 --- !u!4 &1684552033
 Transform:
   m_ObjectHideFlags: 0

@@ -1158,8 +1158,8 @@ MonoBehaviour:
   fadeImage: {fileID: 585947519}
   missionText: {fileID: 1080083778}
   fadeDuration: 1.5
-  typingSpeed: 0.05
-  autoNextDelay: 0.5
+  typingSpeed: 0.11
+  autoNextDelay: 1
   typingSFX: {fileID: 8300000, guid: ec2d08387b6a6f84d91849550dcb643e, type: 3}
   currentCutscene: 0
 --- !u!4 &697422907

@@ -27,14 +27,20 @@ public class DevilAttackController : MonoBehaviour
     bool isAttacking = false;
     Coroutine attackRoutine;
 
+    // 현재 실행 중인 공격 추적용
+    IDevilAttack currentAttack;
+    AttackEntry currentEntry;
+
     void Start()
     {
+        StartCoroutine(StartDelay());
+    }
+    IEnumerator StartDelay()
+    {
+        yield return new WaitForSeconds(2f); // ← 여기 조절
+
         BeginAttackLoop();
     }
-
-    // =========================
-    // 외부 제어용 (중요)
-    // =========================
     public void BeginAttackLoop()
     {
         if (attackRoutine != null) return;
@@ -49,11 +55,18 @@ public class DevilAttackController : MonoBehaviour
         {
             StopCoroutine(attackRoutine);
             attackRoutine = null;
-            isAttacking = false;
         }
-    }
 
-    // =========================
+        // 현재 진행 중인 공격도 즉시 종료
+        if (currentAttack != null)
+        {
+            currentAttack.EndAttack();
+            currentAttack = null;
+            currentEntry = null;
+        }
+
+        isAttacking = false;
+    }
 
     AttackEntry GetNextAttack()
     {
@@ -71,7 +84,6 @@ public class DevilAttackController : MonoBehaviour
         attackBag.Clear();
         attackBag.AddRange(attacks);
 
-        // Fisher–Yates Shuffle
         for (int i = attackBag.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
@@ -83,10 +95,8 @@ public class DevilAttackController : MonoBehaviour
 
     public void ForceStopAllAttacks()
     {
-        // 공격 루프 정지
         StopAttackLoop();
 
-        // 현재 공격 중인 것들 강제 종료
         foreach (var entry in attacks)
         {
             if (entry.attack is IDevilAttack atk)
@@ -95,7 +105,6 @@ public class DevilAttackController : MonoBehaviour
             }
         }
     }
-
 
     IEnumerator AttackLoop()
     {
@@ -112,6 +121,7 @@ public class DevilAttackController : MonoBehaviour
                 if (entry == null)
                 {
                     Debug.LogError("AttackEntry 없음");
+                    attackRoutine = null;
                     yield break;
                 }
 
@@ -124,25 +134,30 @@ public class DevilAttackController : MonoBehaviour
                     continue;
                 }
 
-                // 위치 이동
+                currentEntry = entry;
+                currentAttack = atk;
+
                 if (entry.bossPosition != null)
                 {
                     transform.position = entry.bossPosition.position;
                     GetComponent<DevilFloat>()?.ResetBasePosition();
                 }
 
-                // 보이기 / 숨기기
                 SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
                 if (sr != null)
                     sr.enabled = !entry.hideBoss;
 
-                // 공격 시작
                 atk.StartAttack();
 
                 yield return new WaitForSeconds(entry.duration);
 
-                // 공격 종료
-                atk.EndAttack();
+                // 중간에 StopAttackLoop()로 끊겼을 수 있으니 체크
+                if (currentAttack == atk)
+                {
+                    atk.EndAttack();
+                    currentAttack = null;
+                    currentEntry = null;
+                }
 
                 yield return new WaitForSeconds(intervalBetweenAttacks);
 

@@ -15,13 +15,6 @@ MonoBehaviour:
   id: 
   lines:
   - speaker: Player
-    text: "\uB611\uB611\uB611"
-    requiresName: 0
-    shakeCamera: 0
-    changeDevilSpriteOnEnd: 0
-    devilSpriteOnEnd: {fileID: 0}
-    weakShake: 0
-  - speaker: Player
     text: "\uAD50\uC218\uB2D8, {name} \uC785\uB2C8\uB2E4."
     requiresName: 0
     shakeCamera: 0

@@ -204,7 +204,7 @@ public class PlayerAction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            SceneManager.LoadScene("DevilBoss");
+            SceneManager.LoadScene("devil_end");
             return;
         }
 
@@ -498,7 +498,7 @@ public class PlayerAction : MonoBehaviour
         if (scene.name == "KeyboardMonster" || scene.name == "Keyboard_boss")
         {
             moveMode = PlayerMoveMode.Platformer;
-            rigid.gravityScale = 1f;
+            rigid.gravityScale = 2.5f;
             rigid.velocity = Vector2.zero;
             transform.localScale = originalScale * 0.5f;
         }
@@ -535,7 +535,7 @@ public class PlayerAction : MonoBehaviour
                 penAttack.enabled = true;
 
             moveMode = PlayerMoveMode.Platformer;
-            rigid.gravityScale = 1f;
+            rigid.gravityScale = 2.5f;
             rigid.velocity = Vector2.zero;
             rigid.bodyType = RigidbodyType2D.Dynamic;
 
@@ -552,7 +552,7 @@ public class PlayerAction : MonoBehaviour
 
             // 점프맵 설정 (KeyboardMonster와 동일)
             moveMode = PlayerMoveMode.Platformer;
-            rigid.gravityScale = 1f;
+            rigid.gravityScale = 2.5f;
             rigid.velocity = Vector2.zero;
             rigid.bodyType = RigidbodyType2D.Dynamic;
 

@@ -24,12 +24,13 @@ public class PrisonDoor : Interactable
     [Header("Objects To Hide")]
     public GameObject[] objectsToHide;
 
+    [Header("SFX")]
+    public AudioClip dialogueSFX;
+
     public override void Interact()
     {
-
         if (isOpened) return;
 
-        // PlayerKeyHolder 동적 탐색
         if (keyHolder == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -43,10 +44,24 @@ public class PrisonDoor : Interactable
             return;
         }
 
-        // 열쇠 사용
-        keyHolder.UseKey();
+        PlayerAction player =
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAction>();
 
-        // 감옥 스프라이트 전환
+        StartCoroutine(OpenDoorSequence(player));
+    }
+
+    IEnumerator OpenDoorSequence(PlayerAction player)
+    {
+        isOpened = true;
+
+        // 열쇠 사용 + 효과음
+        keyHolder.UseKey();
+        AudioManager.Instance.PlayOneShotSFX(dialogueSFX);
+
+    
+        yield return new WaitForSeconds(0.4f); 
+
+        // 스프라이트 전환
         if (closedPrison != null) closedPrison.SetActive(false);
         if (openedPrison != null) openedPrison.SetActive(true);
 
@@ -56,17 +71,8 @@ public class PrisonDoor : Interactable
                 obj.SetActive(false);
         }
 
-        isOpened = true;
-
-        PlayerAction player =
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAction>();
-
         cam = Camera.main.GetComponent<Cameramove>();
-        Vector3 camTarget = (player.transform.position + transform.position) * 0.5f;
 
-        camTarget.z = Camera.main.transform.position.z;
-
-        // ⭐ 플레이어를 뒤로 충분히 이동
         Vector3 backPos = player.transform.position + Vector3.left * 8f;
 
         StartCoroutine(RescueSequence(player, backPos));

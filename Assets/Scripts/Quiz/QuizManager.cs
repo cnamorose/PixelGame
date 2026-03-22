@@ -47,6 +47,8 @@ public class QuizManager : MonoBehaviour
     private int quizCount = 0;
     private int maxQuizCount = 6;
 
+    bool isQuizEnding = false;
+
     void Start()
     {
         quizPool = new List<QuizData>(quizList);
@@ -65,6 +67,7 @@ public class QuizManager : MonoBehaviour
 
     void Update()
     {
+        if (isQuizEnding) return;
         if (!isAnswering) return;
 
         currentTime -= Time.deltaTime;
@@ -104,6 +107,8 @@ public class QuizManager : MonoBehaviour
 
     public void CheckAnswer(int index)
     {
+        if (isQuizEnding) return;
+
         if (index == currentQuiz.correctIndex)
         {
             isAnswering = false;    
@@ -123,6 +128,8 @@ public class QuizManager : MonoBehaviour
 
     void TimeOut()
     {
+        if (isQuizEnding) return;
+
         isAnswering = false;
         playerLife.LoseLife();
 
@@ -135,8 +142,13 @@ public class QuizManager : MonoBehaviour
 
     void ShowQuizClear()
     {
+        if (isQuizEnding) return; // ⭐ 중복 방지
+
+        isQuizEnding = true;      // ⭐ 핵심
+        isAnswering = false;      // ⭐ 입력 차단
+
         if (questionPanel != null)
-            questionPanel.SetActive(true);
+            questionPanel.SetActive(false); // ⭐ UI 자체 꺼버리기
 
         StartCoroutine(QuizClearSequence());
     }

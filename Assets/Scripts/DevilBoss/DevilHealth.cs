@@ -101,33 +101,34 @@ public class DevilHealth : MonoBehaviour
         isTransitioning = true;
         currentPhase = DevilPhase.Phase2;
 
-        // 공격 완전 정지
-        attackController.StopAttackLoop();
+        attackController.ForceStopAllAttacks();
 
-        // 단발 대사
         yield return ShowDialogue("이렇게 쎄다고?");
 
-        // NPC 교체
         npcPhase1.SetActive(false);
         npcPhase2.SetActive(true);
 
-        // 공격 재개
+        yield return new WaitForSeconds(1f);
+
         attackController.BeginAttackLoop();
 
         isTransitioning = false;
     }
+
 
     IEnumerator Phase3Transition()
     {
         isTransitioning = true;
         currentPhase = DevilPhase.Phase3;
 
-        attackController.StopAttackLoop();
+        attackController.ForceStopAllAttacks();
 
-        yield return ShowDialogue("아직 끝나지 않았다");
+        yield return ShowDialogue("아직.. 끝나지 않았다..");
 
         npcPhase2.SetActive(false);
         npcPhase3.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
 
         attackController.BeginAttackLoop();
 
@@ -187,13 +188,13 @@ public class DevilHealth : MonoBehaviour
 
     IEnumerator DevilDeathSequence()
     {
-        // 공격 즉시 중단
-        attackController.StopAttackLoop();
+        // 공격 즉시 완전 중단
+        attackController.ForceStopAllAttacks();
+
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.StopBGM();
         }
-
 
         // 슬로우
         yield return StartCoroutine(DeathSlowMotion(0.15f, 0.6f));
@@ -201,12 +202,11 @@ public class DevilHealth : MonoBehaviour
         // 컷신 종료 후 콜백 등록
         DialogueManager.Instance.onCutsceneEnd = OnDevilDeathDialogueEnd;
 
-        // 컷신 시작 (씬 이동 없음)
         DialogueSequence selectedDialogue =
-GameManager_L.Instance.currentLanguage == Language.EN
-&& bossDeathDialogue_EN != null
-    ? bossDeathDialogue_EN
-    : bossDeathDialogue;
+            GameManager_L.Instance.currentLanguage == Language.EN
+            && bossDeathDialogue_EN != null
+                ? bossDeathDialogue_EN
+                : bossDeathDialogue;
 
         DialogueManager.Instance.StartDialogue(selectedDialogue);
     }

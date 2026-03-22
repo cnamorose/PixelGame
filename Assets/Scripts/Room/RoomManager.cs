@@ -8,6 +8,8 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
+        PlayerLifeManager.Instance.ShowPlayerAgain();
+
         switch (GameResultHolder.Result)
         {
             case GameResult.Printed:

@@ -15,13 +15,6 @@ MonoBehaviour:
   id: 
   lines:
   - speaker: Player
-    text: Knock, knock.
-    requiresName: 0
-    shakeCamera: 0
-    changeDevilSpriteOnEnd: 0
-    devilSpriteOnEnd: {fileID: 0}
-    weakShake: 0
-  - speaker: Player
     text: "Professor, it\u2019s {name}."
     requiresName: 0
     shakeCamera: 0

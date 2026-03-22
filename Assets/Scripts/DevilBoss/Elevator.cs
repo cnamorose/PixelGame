@@ -14,6 +14,9 @@ public class Elevator : Interactable
 
     bool isUsed = false;
 
+    [Header("SFX")]
+    public AudioClip dialogueSFX;
+
     public override void Interact()
     {
         if (isUsed) return;
@@ -41,6 +44,8 @@ public class Elevator : Interactable
         Animator openAnim = open != null ? open.GetComponent<Animator>() : null;
         if (openAnim == null)
             yield break;
+
+        AudioManager.Instance.PlayOneShotSFX(dialogueSFX);
 
         // 문 열림 애니
         openAnim.enabled = true;

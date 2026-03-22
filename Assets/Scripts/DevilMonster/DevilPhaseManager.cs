@@ -7,7 +7,6 @@ using static DialogueManager;
 
 public class DevilPhaseManager : MonoBehaviour
 {
-
     [Header("BGM")]
     public AudioClip phaseBGM;
 
@@ -20,6 +19,9 @@ public class DevilPhaseManager : MonoBehaviour
 
     [Header("Devil")]
     public GameObject devilObject;
+
+    [Header("Next Scene")]
+    public string nextSceneName = "Stage2";
 
     public void Start()
     {
@@ -35,7 +37,7 @@ public class DevilPhaseManager : MonoBehaviour
     }
 
     IEnumerator PhaseEndSequence()
-    {      
+    {
         PlayerAction player = FindObjectOfType<PlayerAction>();
         if (player != null)
             player.LockControl();
@@ -49,8 +51,32 @@ public class DevilPhaseManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        fadePanel.gameObject.SetActive(true);
-        fadePanel.color = Color.black;
+        // 이미 1->2 대화를 본 적 있으면 바로 다음 씬으로
+        if (GameProgressManager.Instance != null &&
+            GameProgressManager.Instance.hasSeenPhase1EndDialogue)
+        {
+            if (fadePanel != null)
+            {
+                fadePanel.gameObject.SetActive(true);
+                fadePanel.color = Color.black;
+            }
+
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.StopBGM();
+            }
+
+            yield return new WaitForSeconds(0.5f);
+            SceneManager.LoadScene(nextSceneName);
+            yield break;
+        }
+
+        // 처음 보는 경우만 아래 연출 + 대화 실행
+        if (fadePanel != null)
+        {
+            fadePanel.gameObject.SetActive(true);
+            fadePanel.color = Color.black;
+        }
 
         if (AudioManager.Instance != null)
         {
@@ -60,13 +86,12 @@ public class DevilPhaseManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         Color devilRed = new Color(0.2f, 0f, 0f, 1f);
-        yield return StartCoroutine(
-            FadeColor(Color.black, devilRed, 1.2f)
-        );
+        yield return StartCoroutine(FadeColor(Color.black, devilRed, 1.2f));
 
-        devilObject.SetActive(true);
+        if (devilObject != null)
+            devilObject.SetActive(true);
 
-        DevilVisual devil = devilObject.GetComponent<DevilVisual>();
+        DevilVisual devil = devilObject != null ? devilObject.GetComponent<DevilVisual>() : null;
         if (devil != null)
             devil.Show();
 
@@ -74,14 +99,20 @@ public class DevilPhaseManager : MonoBehaviour
             DialogueManager.CutsceneType.DevilMonster;
 
         DialogueSequence selectedDialogue =
-GameManager_L.Instance.currentLanguage == Language.EN
-&& bossDeathDialogue_EN != null
-    ? bossDeathDialogue_EN
-    : bossDeathDialogue;
+            GameManager_L.Instance.currentLanguage == Language.EN &&
+            bossDeathDialogue_EN != null
+                ? bossDeathDialogue_EN
+                : bossDeathDialogue;
 
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.StopBGM();
+        }
+
+        // 대화 본 상태 저장
+        if (GameProgressManager.Instance != null)
+        {
+            GameProgressManager.Instance.hasSeenPhase1EndDialogue = true;
         }
 
         DialogueManager.Instance.StartDialogue(selectedDialogue);
@@ -98,6 +129,4 @@ GameManager_L.Instance.currentLanguage == Language.EN
         }
         fadePanel.color = to;
     }
-
-
 }

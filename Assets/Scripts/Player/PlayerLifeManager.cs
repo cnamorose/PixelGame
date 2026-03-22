@@ -11,13 +11,13 @@ public class PlayerLifeManager : MonoBehaviour
     public float invincibleTime = 1f;
     private bool isInvincible = false;
 
-
     public int maxLife = 3;
     public int currentLife = 3;
 
     public event Action OnLifeChanged;
     public Vector3 respawnPosition;
 
+    private Animator animator;
 
     private void Awake()
     {
@@ -29,13 +29,14 @@ public class PlayerLifeManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
-    }
 
+        animator = GetComponent<Animator>();
+    }
 
     public void LoseLife()
     {
-        // ⭐ 이미 죽었거나 무적이면 무시
         if (currentLife <= 0 || isInvincible)
             return;
 
@@ -46,11 +47,31 @@ public class PlayerLifeManager : MonoBehaviour
         if (currentLife <= 0)
         {
             currentLife = 0;
+
+            // ⭐ 플레이어 숨기기
+            SetPlayerVisible(false);
+
             GameOverManager.Instance.ShowGameOver();
             return;
         }
 
         StartCoroutine(InvincibleRoutine());
+    }
+
+    void SetPlayerVisible(bool visible)
+    {
+        // 스프라이트 전부 ON/OFF
+        var renderers = GetComponentsInChildren<SpriteRenderer>(true);
+        foreach (var r in renderers)
+            r.enabled = visible;
+
+        // 다시 보일 때 애니 초기화
+        if (visible && animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+            animator.SetFloat("Speed", 0f);
+        }
     }
 
     IEnumerator InvincibleRoutine()
@@ -60,7 +81,6 @@ public class PlayerLifeManager : MonoBehaviour
 
         isInvincible = true;
 
-        //깜빡임 연출
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null)
         {
@@ -85,5 +105,11 @@ public class PlayerLifeManager : MonoBehaviour
     {
         currentLife = maxLife;
         OnLifeChanged?.Invoke();
+    }
+
+    // ⭐ 부활용 (Room 씬에서 한 번 호출)
+    public void ShowPlayerAgain()
+    {
+        SetPlayerVisible(true);
     }
 }

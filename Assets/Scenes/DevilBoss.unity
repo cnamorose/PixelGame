@@ -604,6 +604,7 @@ MonoBehaviour:
   tridentPrefab: {fileID: 1410085001234601110, guid: 41652123e2588dc45a87c3d06cc61767, type: 3}
   skyPointsParent: {fileID: 1129929502}
   spawnInterval: 0.5
+  dropSFX: {fileID: 8300000, guid: 07cd153a03e96b548ac1468a16462f8a, type: 3}
 --- !u!4 &255609107
 Transform:
   m_ObjectHideFlags: 0
@@ -1251,6 +1252,7 @@ MonoBehaviour:
   openStateName: Open
   closeStateName: Close
   nextSceneName: devil_end
+  dialogueSFX: {fileID: 8300000, guid: ac454fcf4e053894380231b86f51e556, type: 3}
 --- !u!61 &543032160
 BoxCollider2D:
   m_ObjectHideFlags: 0

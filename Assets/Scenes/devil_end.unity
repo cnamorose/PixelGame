@@ -722,6 +722,7 @@ MonoBehaviour:
   closeStateName: close
   spawnPoint: {fileID: 759556296}
   openDelay: 2
+  dialogueSFX: {fileID: 8300000, guid: 9007cfe2524f55c4a9951dac197a2d9d, type: 3}
 --- !u!61 &505343693
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1285,6 +1286,7 @@ MonoBehaviour:
   cutsceneType: 5
   objectsToHide:
   - {fileID: 569584943}
+  dialogueSFX: {fileID: 8300000, guid: c96ed9b85be741f4eb348e1ec5c648d0, type: 3}
 --- !u!1 &759556295
 GameObject:
   m_ObjectHideFlags: 0

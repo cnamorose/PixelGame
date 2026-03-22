@@ -16,6 +16,9 @@ public class SkyTridentAttack : MonoBehaviour, IDevilAttack
 
     Coroutine runningRoutine;
 
+    [Header("SFX")]
+    public AudioClip dropSFX;
+
     void Awake()
     {
         int count = skyPointsParent.childCount;
@@ -59,6 +62,16 @@ public class SkyTridentAttack : MonoBehaviour, IDevilAttack
             Instantiate(tridentPrefab, point.position, Quaternion.identity);
 
         spawnedTridents.Add(obj);
+
+        // 🔊 확률로 효과음 재생
+        if (AudioManager.Instance != null && dropSFX != null)
+        {
+            if (Random.value < 0.6f) // 60% 확률
+            {
+                AudioManager.Instance.PlayOneShotSFX(dropSFX);
+            }
+        }
+
         obj.GetComponent<SkyTrident>().StartDrop();
     }
 

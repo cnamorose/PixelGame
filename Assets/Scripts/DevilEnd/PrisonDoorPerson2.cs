@@ -22,9 +22,14 @@ public class PrisonDoorPerson2 : Interactable
 
     bool isOpened = false;
 
+    [Header("SFX")]
+    public AudioClip dialogueSFX;
+
     public override void Interact()
     {
         if (isOpened) return;
+
+        AudioManager.Instance.PlayOneShotSFX(dialogueSFX);
 
         // 감옥 스프라이트 전환
         if (closedPrison != null) closedPrison.SetActive(false);

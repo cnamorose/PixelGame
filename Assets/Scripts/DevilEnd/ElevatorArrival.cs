@@ -24,6 +24,9 @@ public class ElevatorArrival : Interactable
     PlayerAction player;
     ElevatorState state = ElevatorState.Opening;
 
+    [Header("SFX")]
+    public AudioClip dialogueSFX;
+
     void Start()
     {
         player = FindObjectOfType<PlayerAction>();
@@ -49,6 +52,8 @@ public class ElevatorArrival : Interactable
         }
 
         yield return new WaitForSeconds(openDelay);
+
+        AudioManager.Instance.PlayOneShotSFX(dialogueSFX);
 
         Animator openAnim = open != null ? open.GetComponent<Animator>() : null;
         if (openAnim == null)

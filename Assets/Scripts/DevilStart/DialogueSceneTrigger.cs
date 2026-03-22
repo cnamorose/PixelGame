@@ -20,6 +20,11 @@ public class DialogueSceneTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (GameProgressManager.Instance != null)
+        {
+            GameProgressManager.Instance.hasSeenFirstDialogue = true;
+        }
+
         if (triggered) return;
         if (!other.CompareTag("Player")) return;
 

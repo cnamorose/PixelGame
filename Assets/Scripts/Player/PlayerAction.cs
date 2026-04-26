@@ -66,6 +66,13 @@ public class PlayerAction : MonoBehaviour
     [Header("Jump SFX")]
     public AudioClip jumpClip;
 
+    [Header("Monster Hit")]
+    public int monsterHitCount = 0;
+    public int hitsToLoseLife = 2;
+    public float knockbackForceX = 14f;
+    public float knockbackForceY = 5f;
+    private bool isKnockback = false;
+
 
     public void LockControl()
     {
@@ -91,6 +98,11 @@ public class PlayerAction : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("KnockbackMonster"))
+        {
+            HandleMonsterHit(other.transform);
+        }
+
         Interactable interactable = other.GetComponent<Interactable>();
         if (interactable != null)
         {
@@ -104,6 +116,14 @@ public class PlayerAction : MonoBehaviour
         if (interactable != null && currentInteractable == interactable)
         {
             currentInteractable = null;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("KnockbackMonster"))
+        {
+            HandleMonsterHit(collision.transform);
         }
     }
 
@@ -315,7 +335,7 @@ public class PlayerAction : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isRecoiling)
+        if (isRecoiling || isKnockback)
             return;
 
         if (forceIdle || isQuizScene || isInventoryOpen)
@@ -674,6 +694,62 @@ public class PlayerAction : MonoBehaviour
     public int GetFacingDir()
     {
         return idleDir; // 1 = 오른쪽, -1 = 왼쪽
+    }
+
+    void HandleMonsterHit(Transform monster)
+    {
+        if (isKnockback) return;
+
+        monsterHitCount++;
+
+        Debug.Log("맞은 횟수: " + monsterHitCount); // 확인용
+
+        Vector2 dir = transform.position.x > monster.position.x
+            ? Vector2.right
+            : Vector2.left;
+
+        StartCoroutine(Knockback(dir));
+
+        if (monsterHitCount >= hitsToLoseLife)
+        {
+            monsterHitCount = 0;
+
+            if (PlayerLifeManager.Instance != null)
+            {
+                PlayerLifeManager.Instance.LoseLife();
+            }
+        }
+    }
+
+    IEnumerator Knockback(Vector2 hitDir)
+    {
+        isKnockback = true;
+        rigid.velocity = Vector2.zero;
+
+        if (anim != null)
+            anim.speed = 0f;
+
+        rigid.AddForce(
+            new Vector2(hitDir.x * knockbackForceX, knockbackForceY),
+            ForceMode2D.Impulse
+        );
+
+        float time = 0f;
+        float duration = 0.5f;
+
+        while (time < duration)
+        {
+            sr.enabled = !sr.enabled;
+            yield return new WaitForSeconds(0.08f);
+            time += 0.08f;
+        }
+
+        sr.enabled = true;
+
+        if (anim != null)
+            anim.speed = 1f;
+
+        isKnockback = false;
     }
 
     public void ApplyAttackRecoil()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterAction: MonoBehaviour
+public class MonsterAction : MonoBehaviour
 {
     public float speed = 1.5f;
     public Transform leftPoint;
@@ -12,16 +12,41 @@ public class MonsterAction: MonoBehaviour
     private float changeTime;
     private SpriteRenderer sr;
 
+    public Transform player;
+    public float soundRange = 4f;
+
+    public AudioClip walkClip;      
+    private AudioSource walkSource;
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+
+        walkSource = GetComponent<AudioSource>();
+
+        if (walkSource != null)
+        {
+            walkSource.clip = walkClip;
+            walkSource.loop = true;
+            walkSource.playOnAwake = false;
+        }
+
+        GameObject playerObj = GameObject.FindWithTag("Player");
+
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogError("Player not found!");
+        }
 
         SetRandomTime();
     }
 
     void Update()
     {
-        // 이동
         if (movingRight)
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
@@ -31,10 +56,8 @@ public class MonsterAction: MonoBehaviour
             transform.Translate(Vector2.left * speed * Time.deltaTime);
         }
 
-        // 방향 반전
         sr.flipX = !movingRight;
 
-        // 랜덤 시간마다 방향 전환
         changeTime -= Time.deltaTime;
         if (changeTime <= 0)
         {
@@ -42,7 +65,6 @@ public class MonsterAction: MonoBehaviour
             SetRandomTime();
         }
 
-        // 포인트 범위를 넘지 않도록 체크
         if (transform.position.x > rightPoint.position.x)
         {
             movingRight = false;
@@ -58,10 +80,40 @@ public class MonsterAction: MonoBehaviour
         float x = transform.position.x;
         x = Mathf.Clamp(x, leftPoint.position.x, rightPoint.position.x);
         transform.position = new Vector2(x, transform.position.y);
+
+        CheckWalkSound();
+    }
+
+    void CheckWalkSound()
+    {
+        if (player == null || walkSource == null || walkClip == null) return;
+
+        float distance = Vector2.Distance(transform.position, player.position);
+
+        if (distance <= soundRange)
+        {
+            if (!walkSource.isPlaying)
+                walkSource.Play();
+        }
+        else
+        {
+            if (walkSource.isPlaying)
+                walkSource.Stop();
+        }
     }
 
     void SetRandomTime()
     {
-        changeTime = Random.Range(0.5f, 2f);   // 0.5~2초 사이로 랜덤하게 방향 바꿈
+        changeTime = Random.Range(0.5f, 2f);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //PlayerLifeManager.Instance.LoseLife();
+            //Destroy(gameObject);
+        }
     }
 }

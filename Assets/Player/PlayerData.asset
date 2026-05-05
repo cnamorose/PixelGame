@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d8a7f8dff87f144b99f2d824b6ec8f, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  playerName: a
+  playerName: "\uD574\uB9BC"
   quizCleared: 1
-  pcCleared: 0
-  paperclear: 0
+  pcCleared: 1
+  paperclear: 1
   hasPen: 0
   hasPaper: 0
   hasUsb: 0

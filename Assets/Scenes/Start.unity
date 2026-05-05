@@ -5136,8 +5136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd2edf6f3e7874a449e286db0bcc52bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasSeenFirstDialogue: 1
-  hasSeenPhase1EndDialogue: 1
+  hasSeenFirstDialogue: 0
+  hasSeenPhase1EndDialogue: 0
 --- !u!4 &1529849351
 Transform:
   m_ObjectHideFlags: 0

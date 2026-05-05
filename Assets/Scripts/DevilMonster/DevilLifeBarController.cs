@@ -21,6 +21,8 @@ public class DevilLifeBarController : MonoBehaviour
 
     SpriteRenderer sr;
 
+    public bool isBossDead = false;
+
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -30,6 +32,8 @@ public class DevilLifeBarController : MonoBehaviour
 
     public void ReduceHP(int amount)
     {
+        if (isBossDead) return;
+
         currentHP -= amount;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         UpdateLifeBar();
@@ -56,7 +60,12 @@ public class DevilLifeBarController : MonoBehaviour
         else
         {
             sr.sprite = hp0Sprite;
-            OnBossPhaseEnd();
+
+            if (!isBossDead)
+            {
+                isBossDead = true;
+                OnBossPhaseEnd();
+            }
         }
     }
 

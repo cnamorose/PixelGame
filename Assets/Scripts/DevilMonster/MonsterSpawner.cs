@@ -19,6 +19,10 @@ public class MonsterSpawner : MonoBehaviour
     {
         while (true)
         {
+            DevilLifeBarController boss = FindObjectOfType<DevilLifeBarController>();
+            if (boss != null && boss.isBossDead)
+                yield break;
+
             float delay = Random.Range(0.5f, 2f);
             yield return new WaitForSeconds(delay);
 
@@ -28,6 +32,11 @@ public class MonsterSpawner : MonoBehaviour
 
     void SpawnMonster()
     {
+        DevilLifeBarController boss = FindObjectOfType<DevilLifeBarController>();
+
+        if (boss != null && boss.isBossDead)
+            return;
+
         Transform spawnPoint = Random.value < 0.5f ? leftSpawn : rightSpawn;
 
         int rand = Random.Range(1, 4);
@@ -36,7 +45,6 @@ public class MonsterSpawner : MonoBehaviour
 
         GameObject monster = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
 
-        // ▶ 크기 보정 (그림 비슷해도 체급 차이 나게)
         if (rand == 1)
             monster.transform.localScale = Vector3.one * 3.0f;
         else if (rand == 2)

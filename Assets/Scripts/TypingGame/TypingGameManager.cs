@@ -49,6 +49,9 @@ public class TypingGameManager : MonoBehaviour
     [Header("Scene")]
     public string returnSceneName = "Room"; // 돌아갈 씬 이름
 
+    [Header("BGM")]
+    public AudioClip BGM;
+
     private bool isGameOver = false;
 
 
@@ -60,6 +63,11 @@ public class TypingGameManager : MonoBehaviour
 
             printButton.gameObject.SetActive(false);
             printButton.onClick.AddListener(OnPrintClicked);
+        }
+
+        if (AudioManager.Instance != null && BGM != null)
+        {
+            AudioManager.Instance.PlayBGM(BGM);
         }
     }
 
@@ -199,6 +207,11 @@ public class TypingGameManager : MonoBehaviour
 
         // 게임 멈춤
         Time.timeScale = 0f;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopBGM();
+        }
 
         // Print 버튼 표시
         if (printButton != null)

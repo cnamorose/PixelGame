@@ -74,6 +74,9 @@ public class GameOverManager : MonoBehaviour
         GameObject timerUI = GameObject.Find("TimerUI");
         if (timerUI != null) timerUI.SetActive(false);
 
+        GameObject CpartsUI = GameObject.Find("CpartsUI");
+        if (CpartsUI != null) CpartsUI.SetActive(false);
+
         StartCoroutine(GameOverSequence());
     }
 

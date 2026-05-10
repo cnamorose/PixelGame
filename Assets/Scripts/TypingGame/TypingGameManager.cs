@@ -272,6 +272,11 @@ public class TypingGameManager : MonoBehaviour
 
     IEnumerator ErrorReturnSequence()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopBGM();
+        }
+
         yield return new WaitForSecondsRealtime(1.5f); 
 
         Time.timeScale = 1f;

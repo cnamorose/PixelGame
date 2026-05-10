@@ -112,4 +112,12 @@ public class PlayerLifeManager : MonoBehaviour
     {
         SetPlayerVisible(true);
     }
+
+    public void CallOnLifeChanged()
+    {
+        if (OnLifeChanged != null)
+        {
+            OnLifeChanged.Invoke();
+        }
+    }
 }

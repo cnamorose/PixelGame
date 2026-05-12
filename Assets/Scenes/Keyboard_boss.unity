@@ -1627,10 +1627,9 @@ MonoBehaviour:
   bossBGM: {fileID: 8300000, guid: a3f5fd2d872d4ef4294a713d0250bf13, type: 3}
   boss: {fileID: 213649639}
   background: {fileID: 681055233}
-  biasToPlayer: 0.3
   moveDuration: 0.6
-  bossDeathDialogue: {fileID: 11400000, guid: 060d157a52c0ace4fb312ff2eb7897b6, type: 2}
-  bossDeathDialogue_EN: {fileID: 11400000, guid: f5ce3259bac84654a99a992b618045b6, type: 2}
+  bossIntroDialogue: {fileID: 11400000, guid: 060d157a52c0ace4fb312ff2eb7897b6, type: 2}
+  bossIntroDialogue_EN: {fileID: 11400000, guid: f5ce3259bac84654a99a992b618045b6, type: 2}
 --- !u!61 &971615502
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1766,6 +1765,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048989590}
   m_CullTransparentMesh: 1
+--- !u!1 &1056000431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1056000432}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1056000432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056000431}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 36.53, y: 6.97, z: -0.06311853}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1210239424
 GameObject:
   m_ObjectHideFlags: 0
@@ -4078,3 +4108,4 @@ SceneRoots:
   - {fileID: 1380751959}
   - {fileID: 1358760469}
   - {fileID: 2102541562}
+  - {fileID: 1056000432}

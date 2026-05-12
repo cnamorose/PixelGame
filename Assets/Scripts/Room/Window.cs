@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Window : Interactable
 {
+    public PlayerData playerdata; // ⭐ PlayerData를 참조할 수 있게 추가
+
     private int interactCount = 0;
-    private bool hasUpgradedMaxLife = false; // 이 창문에서 보상을 이미 받았는지 확인
+    // private bool hasUpgradedMaxLife = false; // 로컬 변수는 삭제합니다.
 
     public override void Interact()
     {
         var life = PlayerLifeManager.Instance;
         bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
 
-        // 이미 이 창문에서 목숨을 늘렸다면 평범한 대사만 출력
-        if (hasUpgradedMaxLife)
+        // ⭐ 수정: PlayerData에 저장된 값으로 체크합니다.
+        if (playerdata.windowLifeUpgraded)
         {
             string text = isEN ? "The sunlight is warm." : "햇살이 따스하다.";
             DialogueManager.Instance.ShowSimpleDialogueAutoClose(text);
@@ -43,14 +45,15 @@ public class Window : Interactable
 
     private void ApplyWindowUpgrade(PlayerLifeManager life, bool isEN)
     {
-        // ⭐ 핵심: 현재 maxLife가 3이든 4든 상관없이 +1을 해줍니다.
+        // 핵심: 현재 maxLife가 3이든 4든 상관없이 +1을 해줍니다.
         life.maxLife++;
         life.currentLife++; // 현재 체력도 보너스로 1칸 회복
 
         // UI 방송 (UI 매니저에게 알약 칸을 새로 그리라고 명령)
         life.CallOnLifeChanged();
 
-        hasUpgradedMaxLife = true;
+        // ⭐ 수정: 영구 데이터인 PlayerData에 저장합니다.
+        playerdata.windowLifeUpgraded = true;
 
         string rewardText = isEN
             ? "Replenished Vitamin D with sunlight! Max Life increased!"

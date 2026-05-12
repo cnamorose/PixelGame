@@ -12,6 +12,9 @@ public class GameProgressManager : MonoBehaviour
     [Header("악마 대화씬 2번 여부")]
     public bool hasSeenPhase1EndDialogue = false;
 
+    [Header("보스 인트로 대화 여부")]
+    public bool hasSeenBossIntro = false;
+
     private void Awake()
     {
         if (Instance == null)

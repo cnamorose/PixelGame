@@ -272,6 +272,7 @@ public class KBossController : MonoBehaviour
     IEnumerator DoAttack(int attackIndex)
     {
         isAttacking = true;
+        Collider2D bossCollider = GetComponent<Collider2D>();
 
         // =====================
         // A1 : 기존 자리에서 5초 액션
@@ -306,6 +307,10 @@ public class KBossController : MonoBehaviour
         if (attackIndex == 2)
         {
             isA2Active = true;
+
+            // ⭐ [추가] 공격 2 동안은 충돌 판정을 꺼서 플레이어가 지나갈 수 있게 함
+            if (bossCollider != null) bossCollider.enabled = false;
+
             transform.position = GetA2CameraTopPosition();
 
             anim.SetInteger("AttackIndex", 2);
@@ -327,6 +332,9 @@ public class KBossController : MonoBehaviour
 
             if (defaultPos != null)
                 transform.position = defaultPos.position;
+
+            // ⭐ [추가] 공격이 끝났으므로 다시 충돌 판정을 켬
+            if (bossCollider != null) bossCollider.enabled = true;
 
             isA2Active = false;
             isAttacking = false;
@@ -398,7 +406,7 @@ public class KBossController : MonoBehaviour
     // ================================
     public void TakeDamage(int damage)
     {
-        if (isDead) return;
+        if (isDead || isA2Active) return;
 
         hp -= damage;
         

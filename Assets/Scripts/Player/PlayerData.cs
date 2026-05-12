@@ -12,6 +12,8 @@ public class PlayerData : ScriptableObject
     public bool quizCleared = false;
     public bool pcCleared = false;
     public bool paperclear = false;
+    public bool bookshelfLifeUpgraded;
+    public bool windowLifeUpgraded;
 
     [Header("Inventory")]
     public bool hasPen;

@@ -12,8 +12,8 @@ public class PlayerData : ScriptableObject
     public bool quizCleared = false;
     public bool pcCleared = false;
     public bool paperclear = false;
-    public bool bookshelfLifeUpgraded;
-    public bool windowLifeUpgraded;
+    public bool bookshelfLifeUpgraded = false;
+    public bool windowLifeUpgraded = false;
 
     [Header("Inventory")]
     public bool hasPen;
@@ -35,5 +35,7 @@ public class PlayerData : ScriptableObject
         hasPaper2 = false;
 
         paperTried = false;
+        bookshelfLifeUpgraded = false;
+        windowLifeUpgraded = false;
     }
 }

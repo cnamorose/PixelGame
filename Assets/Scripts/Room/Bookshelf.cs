@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Bookshelf : Interactable
 {
     public PlayerData playerdata;
+    public AudioClip SFX;
 
     private int interactCount = 0;
 
@@ -80,6 +81,7 @@ public class Bookshelf : Interactable
 
             // ⭐ 핵심: 영구 데이터인 PlayerData에 저장합니다.
             playerdata.bookshelfLifeUpgraded = true;
+            AudioManager.Instance.PlaySFX(SFX);
 
             string rewardText = isEN
                 ? "Found a hidden vitamin! Maximum Life increased!"

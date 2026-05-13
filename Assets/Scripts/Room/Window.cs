@@ -8,6 +8,7 @@ public class Window : Interactable
 
     private int interactCount = 0;
     // private bool hasUpgradedMaxLife = false; // 로컬 변수는 삭제합니다.
+    public AudioClip SFX;
 
     public override void Interact()
     {
@@ -54,6 +55,7 @@ public class Window : Interactable
 
         // ⭐ 수정: 영구 데이터인 PlayerData에 저장합니다.
         playerdata.windowLifeUpgraded = true;
+        AudioManager.Instance.PlaySFX(SFX);
 
         string rewardText = isEN
             ? "Replenished Vitamin D with sunlight! Max Life increased!"

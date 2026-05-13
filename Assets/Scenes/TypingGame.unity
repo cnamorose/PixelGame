@@ -1650,6 +1650,8 @@ MonoBehaviour:
   printButton: {fileID: 1216100129}
   returnSceneName: Room
   BGM: {fileID: 8300000, guid: e65f79d818e58fe4181dabd540a0d042, type: 3}
+  SFX: {fileID: 8300000, guid: f7570852f2d28404fb9ffde9326223e7, type: 3}
+  LoopSFX: {fileID: 8300000, guid: 64b117eea736132499ec416eb3012d56, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

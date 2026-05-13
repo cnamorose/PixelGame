@@ -8,7 +8,7 @@ using System.Collections;
 public class TypingGameManager : MonoBehaviour
 {
     [Header("Warning Blink")]
-    public float warningBlinkInterval = 0.5f;
+    public float warningBlinkInterval = 0.7f;
 
     private Coroutine warningBlinkCoroutine;
 
@@ -51,6 +51,10 @@ public class TypingGameManager : MonoBehaviour
 
     [Header("BGM")]
     public AudioClip BGM;
+
+    [Header("SFX")]
+    public AudioClip SFX;
+    public AudioClip LoopSFX;
 
     private bool isGameOver = false;
 
@@ -277,6 +281,7 @@ public class TypingGameManager : MonoBehaviour
             AudioManager.Instance.StopBGM();
         }
 
+        AudioManager.Instance.PlaySFX(SFX);
         yield return new WaitForSecondsRealtime(1.5f); 
 
         Time.timeScale = 1f;
@@ -288,8 +293,18 @@ public class TypingGameManager : MonoBehaviour
         while (true)
         {
             if (warningImage != null)
-                warningImage.gameObject.SetActive(!warningImage.gameObject.activeSelf);
+            {
+                // 현재 상태의 반대로 토글
+                bool nextState = !warningImage.gameObject.activeSelf;
+                warningImage.gameObject.SetActive(nextState);
 
+                // ⭐ 이미지가 켜질 때만 "삐-" 소리 재생 (PlaySFX 사용)
+                if (nextState && AudioManager.Instance != null && LoopSFX != null)
+                {
+                    // PlaySFX는 단발성 효과음을 재생합니다.
+                    AudioManager.Instance.PlaySFX(LoopSFX);
+                }
+            }
             yield return new WaitForSeconds(warningBlinkInterval);
         }
     }
@@ -306,6 +321,7 @@ public class TypingGameManager : MonoBehaviour
         if (warningBlinkCoroutine != null)
         {
             StopCoroutine(warningBlinkCoroutine);
+            AudioManager.Instance.StopLoopingSFX();
             warningBlinkCoroutine = null;
         }
 

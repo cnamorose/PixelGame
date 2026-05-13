@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: "\uD574\uB9BC"
   quizCleared: 1
-  pcCleared: 0
+  pcCleared: 1
   paperclear: 0
   bookshelfLifeUpgraded: 0
   windowLifeUpgraded: 0
@@ -22,4 +22,4 @@ MonoBehaviour:
   hasPaper: 0
   hasUsb: 0
   hasPaper2: 0
-  paperTried: 0
+  paperTried: 1

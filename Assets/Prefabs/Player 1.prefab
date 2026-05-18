@@ -133,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 4227885390458954721}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0629, y: -0.07959999, z: 0.012299816}
+  m_LocalPosition: {x: 0.0624, y: -0.0796, z: 0.012299816}
   m_LocalScale: {x: 0.090909086, y: 0.090909086, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -402,7 +402,7 @@ MonoBehaviour:
   Player: {fileID: 9100000, guid: 4fd3a4aa4b40d164486d968d134324ef, type: 2}
   moveMode: 0
   Speed: 4
-  jumpForce: 7
+  jumpForce: 11
   anim: {fileID: 0}
   h: 0
   v: 0
@@ -603,13 +603,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89d6be52116587a4c80c1ed5a33dc9d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  penPivot: {fileID: 0}
-  penHitBox: {fileID: 0}
+  penPivot: {fileID: 2258430868101734812, guid: 437719fa764a9e943b384c644c8135b8, type: 3}
+  penHitBox: {fileID: 212719130750668643, guid: 437719fa764a9e943b384c644c8135b8, type: 3}
   attackKey: 106
   swingAngle: 120
   swingDuration: 0.18
   cooldown: 0.25
-  penVisual: {fileID: 0}
+  penVisual: {fileID: 6222196365349182882, guid: 437719fa764a9e943b384c644c8135b8, type: 3}
 --- !u!1 &7785957512270500507
 GameObject:
   m_ObjectHideFlags: 0

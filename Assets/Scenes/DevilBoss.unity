@@ -3108,6 +3108,7 @@ GameObject:
   - component: {fileID: 1623326244}
   - component: {fileID: 1623326243}
   - component: {fileID: 1623326246}
+  - component: {fileID: 1623326247}
   m_Layer: 0
   m_Name: DevilNPC2
   m_TagString: Untagged
@@ -3290,6 +3291,18 @@ PolygonCollider2D:
       - {x: 0.060755685, y: 0.020868048}
       - {x: 0.060070954, y: 0.061336286}
   m_UseDelaunayMesh: 0
+--- !u!114 &1623326247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623326239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f401f9f1431d40b4a890957f2e24d454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1641727398
 GameObject:
   m_ObjectHideFlags: 0
@@ -3522,6 +3535,7 @@ GameObject:
   - component: {fileID: 1809569401}
   - component: {fileID: 1809569400}
   - component: {fileID: 1809569403}
+  - component: {fileID: 1809569404}
   m_Layer: 0
   m_Name: DevilNPC3
   m_TagString: Untagged
@@ -3711,6 +3725,18 @@ PolygonCollider2D:
       - {x: 0.05961545, y: 0.039898932}
       - {x: 0.049392004, y: 0.050657332}
   m_UseDelaunayMesh: 0
+--- !u!114 &1809569404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809569396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f401f9f1431d40b4a890957f2e24d454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1817851515
 GameObject:
   m_ObjectHideFlags: 0
@@ -3785,6 +3811,7 @@ GameObject:
   - component: {fileID: 1881977070}
   - component: {fileID: 1881977069}
   - component: {fileID: 1881977072}
+  - component: {fileID: 1881977073}
   m_Layer: 0
   m_Name: DevilNPC1
   m_TagString: Untagged
@@ -3962,6 +3989,18 @@ PolygonCollider2D:
       - {x: 0.060755685, y: 0.020868048}
       - {x: 0.060070954, y: 0.061336286}
   m_UseDelaunayMesh: 0
+--- !u!114 &1881977073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881977067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f401f9f1431d40b4a890957f2e24d454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1883460432
 GameObject:
   m_ObjectHideFlags: 0

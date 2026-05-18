@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6822047368794178794}
   m_Layer: 11
   m_Name: Trident
-  m_TagString: Untagged
+  m_TagString: BossProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

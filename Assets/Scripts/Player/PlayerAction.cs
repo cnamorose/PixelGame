@@ -73,6 +73,7 @@ public class PlayerAction : MonoBehaviour
     public float knockbackForceY = 5f;
     private bool isKnockback = false;
 
+    private bool isInvincible = false; // 직격 데미지용 무적 체크
 
     public void LockControl()
     {
@@ -771,6 +772,39 @@ public class PlayerAction : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         isRecoiling = false;
+    }
+
+    public void TakeDirectDamage()
+    {
+        // 이미 넉백 중이거나 무적 상태이면 데미지 무시
+        if (isInvincible || isKnockback) return;
+
+        // 목숨 감소 처리
+        if (PlayerLifeManager.Instance != null)
+        {
+            PlayerLifeManager.Instance.LoseLife();
+        }
+
+        // 넉백 없이 깜빡이는 무적 루틴 시작
+        StartCoroutine(DirectDamageInvincibilityRoutine());
+    }
+
+    IEnumerator DirectDamageInvincibilityRoutine()
+    {
+        isInvincible = true;
+
+        float time = 0f;
+        float duration = 0.6f; // 💡 무적 및 깜빡임 지속 시간 (원하는 대로 조절 가능)
+
+        while (time < duration)
+        {
+            sr.enabled = !sr.enabled;
+            yield return new WaitForSeconds(0.08f);
+            time += 0.08f;
+        }
+
+        sr.enabled = true;
+        isInvincible = false;
     }
 
 

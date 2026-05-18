@@ -66,7 +66,8 @@ public class PC : Interactable
                 question,
                 onYes: () =>
                 {
-                    SceneManager.LoadScene("KeyboardMonster");
+                    // 🔹 바로 이동하지 않고 코루틴을 호출합니다.
+                    StartCoroutine(LoadKeyboardMonsterWithDelay());
                 },
                 onNo: () =>
                 {
@@ -74,6 +75,13 @@ public class PC : Interactable
                 }
             );
             return;
+        }
+
+        // ⏳ 1초 기다렸다가 씬을 로드하는 함수
+        IEnumerator LoadKeyboardMonsterWithDelay()
+        {
+            yield return new WaitForSeconds(1.0f); // 1초 대기
+            SceneManager.LoadScene("KeyboardMonster");
         }
 
         // 3️⃣ PC 클리어 + 논문 미완성
@@ -99,11 +107,17 @@ public class PC : Interactable
                 onYes: () =>
                 {
                     playerdata.paperTried = true;
-                    SceneManager.LoadScene("TypingGame");
+                    StartCoroutine(TypingGameWithDelay());
                 },
                 onNo: () => { }
             );
             return;
+        }
+
+        IEnumerator TypingGameWithDelay()
+        {
+            yield return new WaitForSeconds(1.0f); // 1초 대기
+            SceneManager.LoadScene("TypingGame");
         }
 
         // 4️⃣ 논문 완료

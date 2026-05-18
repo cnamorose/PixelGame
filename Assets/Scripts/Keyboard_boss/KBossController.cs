@@ -451,6 +451,8 @@ public class KBossController : MonoBehaviour
             AudioManager.Instance.StopBGM();
         }
 
+        ClearRemainingProjectiles();
+
         Vector3 deathPos = transform.position;
 
         // 모든 행동 중지
@@ -473,31 +475,21 @@ public class KBossController : MonoBehaviour
         StartCoroutine(DestroyAfterDeath());
     }
 
-    [SerializeField] float keyDropYOffset = -0.5f;
-
-    /**IEnumerator DestroyAfterDeath()
+    void ClearRemainingProjectiles()
     {
-        PlayerAction player = FindObjectOfType<PlayerAction>();
+        // "BossProjectile" 태그를 가진 모든 게임 오브젝트를 배열로 가져옴
+        GameObject[] projectiles = GameObject.FindGameObjectsWithTag("BossProjectile");
 
-        Time.timeScale = 0.25f;
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
-
-        float waitTime = deathClip != null ? deathClip.length : 0.8f;
-        yield return new WaitForSeconds(waitTime);
-
-        if (keyPrefab != null)
+        foreach (GameObject p in projectiles)
         {
-            Vector3 dropPos = transform.position;
-            dropPos.y += keyDropYOffset;
-
-            Instantiate(keyPrefab, dropPos, Quaternion.identity);
+            Destroy(p);
         }
 
-        if (player != null)
-            player.UnlockControl();
+        Debug.Log("모든 공격 프리팹 제거 완료");
+    }
 
-        Destroy(gameObject);
-    }**/
+    [SerializeField] float keyDropYOffset = -0.5f;
+
 
     IEnumerator DestroyAfterDeath()
     {
@@ -551,5 +543,37 @@ public class KBossController : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    // ================================
+    // 플레이어 몸빵(직접 충돌) 시 데미지 처리
+    // ================================
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (isDead) return; // 보스가 죽었으면 데미지 판정 없음
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerAction pAction = collision.gameObject.GetComponent<PlayerAction>();
+            if (pAction != null)
+            {
+                pAction.TakeDirectDamage(); // 넉백 없는 데미지 호출
+            }
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (isDead) return;
+
+        if (other.CompareTag("Player"))
+        {
+            PlayerAction pAction = other.GetComponent<PlayerAction>();
+            if (pAction != null)
+            {
+                pAction.TakeDirectDamage(); // 넉백 없는 데미지 호출
+            }
+        }
+    }
+
 
 }

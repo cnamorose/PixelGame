@@ -33,6 +33,12 @@ public class PlayerShooter : MonoBehaviour
 
     void Shoot()
     {
+        if (firePoint == null)
+        {
+            GameObject fpObj = GameObject.Find("FirePoint"); // 하이어라키에 있는 발사 포인트 이름
+            if (fpObj != null) firePoint = fpObj.transform;
+        }
+
         if (penPrefab == null || firePoint == null)
         {
             Debug.LogError("penPrefab 또는 firePoint 없음");
@@ -65,5 +71,18 @@ public class PlayerShooter : MonoBehaviour
         {
             Physics2D.IgnoreCollision(penCol, playerCol);
         }
+
+        if (proj != null)
+        {
+            Debug.Log("정상적으로 총알 발사 함수 실행됨!"); // 이 로그가 뜨는지 확인!
+            proj.Fire(dir);
+        }
+        else
+        {
+            Debug.Log("에러: PenProjectile 스크립트를 찾지 못해서 안 날아감!");
+        }
+
+
     }
+
 }

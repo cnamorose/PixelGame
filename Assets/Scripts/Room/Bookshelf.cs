@@ -29,11 +29,23 @@ public class Bookshelf : Interactable
     private void HandleQuizEntrance(bool isEN)
     {
         string question = isEN ? "Do you want to enter the quiz stage?" : "퀴즈 스테이지에 입장하시겠습니까?";
+
         DialogueManager.Instance.ShowChoiceDialogue(
             question,
-            onYes: () => { SceneManager.LoadScene("Quiz"); },
+            onYes: () =>
+            {
+                // 🔹 바로 이동하지 않고 코루틴 실행
+                StartCoroutine(LoadQuizWithDelay());
+            },
             onNo: () => { }
         );
+    }
+
+    // ⏳ 1초 대기 후 씬 이동을 담당하는 코루틴
+    IEnumerator LoadQuizWithDelay()
+    {
+        yield return new WaitForSeconds(1f); // 1초 대기
+        SceneManager.LoadScene("Quiz");
     }
 
     private void HandleEasterEgg(bool isEN)

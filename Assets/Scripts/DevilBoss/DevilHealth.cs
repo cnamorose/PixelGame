@@ -101,7 +101,9 @@ public class DevilHealth : MonoBehaviour
         isTransitioning = true;
         currentPhase = DevilPhase.Phase2;
 
+        // 1. 공격 중단 및 기존 탄막 제거
         attackController.ForceStopAllAttacks();
+        ClearRemainingProjectiles(); // 🔹 추가
 
         yield return ShowDialogue("이렇게 쎄다고?");
 
@@ -111,17 +113,17 @@ public class DevilHealth : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         attackController.BeginAttackLoop();
-
         isTransitioning = false;
     }
-
 
     IEnumerator Phase3Transition()
     {
         isTransitioning = true;
         currentPhase = DevilPhase.Phase3;
 
+        // 1. 공격 중단 및 기존 탄막 제거
         attackController.ForceStopAllAttacks();
+        ClearRemainingProjectiles(); // 🔹 추가
 
         yield return ShowDialogue("아직.. 끝나지 않았다..");
 
@@ -131,7 +133,6 @@ public class DevilHealth : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         attackController.BeginAttackLoop();
-
         isTransitioning = false;
     }
 
@@ -150,10 +151,10 @@ public class DevilHealth : MonoBehaviour
         if (isTransitioning) return;
         isTransitioning = true;
 
-        Debug.Log("Devil Dead");
-
         attackController.ForceStopAllAttacks();
+        ClearRemainingProjectiles(); // 🔹 추가
 
+        Debug.Log("Devil Dead");
         StartCoroutine(DevilDeathSequence());
     }
 
@@ -226,6 +227,17 @@ public class DevilHealth : MonoBehaviour
         attackController.ForceStopAllAttacks();
 
         gameObject.SetActive(false);
+    }
+
+    void ClearRemainingProjectiles()
+    {
+        // "BossProjectile" 태그를 가진 모든 오브젝트를 찾아서 삭제
+        GameObject[] projectiles = GameObject.FindGameObjectsWithTag("BossProjectile");
+        foreach (GameObject p in projectiles)
+        {
+            Destroy(p);
+        }
+        Debug.Log("화면의 모든 데빌 투사체 제거 완료");
     }
 
 }

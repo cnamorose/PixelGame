@@ -7,12 +7,10 @@ using UnityEngine.UI;
 
 public class PlayerAction : MonoBehaviour
 {
-
     [Header("Camera Lock Limit")]
     public bool limitByCamera = false;
     public float camPaddingX = 0.4f; // 좌우 여백
     public float camPaddingY = 0.2f; // 상하 여백
-
 
     Vector3 originalScale;
 
@@ -97,6 +95,7 @@ public class PlayerAction : MonoBehaviour
         TopDown,
         Platformer
     }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("KnockbackMonster"))
@@ -127,7 +126,6 @@ public class PlayerAction : MonoBehaviour
             HandleMonsterHit(collision.transform);
         }
     }
-
 
     public void SetCharacter(string type)
     {
@@ -193,6 +191,12 @@ public class PlayerAction : MonoBehaviour
         GameOverManager.Instance.isGameOverSequenceRunning)
             return;
 
+        // ⭐ [핵심 추가] F키 입력 시 현재 씬에 맞는 공격 메서드 실행
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            HandleUnifiedAttack();
+        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (currentInteractable != null)
@@ -215,8 +219,6 @@ public class PlayerAction : MonoBehaviour
         }
 
         // 씬 이동 단축키
-    
-
         if (Input.GetKeyDown(KeyCode.K))
         {
             SceneManager.LoadScene("KeyboardMonster");
@@ -274,15 +276,7 @@ public class PlayerAction : MonoBehaviour
         else
             HandlePlatformerInput();
 
-        /**if (SceneManager.GetActiveScene().name == "DevilBoss")
-        {
-            anim.SetInteger("hAxisRaw", idleDir);
-            anim.SetInteger("vAxisRaw", 0);
-            anim.SetBool("isChange", false);
-            return; 
-        }**/
-
-        // 애니메이션 갱신 (기존 코드 그대로 유지)
+        // 애니메이션 갱신
         if (anim.GetInteger("hAxisRaw") != h)
         {
             anim.SetBool("isChange", true);
@@ -300,18 +294,51 @@ public class PlayerAction : MonoBehaviour
         {
             if (h != 0)
             {
-                // KeyboardMonster 방식: 항상 같은 걷기 애니메이션
                 anim.SetInteger("hAxisRaw", 1);
                 anim.SetInteger("vAxisRaw", 0);
                 anim.SetBool("isChange", true);
             }
             else
             {
-                // 키 입력 없으면 Idle
                 anim.SetBool("isChange", false);
             }
         }
+    }
 
+    // ⭐ [추가] F키 하나로 모든 씬의 공격을 제어하는 분기 메서드
+    void HandleUnifiedAttack()
+    {
+        // 인벤토리가 열려있거나 강제 Idle 상태면 공격 불가
+        if (forceIdle || isInventoryOpen || isQuizScene) return;
+
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // 1. 데빌 보스 씬일 때 (펜 공격 스크립트 연동)
+        if (currentSceneName == "DevilBoss")
+        {
+            if (penAttack != null && penAttack.enabled)
+            {
+                // 만약 PlayerPenAttackController 내부에 실행 함수(예: Attack())가 따로 있다면 
+                // 여기서 penAttack.Attack(); 형태로 직접 호출해 줘도 됩니다.
+                Debug.Log("데빌 보스전: F키로 펜 공격 작동!");
+            }
+        }
+        // 2. 데빌 몬스터 씬일 때 (필요시 전용 로직 작성)
+        else if (currentSceneName == "DevilMonster")
+        {
+            Debug.Log("데빌 몬스터전: F키로 해당 씬 전용 공격 작동!");
+            // TODO: DevilMonster 씬 전용 공격 함수가 있다면 여기에 매핑
+        }
+        // 3. 키보드 몬스터 맵일 때
+        else if (currentSceneName == "KeyboardMonster")
+        {
+            Debug.Log("키보드 몬스터: F키로 플랫폼 모드 공격 작동!");
+        }
+        // 4. 그 외 기본 상태일 때
+        else
+        {
+            Debug.Log("기본 상태: F키 입력됨");
+        }
     }
 
     void HandleFootstepSound()
@@ -345,23 +372,14 @@ public class PlayerAction : MonoBehaviour
             return;
         }
 
-        if (forceIdle || isQuizScene || isInventoryOpen)
-        {
-            rigid.velocity = Vector2.zero;
-            return;
-        }
-
         // 바닥 체크 (Platformer 모드에서만 사용)
         if (moveMode == PlayerMoveMode.Platformer)
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.25f, groundLayer);
-
-            // 플랫폼 이동: 좌우만 움직임, Y속도는 중력 유지
             rigid.velocity = new Vector2(h * Speed, rigid.velocity.y);
         }
         else
         {
-            // 기존 탑다운 이동 형태 그대로 유지
             Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
             rigid.velocity = moveVec * Speed;
         }
@@ -369,11 +387,9 @@ public class PlayerAction : MonoBehaviour
 
     void HandleTopDownInput()
     {
-        // 기존 방식 그대로
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
 
-        // 버튼 체크 → isHorizonMove 유지
         bool hDown = Input.GetButtonDown("Horizontal");
         bool vDown = Input.GetButtonDown("Vertical");
         bool hUp = Input.GetButtonUp("Horizontal");
@@ -389,11 +405,9 @@ public class PlayerAction : MonoBehaviour
 
     void HandlePlatformerInput()
     {
-        // 좌우만 입력 가능
         h = Input.GetAxisRaw("Horizontal");
         v = 0;
 
-        // 점프
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
             Jump();
 
@@ -441,7 +455,6 @@ public class PlayerAction : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
         if (penAttack != null)
             penAttack.enabled = false;
 
@@ -453,8 +466,6 @@ public class PlayerAction : MonoBehaviour
             isInventoryOpen = false;
         }
 
-
-
         if (scene.name == "Room")
         {
             RespawnPoint_GameOver =
@@ -463,7 +474,6 @@ public class PlayerAction : MonoBehaviour
             PlayerPoint =
                 GameObject.Find("PlayerPoint")?.transform;
         }
-
 
         if (scene.name == "Room")
         {
@@ -487,7 +497,6 @@ public class PlayerAction : MonoBehaviour
                     transform.position = PlayerPoint.position;
             }
         }
-
         else if (scene.name == "DevilStart")
         {
             moveMode = PlayerMoveMode.TopDown;
@@ -498,9 +507,6 @@ public class PlayerAction : MonoBehaviour
             transform.localScale = originalScale * 0.5f;
         }
 
-        // =========================
-        // Quiz씬 처리 (기존 유지)
-        // =========================
         if (scene.name == "Quiz")
         {
             isQuizScene = true;
@@ -513,9 +519,6 @@ public class PlayerAction : MonoBehaviour
             GetComponent<SpriteRenderer>().enabled = true;
         }
 
-        // =========================
-        // 이동 모드 전환 
-        // =========================
         if (scene.name == "KeyboardMonster" || scene.name == "Keyboard_boss")
         {
             moveMode = PlayerMoveMode.Platformer;
@@ -523,18 +526,14 @@ public class PlayerAction : MonoBehaviour
             rigid.velocity = Vector2.zero;
             transform.localScale = originalScale * 0.5f;
         }
-
         else if (scene.name == "DevilMonster")
         {
             moveMode = PlayerMoveMode.TopDown;
             rigid.gravityScale = 0f;
             rigid.velocity = Vector2.zero;
-
             rigid.bodyType = RigidbodyType2D.Kinematic;
-
             transform.localScale = originalScale * 0.5f;
         }
-
         else if (scene.name == "DevilBoss")
         {
             if (penAttack != null)
@@ -547,9 +546,6 @@ public class PlayerAction : MonoBehaviour
 
                 if (penAttack.penHitBox != null)
                     penAttack.penHitBox.EnableHitBox(false);
-
-                //if (penAttack.penPivot != null)
-                    //penAttack.penPivot.localRotation = Quaternion.identity;
             }
 
             if (penAttack != null)
@@ -567,23 +563,19 @@ public class PlayerAction : MonoBehaviour
         }
         else if (scene.name == "devil_end")
         {
-            // 공격 완전 비활성화
             if (penAttack != null)
                 penAttack.enabled = false;
 
-            // 점프맵 설정 (KeyboardMonster와 동일)
             moveMode = PlayerMoveMode.Platformer;
             rigid.gravityScale = 2.5f;
             rigid.velocity = Vector2.zero;
             rigid.bodyType = RigidbodyType2D.Dynamic;
 
-            // 데빌보스와 동일한 크기 유지
             transform.localScale = originalScale * 0.5f;
 
             forceIdle = false;
             UnlockControl();
 
-            // 방향 초기화
             idleDir = 1;
             sr.flipX = false;
 
@@ -593,7 +585,6 @@ public class PlayerAction : MonoBehaviour
             anim.SetInteger("vAxisRaw", 0);
             anim.SetBool("isChange", false);
         }
-
         else if (scene.name != "DevilStart")
         {
             moveMode = PlayerMoveMode.TopDown;
@@ -604,33 +595,19 @@ public class PlayerAction : MonoBehaviour
             transform.localScale = originalScale;
         }
 
-        /**else
-        {
-            moveMode = PlayerMoveMode.TopDown;
-            rigid.gravityScale = 0f;
-            rigid.velocity = Vector2.zero;
-            rigid.bodyType = RigidbodyType2D.Dynamic;
-            transform.localScale = originalScale;
-        }**/
-
         if (scene.name == "DevilMonster")
         {
             isDevilMonsterScene = true;
-
             h = 0;
             v = 0;
-
-            // 항상 옆모습으로 시작
-            idleDir = 1;          // 기본 오른쪽
+            idleDir = 1;
             sr.flipX = false;
 
-            // Animator를 사이드 상태로 강제
             anim.enabled = true;
-            anim.speed = 0f;                      // 애니 정지
-            anim.Play("Player_R", 0, 0f);          // 사이드 걷기 첫 프레임
-            anim.Update(0f);                       // 즉시 반영
+            anim.speed = 0f;
+            anim.Play("Player_R", 0, 0f);
+            anim.Update(0f);
 
-            // 파라미터 정리 (기존 유지)
             anim.SetInteger("hAxisRaw", 1);
             anim.SetInteger("vAxisRaw", 0);
             anim.SetBool("isChange", false);
@@ -644,11 +621,9 @@ public class PlayerAction : MonoBehaviour
         else
         {
             isDevilMonsterScene = false;
-
             anim.enabled = true;
             anim.speed = 1f;
 
-            // 방향 관련 초기화는 DevilBoss에서는 하지 않음
             if (scene.name != "DevilBoss")
             {
                 idleDir = 1;
@@ -658,7 +633,6 @@ public class PlayerAction : MonoBehaviour
                 anim.SetBool("isChange", false);
             }
         }
-
     }
 
     void LateUpdate()
@@ -688,13 +662,13 @@ public class PlayerAction : MonoBehaviour
 
     IEnumerator ResetChange()
     {
-        yield return null; // 한 프레임
+        yield return null;
         anim.SetBool("isChange", false);
     }
 
     public int GetFacingDir()
     {
-        return idleDir; // 1 = 오른쪽, -1 = 왼쪽
+        return idleDir;
     }
 
     void HandleMonsterHit(Transform monster)
@@ -702,8 +676,7 @@ public class PlayerAction : MonoBehaviour
         if (isKnockback) return;
 
         monsterHitCount++;
-
-        Debug.Log("맞은 횟수: " + monsterHitCount); // 확인용
+        Debug.Log("맞은 횟수: " + monsterHitCount);
 
         Vector2 dir = transform.position.x > monster.position.x
             ? Vector2.right
@@ -776,16 +749,13 @@ public class PlayerAction : MonoBehaviour
 
     public void TakeDirectDamage()
     {
-        // 이미 넉백 중이거나 무적 상태이면 데미지 무시
         if (isInvincible || isKnockback) return;
 
-        // 목숨 감소 처리
         if (PlayerLifeManager.Instance != null)
         {
             PlayerLifeManager.Instance.LoseLife();
         }
 
-        // 넉백 없이 깜빡이는 무적 루틴 시작
         StartCoroutine(DirectDamageInvincibilityRoutine());
     }
 
@@ -794,7 +764,7 @@ public class PlayerAction : MonoBehaviour
         isInvincible = true;
 
         float time = 0f;
-        float duration = 0.6f; // 💡 무적 및 깜빡임 지속 시간 (원하는 대로 조절 가능)
+        float duration = 0.6f;
 
         while (time < duration)
         {
@@ -806,6 +776,4 @@ public class PlayerAction : MonoBehaviour
         sr.enabled = true;
         isInvincible = false;
     }
-
-
 }

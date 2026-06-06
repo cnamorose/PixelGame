@@ -17,12 +17,40 @@ public class DoorTrigger : MonoBehaviour
 
     private Coroutine hideRoutine;
 
+    // 국문 
+    private readonly string[] warningsKR = new string[] {
+        "논문 작성 전에는 나갈 수 없다...",
+        "교수님의 환청이 들리는 것 같다'",
+        "지금 나가면 Reject의 상처만\n남을 뿐이다.",
+        "도망치지 마라.",
+        "빈 모니터가 당신을 노려보고 있습니다.",
+        "아직 Introduction밖에 안 썼으면서\n어디를 가려고?",
+        "등 뒤에서 교수님의\n서늘한 시선이 느껴진다...",
+        "디버깅도 안 끝난 코드를 두고 나간다고?",
+        "Ctrl + S를 누르지 않은 기억이\n스쳐 지나갔다.",
+        "시간은 계속 흘러간다..."
+    };
+
+    // 영문 
+    private readonly string[] warningsEN = new string[] {
+        "You can't leave before finishing the thesis...",
+        "I can hear the professor's ghost: 'Is your paper done yet?'",
+        "Leaving now will only lead to a brutal Reject.",
+        "Don't run away!",
+        "The blank screen is staring right into your soul.",
+        "You've barely finished the Introduction. Where are you going?",
+        "You feel the professor's cold gaze piercing your back...",
+        "Leaving before fixing the bugs? Unacceptable.",
+        "A sudden horror hits you:\nDid I press Ctrl + S?",
+        "Time keeps ticking away..."
+    };
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player"))
             return;
 
-        bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+        bool isEN = GameManager_L.Instance != null && GameManager_L.Instance.currentLanguage == Language.EN;
 
         if (playerData.paperclear)
         {
@@ -52,9 +80,9 @@ public class DoorTrigger : MonoBehaviour
             return;
         }
 
-        string warning = isEN
-            ? "You can't leave before finishing the thesis..."
-            : "논문 작성 전에는 나갈 수 없다...";
+        // 10가지 문장 중 하나를 무작위로 선택 (0 ~ 9)
+        int randomIndex = Random.Range(0, 10);
+        string warning = isEN ? warningsEN[randomIndex] : warningsKR[randomIndex];
 
         ShowWarning(warning);
     }

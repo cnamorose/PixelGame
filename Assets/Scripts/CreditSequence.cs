@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -10,13 +10,24 @@ public class CreditSequence : MonoBehaviour
     public float stayDuration = 2f;
 
     string[] credits =
-    {
-        "Director\nYour Name",
-        "Programming\nYou",
-        "Art\nYou",
-        "Special Thanks\nEveryone",
-        "Thank You\nFor Playing"
-    };
+{
+    // 첫 번째 줄바꿈 후 폰트 크기를 10으로 줄여서 줄바꿈을 한 번 더 하고, 다시 원상복구(</size>)
+    "A Game By\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+
+    "Director &\nGame Design\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+
+    "Programming\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+
+    "Art & UI Design\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+
+    "Music & Sound\n<size=10>\n</size>Generated via\n<color=#FF8C00>Suno AI</color>",
+
+    "Used Font\n<size=10>\n</size>'Mulmaru'\nby mushsooni",
+
+    "Special Thanks\n<size=10>\n</size><color=#008A7B>MILab</color>",
+
+    "Thank You\nFor Playing!"
+};
 
     public void Play()
     {

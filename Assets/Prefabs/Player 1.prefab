@@ -605,7 +605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   penPivot: {fileID: 2258430868101734812, guid: 437719fa764a9e943b384c644c8135b8, type: 3}
   penHitBox: {fileID: 212719130750668643, guid: 437719fa764a9e943b384c644c8135b8, type: 3}
-  attackKey: 106
+  attackKey: 102
   swingAngle: 120
   swingDuration: 0.18
   cooldown: 0.25

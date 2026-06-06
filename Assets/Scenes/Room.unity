@@ -2072,8 +2072,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -129.7, y: -271.5}
-  m_SizeDelta: {x: 306.59, y: 27.03}
+  m_AnchoredPosition: {x: -161.5, y: -274.5}
+  m_SizeDelta: {x: 266.11, y: 27.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &915885374
 MonoBehaviour:
@@ -2098,7 +2098,7 @@ MonoBehaviour:
   m_text: "\uC878\uC5C5\uD558\uAE30 \uC804\uC5D0\uB294 \uB098\uAC08 \uC218 \uC5C6\uB2E4..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d371b03ad3966d74594869883f5230d7, type: 2}
-  m_sharedMaterial: {fileID: -6985383782216826370, guid: a5d038aaebdad0441a6c8b73526d291f, type: 2}
+  m_sharedMaterial: {fileID: -4057751166150182433, guid: d371b03ad3966d74594869883f5230d7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2122,14 +2122,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2161,7 +2161,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0.07049608, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &915885375

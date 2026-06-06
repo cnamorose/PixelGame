@@ -9,7 +9,7 @@ public class PlayerPenAttackController : MonoBehaviour
     public PlayerPenHitBox penHitBox;      // PenHitBox
 
     [Header("Attack")]
-    public KeyCode attackKey = KeyCode.J;
+    public KeyCode attackKey = KeyCode.F;
     public float swingAngle = 120f;
     public float swingDuration = 0.18f;
     public float cooldown = 0.25f;

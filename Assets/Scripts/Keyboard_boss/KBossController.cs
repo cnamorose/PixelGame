@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class KBossController : MonoBehaviour
 {
+    // ⭐ [A4 전용 탄막 형태 선택 변수]
+    public enum A4AttackShape { Cross, XShape }
+
     [Header("Drop")]
     public GameObject keyPrefab;
 
@@ -40,6 +43,19 @@ public class KBossController : MonoBehaviour
     public Transform a1StartPos;
     public Transform a1EndPos;
 
+    // ============================================================
+    // ⭐ [A4 패턴 설정 변수]
+    // ============================================================
+    [Header("A4 Multi-Point Slide Settings")]
+    public Transform[] a4SpawnPoints;     // 4개의 이동 지점 배열
+    public float a4AttackDuration = 6f;    // A4 공격 패턴이 유지되는 총 시간
+    public float slideSpeed = 10f;         // 지점 간 이동할 때의 속도
+    public float attackInterval = 0.4f;    // 이동하는 와중에 무작위 탄막을 뿌리는 주기 간격 (초)
+
+    [Header("A4 Custom Shape Settings")]
+    [Tooltip("Cross = + 형태, XShape = X 형태")]
+    public A4AttackShape a4Shape = A4AttackShape.Cross; // 인스펙터에서 마우스로 딸깍 선택 가능!
+
     [Header("Move Settings")]
     public float moveSpeed = 5f;
 
@@ -58,12 +74,12 @@ public class KBossController : MonoBehaviour
 
     [Header("A2 Drop Settings")]
     public GameObject dropPrefab;
-    public float dropInterval = 0.4f;   
-    public float dropHeight = 6f;        
+    public float dropInterval = 0.4f;
+    public float dropHeight = 6f;
     public float dropRangeX = 6f;
 
     [Header("Dialogue")]
-    public DialogueSequence bossDeathDialogue;     
+    public DialogueSequence bossDeathDialogue;
     public DialogueSequence bossDeathDialogue_EN;
 
     private bool isDead = false;
@@ -84,7 +100,7 @@ public class KBossController : MonoBehaviour
 
         originalScale = transform.localScale;
 
-        camMove = Camera.main.GetComponent<Cameramove>(); 
+        camMove = Camera.main.GetComponent<Cameramove>();
     }
 
     public void StartBoss()
@@ -124,6 +140,7 @@ public class KBossController : MonoBehaviour
 
     public int burstCount = 5;
 
+    // 기존 1, 2, 3번 공격에서 쓰이는 원래의 보스 몸 기준 발사 로직 (유지)
     void ThrowFromIndex(int index)
     {
         if (throwPrefab == null || throwPoints == null)
@@ -135,16 +152,15 @@ public class KBossController : MonoBehaviour
         Transform point = throwPoints[index];
         if (point == null) return;
 
-        // ⭐ A1은 한 번에 1개만 던짐
-        int throwCount = Random.Range(1, 3); // 1~2개 (원하면 1로 고정해도 됨)
+        int throwCount = Random.Range(1, 3);
 
         for (int i = 0; i < throwCount; i++)
         {
             GameObject obj = Instantiate(throwPrefab, point.position, Quaternion.identity);
-            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>() == null ? obj.GetComponent<Rigidbody2D>() : null;
+            if (rb == null) rb = obj.GetComponent<Rigidbody2D>();
             if (rb == null) continue;
 
-            // ⭐ 완전 랜덤 방향 (360도)
             float angle = Random.Range(0f, 360f);
             Vector2 dir = new Vector2(
                 Mathf.Cos(angle * Mathf.Deg2Rad),
@@ -166,6 +182,37 @@ public class KBossController : MonoBehaviour
         ThrowFromIndex(0); // 왼쪽
     }
 
+    // ⭐ [4번 전용 수정] 지정된 지점에서 규칙적인 각도(+, X)로 정확히 4개 발사
+    void A4ShapeThrowFromPosition(Vector3 spawnPosition)
+    {
+        if (throwPrefab == null) return;
+
+        // 시작 기본 각도 설정
+        // + 형태(Cross)는 0도(우), 90도(상), 180도(좌), 270도(하)
+        // X 형태(XShape)는 대각선이므로 45도, 135도, 225度, 315도
+        float startAngle = (a4Shape == A4AttackShape.Cross) ? 0f : 45f;
+
+        // 90도씩 꺾으면서 정밀하게 딱 4개만 스폰하여 퍼트림
+        for (int i = 0; i < 4; i++)
+        {
+            float targetAngle = startAngle + (i * 90f);
+
+            GameObject obj = Instantiate(throwPrefab, spawnPosition, Quaternion.identity);
+            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+            if (rb == null) continue;
+
+            // 각도를 라디안 삼각함수 벡터 벡터 방향으로 변환
+            Vector2 dir = new Vector2(
+                Mathf.Cos(targetAngle * Mathf.Deg2Rad),
+                Mathf.Sin(targetAngle * Mathf.Deg2Rad)
+            ).normalized;
+
+            // 속도는 기존 밸런스 데이터 유지
+            float speed = Random.Range(minThrowSpeed, maxThrowSpeed);
+            rb.velocity = dir * speed;
+        }
+    }
+
     Vector3 GetRandomDropPositionInCamera()
     {
         Camera cam = Camera.main;
@@ -177,14 +224,11 @@ public class KBossController : MonoBehaviour
 
         Vector3 camPos = cam.transform.position;
 
-        // 화면 좌우 범위
         float minX = camPos.x - camWidth;
         float maxX = camPos.x + camWidth;
 
-        // 화면 최상단
         float topY = camPos.y + camHeight;
 
-        // 약간 위에서 생성 (연출용)
         float spawnYOffset = 0.5f;
 
         float x = Random.Range(minX, maxX);
@@ -228,14 +272,10 @@ public class KBossController : MonoBehaviour
         transform.position = targetPos;
     }
 
-    // ================================
-    // 메인 보스 루프
-    // ================================
     IEnumerator BossRoutine()
     {
         while (!isDead)
         {
-            // 공격 중이면 대기
             if (isAttacking)
             {
                 yield return null;
@@ -247,21 +287,17 @@ public class KBossController : MonoBehaviour
             int attackIndex = GetRandomAttack();
             Debug.Log("AttackIndex 선택됨: " + attackIndex);
 
-            // ⭐ 공격 실행은 DoAttack에게 위임
             yield return StartCoroutine(DoAttack(attackIndex));
         }
     }
 
-    // ================================
-    // 랜덤 공격 선택 (연속 방지)
-    // ================================
     int GetRandomAttack()
     {
         int index;
 
         do
         {
-            index = Random.Range(1, 4); // A1~A3
+            index = Random.Range(1, 5);
         }
         while (index == lastAttackIndex);
 
@@ -274,9 +310,6 @@ public class KBossController : MonoBehaviour
         isAttacking = true;
         Collider2D bossCollider = GetComponent<Collider2D>();
 
-        // =====================
-        // A1 : 기존 자리에서 5초 액션
-        // =====================
         if (attackIndex == 1)
         {
             if (defaultPos != null)
@@ -299,16 +332,10 @@ public class KBossController : MonoBehaviour
             yield break;
         }
 
-
-        // =====================
-        // A2 : 지정 위치 + 3배 크기 + 5초 반복
-        // =====================
-        // A2 : 지정 위치 + 5초 반복
         if (attackIndex == 2)
         {
             isA2Active = true;
 
-            // ⭐ [추가] 공격 2 동안은 충돌 판정을 꺼서 플레이어가 지나갈 수 있게 함
             if (bossCollider != null) bossCollider.enabled = false;
 
             transform.position = GetA2CameraTopPosition();
@@ -333,7 +360,6 @@ public class KBossController : MonoBehaviour
             if (defaultPos != null)
                 transform.position = defaultPos.position;
 
-            // ⭐ [추가] 공격이 끝났으므로 다시 충돌 판정을 켬
             if (bossCollider != null) bossCollider.enabled = true;
 
             isA2Active = false;
@@ -341,9 +367,6 @@ public class KBossController : MonoBehaviour
             yield break;
         }
 
-        // =====================
-        // A3 : 이동하면서 액션 → 끝에서 순간이동
-        // =====================
         if (attackIndex == 3)
         {
             if (a1StartPos != null)
@@ -370,9 +393,72 @@ public class KBossController : MonoBehaviour
             anim.SetBool("IsAttacking", false);
             anim.SetInteger("AttackIndex", 0);
 
-            // ⭐ 즉시 원래 위치로 순간이동
             if (!isDead && defaultPos != null)
                 transform.position = defaultPos.position;
+
+            isAttacking = false;
+            yield break;
+        }
+
+        // ============================================================
+        // 🟢 A4 : 랜덤 좌표 대시 + '해당 랜덤 지점'에서 [정방향 4방향] 투사체 생성 패턴
+        // ============================================================
+        if (attackIndex == 4)
+        {
+            anim.SetInteger("AttackIndex", 1);
+            anim.SetBool("IsAttacking", true);
+
+            float patternStartTime = Time.time;
+            float lastAttackTime = 0f;
+            int currentTargetPointIndex = Random.Range(0, a4SpawnPoints.Length);
+
+            while (Time.time - patternStartTime < a4AttackDuration && !isDead)
+            {
+                if (a4SpawnPoints != null && a4SpawnPoints.Length > 0)
+                {
+                    Transform targetPoint = a4SpawnPoints[currentTargetPointIndex];
+
+                    if (targetPoint != null)
+                    {
+                        // 1. 무작위 좌표로 보스 이동
+                        transform.position = Vector3.MoveTowards(
+                            transform.position,
+                            targetPoint.position,
+                            slideSpeed * Time.deltaTime
+                        );
+
+                        // 2. 이동 중 주기에 맞춰 4방향 모양 발사 호출
+                        if (Time.time - lastAttackTime >= attackInterval)
+                        {
+                            lastAttackTime = Time.time;
+
+                            // ⭐ 바뀐 4방향 탄형 함수 호출
+                            A4ShapeThrowFromPosition(targetPoint.position);
+                        }
+
+                        // 3. 지점 도달 시 리타겟팅
+                        if (Vector3.Distance(transform.position, targetPoint.position) <= 0.05f)
+                        {
+                            int nextIndex;
+                            do
+                            {
+                                nextIndex = Random.Range(0, a4SpawnPoints.Length);
+                            } while (nextIndex == currentTargetPointIndex && a4SpawnPoints.Length > 1);
+
+                            currentTargetPointIndex = nextIndex;
+                        }
+                    }
+                }
+                yield return null;
+            }
+
+            anim.SetBool("IsAttacking", false);
+            anim.SetInteger("AttackIndex", 0);
+
+            if (!isDead && defaultPos != null)
+            {
+                yield return StartCoroutine(MoveToPosition(defaultPos.position));
+            }
 
             isAttacking = false;
             yield break;
@@ -385,31 +471,29 @@ public class KBossController : MonoBehaviour
         if (cam == null || sr == null)
             return transform.position;
 
-        // 카메라 기준
         float camTopY = cam.transform.position.y + cam.orthographicSize;
         float camCenterX = cam.transform.position.x;
 
-        // 스프라이트 윗면 오프셋
         float spriteTopOffset = sr.bounds.max.y - transform.position.y;
 
         return new Vector3(
-            camCenterX,                // X는 무조건 카메라 중심
-            camTopY - spriteTopOffset, // 윗면이 천장에 닿도록
+            camCenterX,
+            camTopY - spriteTopOffset,
             transform.position.z
         );
     }
-
-
 
     // ================================
     // 데미지 처리
     // ================================
     public void TakeDamage(int damage)
     {
+        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning) return;
+
         if (isDead || isA2Active) return;
 
         hp -= damage;
-        
+
         if (!isHitBlinking)
             StartCoroutine(HitBlink());
 
@@ -441,9 +525,10 @@ public class KBossController : MonoBehaviour
     // ================================
     // 사망 처리
     // ================================
-
     void Die()
     {
+        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning) return;
+
         isDead = true;
 
         if (AudioManager.Instance != null)
@@ -455,7 +540,6 @@ public class KBossController : MonoBehaviour
 
         Vector3 deathPos = transform.position;
 
-        // 모든 행동 중지
         StopAllCoroutines();
         isAttacking = false;
         isA2Active = false;
@@ -477,7 +561,6 @@ public class KBossController : MonoBehaviour
 
     void ClearRemainingProjectiles()
     {
-        // "BossProjectile" 태그를 가진 모든 게임 오브젝트를 배열로 가져옴
         GameObject[] projectiles = GameObject.FindGameObjectsWithTag("BossProjectile");
 
         foreach (GameObject p in projectiles)
@@ -508,10 +591,10 @@ public class KBossController : MonoBehaviour
         };
 
         DialogueSequence selectedDialogue =
-    GameManager_L.Instance.currentLanguage == Language.EN
-    && bossDeathDialogue_EN != null
-        ? bossDeathDialogue_EN
-        : bossDeathDialogue;
+            GameManager_L.Instance.currentLanguage == Language.EN
+            && bossDeathDialogue_EN != null
+                ? bossDeathDialogue_EN
+                : bossDeathDialogue;
 
         DialogueManager.Instance.StartDialogue(selectedDialogue);
         yield break;
@@ -544,19 +627,16 @@ public class KBossController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // ================================
-    // 플레이어 몸빵(직접 충돌) 시 데미지 처리
-    // ================================
     void OnCollisionStay2D(Collision2D collision)
     {
-        if (isDead) return; // 보스가 죽었으면 데미지 판정 없음
+        if (isDead) return;
 
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerAction pAction = collision.gameObject.GetComponent<PlayerAction>();
             if (pAction != null)
             {
-                pAction.TakeDirectDamage(); // 넉백 없는 데미지 호출
+                pAction.TakeDirectDamage();
             }
         }
     }
@@ -570,10 +650,8 @@ public class KBossController : MonoBehaviour
             PlayerAction pAction = other.GetComponent<PlayerAction>();
             if (pAction != null)
             {
-                pAction.TakeDirectDamage(); // 넉백 없는 데미지 호출
+                pAction.TakeDirectDamage();
             }
         }
     }
-
-
 }

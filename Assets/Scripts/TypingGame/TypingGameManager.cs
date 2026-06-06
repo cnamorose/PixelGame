@@ -12,24 +12,20 @@ public class TypingGameManager : MonoBehaviour
 
     private Coroutine warningBlinkCoroutine;
 
-    // 현재 화면에 떨어져 있는 단어들
     private List<WordMovement> activeWords = new List<WordMovement>();
-
-    // 사용자가 입력 중인 문자열
     private string currentInput = "";
 
-    // 입력 UI
     public TextMeshProUGUI inputUIText;
 
     [Header("Goal")]
     public int totalTarget = 10;
 
     [Header("Score")]
-    public int successCount = 0;   // 맞춘 개수 (음수 가능)
+    public int successCount = 0;
 
     [Header("Rules")]
-    public int step = 5;           // 5단위 스프라이트
-    public int minScore = -10;     // -10 되면 게임오버
+    public int step = 5;
+    public int minScore = -10;
 
     [Header("Progress UI")]
     public Image progressImage;
@@ -47,7 +43,7 @@ public class TypingGameManager : MonoBehaviour
     public Button printButton;
 
     [Header("Scene")]
-    public string returnSceneName = "Room"; // 돌아갈 씬 이름
+    public string returnSceneName = "Room";
 
     [Header("BGM")]
     public AudioClip BGM;
@@ -64,7 +60,6 @@ public class TypingGameManager : MonoBehaviour
         if (printButton != null)
         {
             PlayerAction.inputLocked = true;
-
             printButton.gameObject.SetActive(false);
             printButton.onClick.AddListener(OnPrintClicked);
         }
@@ -115,6 +110,9 @@ public class TypingGameManager : MonoBehaviour
         WordMovement target = null;
         float lowestY = float.MaxValue;
 
+        // 혹시 모를 죽은 데이터 미리 청소
+        activeWords.RemoveAll(item => item == null);
+
         foreach (WordMovement w in activeWords)
         {
             if (w == null) continue;
@@ -160,15 +158,18 @@ public class TypingGameManager : MonoBehaviour
     void OnWrongSubmit()
     {
         if (isGameOver) return;
-
-        // 지금은 패널티 없음 (원하면 여기서 successCount-- 해도 됨)
         Debug.Log("Wrong submit");
     }
 
-    // ⭐ 단어를 놓쳤을 때 (WordMovement에서 호출)
-    public void OnWordMissed()
+    // ⭐ 수정: 매개변수로 어떤 단어가 바닥에 닿았는지(this)를 전달받아 지우도록 변경
+    public void OnWordMissed(WordMovement missedWord)
     {
         if (isGameOver) return;
+
+        if (missedWord != null && activeWords.Contains(missedWord))
+        {
+            activeWords.Remove(missedWord);
+        }
 
         successCount--;
 
@@ -183,10 +184,7 @@ public class TypingGameManager : MonoBehaviour
             return;
 
         int stage = successCount / step;
-
-        // 0 이하는 무조건 0단계 유지
         stage = Mathf.Clamp(stage, 0, progressSprites.Length - 1);
-
         progressImage.sprite = progressSprites[stage];
     }
 
@@ -195,12 +193,8 @@ public class TypingGameManager : MonoBehaviour
         if (GraphImage == null || GraphSprites == null || GraphSprites.Length == 0)
             return;
 
-        // 10개 단위로 그래프 단계 계산
         int graphStage = successCount / 10;
-
-        // successCount <= 0 이면 항상 0단계 유지
         graphStage = Mathf.Clamp(graphStage, 0, GraphSprites.Length - 1);
-
         GraphImage.sprite = GraphSprites[graphStage];
     }
 
@@ -208,8 +202,6 @@ public class TypingGameManager : MonoBehaviour
     {
         isGameOver = true;
         PlayerAction.inputLocked = true;
-
-        // 게임 멈춤
         Time.timeScale = 0f;
 
         if (AudioManager.Instance != null)
@@ -217,7 +209,6 @@ public class TypingGameManager : MonoBehaviour
             AudioManager.Instance.StopBGM();
         }
 
-        // Print 버튼 표시
         if (printButton != null)
             printButton.gameObject.SetActive(true);
     }
@@ -225,7 +216,6 @@ public class TypingGameManager : MonoBehaviour
     void OnPrintClicked()
     {
         PlayerAction.inputLocked = false;
-
         Debug.Log("PRINT COMPLETE");
         GameResultHolder.Result = GameResult.Printed;
 
@@ -237,11 +227,10 @@ public class TypingGameManager : MonoBehaviour
     {
         if (successCount <= minScore)
         {
-            if (isGameOver) return; 
+            if (isGameOver) return;
 
             isGameOver = true;
             PlayerAction.inputLocked = false;
-
             Time.timeScale = 0f;
 
             StopWarningBlink();
@@ -253,7 +242,6 @@ public class TypingGameManager : MonoBehaviour
                 errorImage.gameObject.SetActive(true);
 
             GameResultHolder.Result = GameResult.Error;
-
             StartCoroutine(ErrorReturnSequence());
             return;
         }
@@ -261,14 +249,12 @@ public class TypingGameManager : MonoBehaviour
         if (successCount <= -2 && successCount >= -9)
         {
             StartWarningBlink();
-
             if (errorImage != null)
                 errorImage.gameObject.SetActive(false);
         }
         else
         {
             StopWarningBlink();
-
             if (errorImage != null)
                 errorImage.gameObject.SetActive(false);
         }
@@ -282,7 +268,7 @@ public class TypingGameManager : MonoBehaviour
         }
 
         AudioManager.Instance.PlaySFX(SFX);
-        yield return new WaitForSecondsRealtime(1.5f); 
+        yield return new WaitForSecondsRealtime(1.5f);
 
         Time.timeScale = 1f;
         SceneManager.LoadScene(returnSceneName);
@@ -294,14 +280,11 @@ public class TypingGameManager : MonoBehaviour
         {
             if (warningImage != null)
             {
-                // 현재 상태의 반대로 토글
                 bool nextState = !warningImage.gameObject.activeSelf;
                 warningImage.gameObject.SetActive(nextState);
 
-                // ⭐ 이미지가 켜질 때만 "삐-" 소리 재생 (PlaySFX 사용)
                 if (nextState && AudioManager.Instance != null && LoopSFX != null)
                 {
-                    // PlaySFX는 단발성 효과음을 재생합니다.
                     AudioManager.Instance.PlaySFX(LoopSFX);
                 }
             }
@@ -312,7 +295,6 @@ public class TypingGameManager : MonoBehaviour
     void StartWarningBlink()
     {
         if (warningBlinkCoroutine != null) return;
-
         warningBlinkCoroutine = StartCoroutine(WarningBlink());
     }
 

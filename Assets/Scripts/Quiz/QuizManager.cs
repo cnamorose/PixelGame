@@ -12,7 +12,7 @@ public class QuizManager : MonoBehaviour
     public AudioClip quizBGM;
 
     [Header("Dialogue")]
-    public DialogueSequence quizClearDialogue;     
+    public DialogueSequence quizClearDialogue;
     public DialogueSequence quizClearDialogue_EN;
 
     [Header("Devil")]
@@ -25,9 +25,14 @@ public class QuizManager : MonoBehaviour
     private bool isAnswering = false;
     public TMP_Text timerText;
 
-    [Header("Quiz Data")]
-    public QuizData[] quizList;       // ScriptableObject 퀴즈들
-    private List<QuizData> quizPool;  // 문제 중복 방지용 리스트
+    [Header("Quiz Data (Multi-Language)")]
+    [Tooltip("비어있으면 Resources/QuizAnswer 폴더에서 자동 로드합니다.")]
+    public QuizData[] quizList;       // 한국어 퀴즈 리스트
+
+    [Tooltip("비어있으면 Resources/QuizAnswer_e 폴더에서 자동 로드합니다.")]
+    public QuizData[] quizList_EN;    // 영어 퀴즈 리스트
+
+    private List<QuizData> quizPool;  // 중복 방지용 실시간 문제 풀
 
     private QuizData currentQuiz;
 
@@ -51,17 +56,26 @@ public class QuizManager : MonoBehaviour
 
     void Start()
     {
-        quizPool = new List<QuizData>(quizList);
-        playerLife = FindObjectOfType<PlayerLifeManager>();
-        if (AudioManager.Instance != null)
+        // 1. 현재 설정된 언어에 맞는 배열 데이터 가져오기
+        QuizData[] selectedQuizList = GetSelectedQuizList();
+
+        // 2. 만약 인스펙터 창이 비어있다면(Length가 0이라면) Resources 폴더에서 자동 로드
+        if (selectedQuizList == null || selectedQuizList.Length == 0)
         {
-            AudioManager.Instance.PlayBGM(quizBGM);
+            selectedQuizList = LoadQuizzesFromResources();
         }
+
+        // 3. 최종 확정된 퀴즈 리스트로 문제 풀 구성
+        quizPool = new List<QuizData>(selectedQuizList);
+
+        playerLife = FindObjectOfType<PlayerLifeManager>();
+
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.StopAmbient();
             AudioManager.Instance.PlayBGM(quizBGM);
         }
+
         LoadRandomQuiz();
     }
 
@@ -72,13 +86,38 @@ public class QuizManager : MonoBehaviour
 
         currentTime -= Time.deltaTime;
 
-
         timerText.text = Mathf.Ceil(currentTime).ToString();
 
         if (currentTime <= 0)
         {
             TimeOut();
         }
+    }
+
+    // 언어 설정에 따라 인스펙터 변수 할당 분기
+    private QuizData[] GetSelectedQuizList()
+    {
+        bool isEN = GameManager_L.Instance != null && GameManager_L.Instance.currentLanguage == Language.EN;
+        return isEN ? quizList_EN : quizList;
+    }
+
+    // 인스펙터가 비어있을 때 폴더 내부 에셋 자동 로드
+    private QuizData[] LoadQuizzesFromResources()
+    {
+        bool isEN = GameManager_L.Instance != null && GameManager_L.Instance.currentLanguage == Language.EN;
+
+        // Resources 폴더 하위의 경로를 지정합니다.
+        string folderPath = isEN ? "QuizAnswer_e" : "QuizAnswer";
+
+        // 해당 폴더 내의 모든 QuizData 타입의 ScriptableObject를 가져옵니다.
+        QuizData[] loadedQuizzes = Resources.LoadAll<QuizData>(folderPath);
+
+        if (loadedQuizzes == null || loadedQuizzes.Length == 0)
+        {
+            Debug.LogError($"[QuizManager] Resources/{folderPath} 폴더에 QuizData 파일이 존재하지 않습니다!");
+        }
+
+        return loadedQuizzes;
     }
 
     public void LoadRandomQuiz()
@@ -104,22 +143,21 @@ public class QuizManager : MonoBehaviour
         isAnswering = true;
     }
 
-
     public void CheckAnswer(int index)
     {
         if (isQuizEnding) return;
 
         if (index == currentQuiz.correctIndex)
         {
-            isAnswering = false;    
+            isAnswering = false;
             quizCount++;
             LoadRandomQuiz();
         }
         else
-        {  
+        {
             playerLife.LoseLife();
 
-            if(playerLife.currentLife > 0)
+            if (playerLife.currentLife > 0)
             {
                 LoadRandomQuiz();
             }
@@ -137,18 +175,17 @@ public class QuizManager : MonoBehaviour
         {
             LoadRandomQuiz();
         }
-        
     }
 
     void ShowQuizClear()
     {
-        if (isQuizEnding) return; // ⭐ 중복 방지
+        if (isQuizEnding) return;
 
-        isQuizEnding = true;      // ⭐ 핵심
-        isAnswering = false;      // ⭐ 입력 차단
+        isQuizEnding = true;
+        isAnswering = false;
 
         if (questionPanel != null)
-            questionPanel.SetActive(false); // ⭐ UI 자체 꺼버리기
+            questionPanel.SetActive(false);
 
         StartCoroutine(QuizClearSequence());
     }
@@ -187,10 +224,9 @@ public class QuizManager : MonoBehaviour
         DialogueManager.Instance.currentCutscene = CutsceneType.QuizClear;
 
         DialogueSequence selectedDialogue =
-    GameManager_L.Instance.currentLanguage == Language.EN
-    && quizClearDialogue_EN != null
-        ? quizClearDialogue_EN
-        : quizClearDialogue;
+            GameManager_L.Instance != null && GameManager_L.Instance.currentLanguage == Language.EN && quizClearDialogue_EN != null
+            ? quizClearDialogue_EN
+            : quizClearDialogue;
 
         if (AudioManager.Instance != null)
         {
@@ -200,5 +236,4 @@ public class QuizManager : MonoBehaviour
 
         DialogueManager.Instance.StartDialogue(selectedDialogue);
     }
-
 }

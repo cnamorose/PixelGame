@@ -49,6 +49,7 @@ public class DevilHealth : MonoBehaviour
 
     DevilPhase currentPhase = DevilPhase.Phase1;
     bool isTransitioning = false;
+
     public void Start()
     {
         if (AudioManager.Instance != null && phaseBGM != null)
@@ -70,7 +71,8 @@ public class DevilHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("Devil HP: " + currentHP);
+        // ⭐ [안전장치 1] 플레이어가 이미 죽어서 게임오버 시퀀스가 돌고 있다면 데미지 및 판정 완전 무시
+        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning) return;
 
         if (isTransitioning) return;
 
@@ -101,9 +103,15 @@ public class DevilHealth : MonoBehaviour
         isTransitioning = true;
         currentPhase = DevilPhase.Phase2;
 
-        // 1. 공격 중단 및 기존 탄막 제거
         attackController.ForceStopAllAttacks();
-        ClearRemainingProjectiles(); // 🔹 추가
+        ClearRemainingProjectiles();
+
+        // ⭐ [안전장치 2] 대화창을 띄우기 직전 한 번 더 게임오버 상태를 체크하여 꼬임 방지
+        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning)
+        {
+            isTransitioning = false;
+            yield break;
+        }
 
         yield return ShowDialogue("이렇게 쎄다고?");
 
@@ -111,6 +119,9 @@ public class DevilHealth : MonoBehaviour
         npcPhase2.SetActive(true);
 
         yield return new WaitForSeconds(1f);
+
+        // 다시 루프 돌기 전 플레이어가 죽었는지 최종 확인
+        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning) yield break;
 
         attackController.BeginAttackLoop();
         isTransitioning = false;
@@ -121,9 +132,15 @@ public class DevilHealth : MonoBehaviour
         isTransitioning = true;
         currentPhase = DevilPhase.Phase3;
 
-        // 1. 공격 중단 및 기존 탄막 제거
         attackController.ForceStopAllAttacks();
-        ClearRemainingProjectiles(); // 🔹 추가
+        ClearRemainingProjectiles();
+
+        // ⭐ [안전장치 3] 대화창 띄우기 전 체크
+        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning)
+        {
+            isTransitioning = false;
+            yield break;
+        }
 
         yield return ShowDialogue("아직.. 끝나지 않았다..");
 
@@ -131,6 +148,8 @@ public class DevilHealth : MonoBehaviour
         npcPhase3.SetActive(true);
 
         yield return new WaitForSeconds(1f);
+
+        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning) yield break;
 
         attackController.BeginAttackLoop();
         isTransitioning = false;
@@ -148,11 +167,21 @@ public class DevilHealth : MonoBehaviour
 
     void Die()
     {
+        // ⭐ [안전장치 4] 보스가 죽는 순간 게임오버 시퀀스가 돌고 있다면 사망 컷신 연출 차단
+        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning) return;
+
         if (isTransitioning) return;
         isTransitioning = true;
 
         attackController.ForceStopAllAttacks();
-        ClearRemainingProjectiles(); // 🔹 추가
+        ClearRemainingProjectiles();
+
+        // 보스가 먼저 완벽하게 승리 판정을 굳혔으므로 플레이어 조작을 잠궈 무적(데미지 차단) 상태로 만듭니다.
+        PlayerAction player = FindObjectOfType<PlayerAction>();
+        if (player != null)
+        {
+            player.LockControl();
+        }
 
         Debug.Log("Devil Dead");
         StartCoroutine(DevilDeathSequence());
@@ -189,7 +218,6 @@ public class DevilHealth : MonoBehaviour
 
     IEnumerator DevilDeathSequence()
     {
-        // 공격 즉시 완전 중단
         attackController.ForceStopAllAttacks();
 
         if (AudioManager.Instance != null)
@@ -197,10 +225,8 @@ public class DevilHealth : MonoBehaviour
             AudioManager.Instance.StopBGM();
         }
 
-        // 슬로우
         yield return StartCoroutine(DeathSlowMotion(0.15f, 0.6f));
 
-        // 컷신 종료 후 콜백 등록
         DialogueManager.Instance.onCutsceneEnd = OnDevilDeathDialogueEnd;
 
         DialogueSequence selectedDialogue =
@@ -231,7 +257,6 @@ public class DevilHealth : MonoBehaviour
 
     void ClearRemainingProjectiles()
     {
-        // "BossProjectile" 태그를 가진 모든 오브젝트를 찾아서 삭제
         GameObject[] projectiles = GameObject.FindGameObjectsWithTag("BossProjectile");
         foreach (GameObject p in projectiles)
         {
@@ -239,5 +264,4 @@ public class DevilHealth : MonoBehaviour
         }
         Debug.Log("화면의 모든 데빌 투사체 제거 완료");
     }
-
 }

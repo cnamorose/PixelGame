@@ -354,15 +354,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -370,9 +370,9 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -420,8 +420,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -327}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -159.33177, y: -325.5418}
+  m_SizeDelta: {x: 414.6565, y: 47.0836}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &565415607
 GameObject:
@@ -641,13 +641,7 @@ MonoBehaviour:
   lettersParent: {fileID: 738665769}
   manager: {fileID: 1791641530}
   spawnArea: {fileID: 967703147}
-  spawnInterval: 1
-  wordList:
-  - apple
-  - unity
-  - pixel
-  - typing
-  - acid
+  spawnInterval: 2
 --- !u!4 &741012804
 Transform:
   m_ObjectHideFlags: 0
@@ -774,8 +768,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -162.5719, y: -445.169}
-  m_SizeDelta: {x: -657.7437, y: 591.8176}
+  m_AnchoredPosition: {x: -159.95087, y: -445.169}
+  m_SizeDelta: {x: -624.7784, y: 591.8176}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &967703148
 MonoBehaviour:

@@ -256,8 +256,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   devilPhase1EndDialogue: {fileID: 11400000, guid: 15344f3d8e5552c49a1b017089b17fa8, type: 2}
-  maxHP: 10
-  currentHP: 100
+  maxHP: 40
+  currentHP: 40
   hp100Sprite: {fileID: 1240808697, guid: 094d1007da9acb34da8be34abb9f590b, type: 3}
   hp70Sprite: {fileID: -1668047377, guid: 094d1007da9acb34da8be34abb9f590b, type: 3}
   hp40Sprite: {fileID: -1854289297, guid: 094d1007da9acb34da8be34abb9f590b, type: 3}
@@ -556,6 +556,10 @@ PrefabInstance:
     - target: {fileID: 4848206868747366600, guid: 77650d51727154b41845fcfa9fd05417, type: 3}
       propertyPath: m_TagString
       value: Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 7735965341020530075, guid: 77650d51727154b41845fcfa9fd05417, type: 3}
+      propertyPath: moveSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8979588874723050889, guid: 77650d51727154b41845fcfa9fd05417, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1480,6 +1484,10 @@ PrefabInstance:
     - target: {fileID: 926145148257139144, guid: 31ac602a97a84e14684474ba773fa9d9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344753206084261285, guid: 31ac602a97a84e14684474ba773fa9d9, type: 3}
+      propertyPath: moveSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8661915235175098789, guid: 31ac602a97a84e14684474ba773fa9d9, type: 3}
       propertyPath: m_Name

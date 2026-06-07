@@ -1939,7 +1939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dee862f4737dc9478ed6cfd7e1d3c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10
+  maxHP: 50
   phaseBGM: {fileID: 8300000, guid: 8d4518d79c9998c42966bc3417fe0ec2, type: 3}
   npcPhase1: {fileID: 1881977067}
   npcPhase2: {fileID: 1623326239}

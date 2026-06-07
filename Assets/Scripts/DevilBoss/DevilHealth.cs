@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DevilHealth : MonoBehaviour
 {
-    public int maxHP = 100;
+    public int maxHP = 50;
     int currentHP;
 
     [Header("BGM")]
@@ -87,12 +87,16 @@ public class DevilHealth : MonoBehaviour
             return;
         }
 
-        // 페이즈 체크
-        if (currentHP <= 70 && currentPhase == DevilPhase.Phase1)
+        // ----------------------------------------------------
+        // ⭐ [수정 완료] 최대 체력 50에 맞춘 페이즈 전환 수치 조절
+        // ----------------------------------------------------
+        // 페이즈 2 전환: 체력이 30 이하로 떨어졌을 때 (기존 70 -> 30)
+        if (currentHP <= 30 && currentPhase == DevilPhase.Phase1)
         {
             StartCoroutine(Phase2Transition());
         }
-        else if (currentHP <= 40 && currentPhase == DevilPhase.Phase2)
+        // 페이즈 3 전환: 체력이 15 이하로 떨어졌을 때 (기존 40 -> 15)
+        else if (currentHP <= 15 && currentPhase == DevilPhase.Phase2)
         {
             StartCoroutine(Phase3Transition());
         }

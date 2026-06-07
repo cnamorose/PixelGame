@@ -26,7 +26,7 @@ public class PlayerPenHitBox : MonoBehaviour
         if (devil != null && !hitThisSwing.Contains(devil))
         {
             hitThisSwing.Add(devil);
-            devil.TakeDamage(10);
+            devil.TakeDamage(1);
 
             PlayerAction player = GetComponentInParent<PlayerAction>();
             if (player != null)

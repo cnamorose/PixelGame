@@ -101,7 +101,7 @@ public class Monster : MonoBehaviour
 
         if (boss != null)
         {
-            boss.ReduceHP(10); // 몬스터 1마리 = 보스 HP 1 감소
+            boss.ReduceHP(1); // 몬스터 1마리 = 보스 HP 1 감소
         }
 
         StartCoroutine(FadeAndDestroy());

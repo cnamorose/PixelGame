@@ -22,7 +22,7 @@ public class KBossController : MonoBehaviour
     bool isHitBlinking = false;
 
     [Header("Status")]
-    public int maxHp = 20;
+    public int maxHp = 40;
     public int hp;
 
     [Header("Attack")]
@@ -50,7 +50,7 @@ public class KBossController : MonoBehaviour
     public Transform[] a4SpawnPoints;     // 4개의 이동 지점 배열
     public float a4AttackDuration = 6f;    // A4 공격 패턴이 유지되는 총 시간
     public float slideSpeed = 10f;         // 지점 간 이동할 때의 속도
-    public float attackInterval = 0.4f;    // 이동하는 와중에 무작위 탄막을 뿌리는 주기 간격 (초)
+    public float attackInterval = 0.2f;    // 이동하는 와중에 무작위 탄막을 뿌리는 주기 간격 (초)
 
     [Header("A4 Custom Shape Settings")]
     [Tooltip("Cross = + 형태, XShape = X 형태")]
@@ -74,7 +74,7 @@ public class KBossController : MonoBehaviour
 
     [Header("A2 Drop Settings")]
     public GameObject dropPrefab;
-    public float dropInterval = 0.4f;
+    public float dropInterval = 0.8f;
     public float dropHeight = 6f;
     public float dropRangeX = 6f;
 

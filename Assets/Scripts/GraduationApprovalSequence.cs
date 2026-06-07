@@ -1,10 +1,14 @@
 ﻿using System.Collections;
-using TMPro;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GraduationApprovalSequence : MonoBehaviour
 {
+    // [기존 변수들 그대로 유지]
     [Header("Text")]
     public TextMeshProUGUI nameText;
     public float typingSpeed = 0.08f;
@@ -51,6 +55,10 @@ public class GraduationApprovalSequence : MonoBehaviour
     [Header("SFX")]
     public AudioClip stpSFX;
 
+    // ⭐ [새로 추가된 종료 버튼 설정]
+    [Header("END BUTTON")]
+    public GameObject quitButton; // 엔딩 곡이 끝나면 나타날 종료 버튼
+
     Cameramove cam;
 
     void Start()
@@ -63,6 +71,10 @@ public class GraduationApprovalSequence : MonoBehaviour
 
         endText.gameObject.SetActive(false);
         creditText.gameObject.SetActive(false);
+
+        // 종료 버튼은 처음에 숨겨둡니다.
+        if (quitButton != null)
+            quitButton.SetActive(false);
 
         if (fadePanel != null)
             fadePanel.color = new Color(0, 0, 0, 0);
@@ -88,6 +100,7 @@ public class GraduationApprovalSequence : MonoBehaviour
 
     IEnumerator Sequence()
     {
+        // [이름 타이핑 및 도장 쾅 연출 로직 그대로 유지]
         string playerName;
 
         if (debugMode)
@@ -122,11 +135,15 @@ public class GraduationApprovalSequence : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        // ----------------------------------------------------
+        // ⭐ BGM 시작 부분 (루프 없이 딱 한 번만 재생)
+        // ----------------------------------------------------
         if (AudioManager.Instance != null && phaseBGM != null)
         {
-            AudioManager.Instance.PlayBGM(phaseBGM);
+            AudioManager.Instance.PlayBGM(phaseBGM, false);
         }
 
+        // [사진 드롭 및 페이드, 크레딧 연출 로직 그대로 유지]
         string selected;
 
         if (debugMode)
@@ -213,5 +230,33 @@ public class GraduationApprovalSequence : MonoBehaviour
         CreditSequence cs = GetComponent<CreditSequence>();
         if (cs != null)
             cs.Play();
+
+        // ----------------------------------------------------
+        // ⭐ [핵심 추가] 엔딩 곡이 끝날 때까지 실시간 대기 후 종료 버튼 활성화
+        // ----------------------------------------------------
+        if (AudioManager.Instance != null && AudioManager.Instance.bgmSource != null)
+        {
+            // 노래가 플레이 중인 동안에는 계속 양보(대기)합니다.
+            while (AudioManager.Instance.bgmSource.isPlaying)
+            {
+                yield return null;
+            }
+        }
+
+        // 노래가 완전히 끝나면 종료 버튼을 화면에 띄웁니다!
+        if (quitButton != null)
+        {
+            quitButton.SetActive(true);
+        }
+    }
+
+    // [버튼 연결용 함수] 게임을 완전히 종료하거나 타이틀로 보낼 때 사용
+    public void OnQuitButtonClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

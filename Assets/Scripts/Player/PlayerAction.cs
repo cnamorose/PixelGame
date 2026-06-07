@@ -191,7 +191,7 @@ public class PlayerAction : MonoBehaviour
         GameOverManager.Instance.isGameOverSequenceRunning)
             return;
 
-        // ⭐ [핵심 추가] F키 입력 시 현재 씬에 맞는 공격 메서드 실행
+        // F키 입력 시 현재 씬에 맞는 공격 메서드 실행
         if (Input.GetKeyDown(KeyCode.F))
         {
             HandleUnifiedAttack();
@@ -218,41 +218,45 @@ public class PlayerAction : MonoBehaviour
             forceIdle = isInventoryOpen;
         }
 
-        // 씬 이동 단축키
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            SceneManager.LoadScene("KeyboardMonster");
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SceneManager.LoadScene("devil_end");
-            return;
-        }
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("Room");
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            SceneManager.LoadScene("ending");
+            return;
+        }
+
+        // ----------------------------------------------------
+        // ⭕ DevilMonster 씬 전용: 방향키 누르면 해당 방향 조준 + 즉시 공격 발동!
+        // ----------------------------------------------------
         if (isDevilMonsterScene && SceneManager.GetActiveScene().name == "DevilMonster")
         {
-            rigid.velocity = Vector2.zero;
+            rigid.velocity = Vector2.zero; // 제자리 고정
 
-            if (Input.GetKeyDown(KeyCode.A))
+            // [왼쪽 화살표] 누르면 왼쪽 보고 즉시 공격
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 idleDir = -1;
                 sr.flipX = true;
+
+                // F키를 누른 것과 동일하게 DevilMonster 씬 전용 공격 로직 즉시 실행!
+                HandleUnifiedAttack();
             }
-            else if (Input.GetKeyDown(KeyCode.D))
+            // [오른쪽 화살표] 누르면 오른쪽 보고 즉시 공격
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 idleDir = 1;
                 sr.flipX = false;
+
+                // F키를 누른 것과 동일하게 DevilMonster 씬 전용 공격 로직 즉시 실행!
+                HandleUnifiedAttack();
             }
 
-            return; // Animator 로직 완전 차단
+            return; // Animator 및 일반 이동 로직 완전 차단
         }
 
         // 강제 Idle 상태
@@ -305,36 +309,27 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
-    // ⭐ [추가] F키 하나로 모든 씬의 공격을 제어하는 분기 메서드
     void HandleUnifiedAttack()
     {
-        // 인벤토리가 열려있거나 강제 Idle 상태면 공격 불가
         if (forceIdle || isInventoryOpen || isQuizScene) return;
 
         string currentSceneName = SceneManager.GetActiveScene().name;
 
-        // 1. 데빌 보스 씬일 때 (펜 공격 스크립트 연동)
         if (currentSceneName == "DevilBoss")
         {
             if (penAttack != null && penAttack.enabled)
             {
-                // 만약 PlayerPenAttackController 내부에 실행 함수(예: Attack())가 따로 있다면 
-                // 여기서 penAttack.Attack(); 형태로 직접 호출해 줘도 됩니다.
                 Debug.Log("데빌 보스전: F키로 펜 공격 작동!");
             }
         }
-        // 2. 데빌 몬스터 씬일 때 (필요시 전용 로직 작성)
         else if (currentSceneName == "DevilMonster")
         {
             Debug.Log("데빌 몬스터전: F키로 해당 씬 전용 공격 작동!");
-            // TODO: DevilMonster 씬 전용 공격 함수가 있다면 여기에 매핑
         }
-        // 3. 키보드 몬스터 맵일 때
         else if (currentSceneName == "KeyboardMonster")
         {
             Debug.Log("키보드 몬스터: F키로 플랫폼 모드 공격 작동!");
         }
-        // 4. 그 외 기본 상태일 때
         else
         {
             Debug.Log("기본 상태: F키 입력됨");
@@ -381,19 +376,35 @@ public class PlayerAction : MonoBehaviour
         else
         {
             Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
-            rigid.velocity = moveVec * Speed;
+            returnVecSpeed(moveVec);
         }
     }
 
+    private void returnVecSpeed(Vector2 moveVec)
+    {
+        rigid.velocity = moveVec * Speed;
+    }
+
+    // ⭐ [수정] WASD를 완전히 차단하고 오직 키보드 방향키만 받도록 변경
     void HandleTopDownInput()
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        // 좌우 입력 계산 (오른쪽 화살표 = 1, 왼쪽 화살표 = -1, 둘 다 안 누르면 0)
+        float targetH = 0f;
+        if (Input.GetKey(KeyCode.RightArrow)) targetH += 1f;
+        if (Input.GetKey(KeyCode.LeftArrow)) targetH -= 1f;
+        h = targetH;
 
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
+        // 상하 입력 계산 (위쪽 화살표 = 1, 아래쪽 화살표 = -1, 둘 다 안 누르면 0)
+        float targetV = 0f;
+        if (Input.GetKey(KeyCode.UpArrow)) targetV += 1f;
+        if (Input.GetKey(KeyCode.DownArrow)) targetV -= 1f;
+        v = targetV;
+
+        // 누르는 순간(Down)과 떼는 순간(Up)에 방향 우선순위 판단 가공
+        bool hDown = Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow);
+        bool vDown = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow);
+        bool hUp = Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow);
+        bool vUp = Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow);
 
         if (hDown)
             isHorizonMove = true;
@@ -403,9 +414,13 @@ public class PlayerAction : MonoBehaviour
             isHorizonMove = h != 0;
     }
 
+    // ⭐ [수정] 플랫포머 모드도 WASD를 차단하고 방향키(좌/우)와 Space바 점프로 변경
     void HandlePlatformerInput()
     {
-        h = Input.GetAxisRaw("Horizontal");
+        float targetH = 0f;
+        if (Input.GetKey(KeyCode.RightArrow)) targetH += 1f;
+        if (Input.GetKey(KeyCode.LeftArrow)) targetH -= 1f;
+        h = targetH;
         v = 0;
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)

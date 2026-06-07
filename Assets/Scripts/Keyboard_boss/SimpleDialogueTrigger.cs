@@ -11,9 +11,6 @@ public class SimpleDialogueTrigger : MonoBehaviour
     [TextArea]
     public string messageEN;
 
-    [Header("SFX")]
-    public AudioClip dialogueSFX;
-
     private bool triggered = false;
 
     void OnTriggerEnter2D(Collider2D other)
@@ -31,9 +28,6 @@ public class SimpleDialogueTrigger : MonoBehaviour
                 : messageKR;
 
         DialogueManager.Instance.ShowSimpleDialogueAutoClose(message);
-        if (dialogueSFX != null)
-        {
-            AudioManager.Instance.PlayOneShotSFX(dialogueSFX);
-        }
+        
     }
 }

@@ -620,7 +620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cef829daa1c63248b6b0989177a82e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 1399180760}
+  respawnPoints:
+  - {fileID: 759556296}
 --- !u!61 &315661829
 BoxCollider2D:
   m_ObjectHideFlags: 0

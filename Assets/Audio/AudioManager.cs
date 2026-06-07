@@ -28,13 +28,14 @@ public class AudioManager : MonoBehaviour
 
     // ---------------- BGM ----------------
 
-    public void PlayBGM(AudioClip clip)
+    // 이 함수를 찾아서 아래 내용으로 바꿔주세요!
+    public void PlayBGM(AudioClip clip, bool isLoop = true)
     {
         if (bgmSource.clip == clip && bgmSource.isPlaying)
             return;
 
         bgmSource.clip = clip;
-        bgmSource.loop = true;
+        bgmSource.loop = isLoop; // ◀ 강제 true 대신 전달받은 값(isLoop)이 들어갑니다.
         bgmSource.volume = 1f;
         bgmSource.Play();
     }
@@ -158,4 +159,33 @@ public class AudioManager : MonoBehaviour
         yield return null; 
         oneShotSFXSource.pitch = 1f;
     }
+
+    // ---------------- 볼륨 제어 기능 추가 ----------------
+
+    // BGM 볼륨 조절 (0.0f ~ 1.0f)
+    public void SetBGMVolume(float volume)
+    {
+        if (bgmSource != null)
+        {
+            bgmSource.volume = volume;
+        }
+    }
+
+    // 효과음 볼륨 조절 (모든 SFX 관련 소스에 일괄 적용)
+    public void SetSFXVolume(float volume)
+    {
+        if (sfxSource != null) sfxSource.volume = volume;
+        if (loopSFXSource != null) loopSFXSource.volume = volume;
+        if (oneShotSFXSource != null) oneShotSFXSource.volume = volume;
+    }
+
+    // 환경음 볼륨 조절
+    public void SetAmbientVolume(float volume)
+    {
+        if (ambientSource != null)
+        {
+            ambientSource.volume = volume;
+        }
+    }
+
 }

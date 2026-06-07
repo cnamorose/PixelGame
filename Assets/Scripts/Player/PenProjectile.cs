@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PenProjectile : MonoBehaviour
 {
-    public int damage = 10;
+    public int damage = 1;
     public float speed = 20f;
 
     [Header("사거리 조절")]

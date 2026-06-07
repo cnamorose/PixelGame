@@ -25,7 +25,8 @@ public class PlayerAttack : MonoBehaviour
         if (action.forceIdle || isAttacking)
             return;
 
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        // ⭕ [수정 완료] A, D 대신 왼쪽/오른쪽 방향키를 누르면 찌르기(Stab) 발동!
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             StartCoroutine(Stab());
         }

@@ -8,13 +8,21 @@ using TMPro;
 
 public class GraduationApprovalSequence : MonoBehaviour
 {
-    // [기존 변수들 그대로 유지]
-    [Header("Text")]
-    public TextMeshProUGUI nameText;
+    // [요구사항 반영] 영/한 텍스트창 컴포넌트 각각 분리
+    [Header("Text UI (Localized)")]
+    public TextMeshProUGUI ko_nameText; // 한국어 이름이 타이핑될 텍스트창
+    public TextMeshProUGUI en_nameText; // 영어 이름이 타이핑될 텍스트창
     public float typingSpeed = 0.08f;
 
-    [Header("Stamp")]
-    public GameObject stamp;
+    // [요구사항 반영] 영/한 디폴트 라벨 UI 컴포넌트 설정
+    [Header("Default Label Settings")]
+    public TextMeshProUGUI ko_default;  // 상시 띄워둘 한국어 라벨 UI ("성명 : ")
+    public TextMeshProUGUI en_default;  // 상시 띄워둘 영어 라벨 UI ("Name : ")
+
+    // [요구사항 반영] 영/한 도장 각각 매핑
+    [Header("Stamp (Localized)")]
+    public GameObject ko_stamp;
+    public GameObject en_stamp;
     public float stampDelayAfterName = 1f;
 
     [Header("Camera Shake")]
@@ -46,7 +54,8 @@ public class GraduationApprovalSequence : MonoBehaviour
 
     [Header("DEBUG")]
     public bool debugMode = true;
-    public string debugName = "홍길동";
+    public string debugName_KR = "홍길동";
+    public string debugName_EN = "Gildong Hong";
     public string debugCharacter = "Boy"; // Boy or Girl
 
     [Header("BGM")]
@@ -55,9 +64,8 @@ public class GraduationApprovalSequence : MonoBehaviour
     [Header("SFX")]
     public AudioClip stpSFX;
 
-    // ⭐ [새로 추가된 종료 버튼 설정]
     [Header("END BUTTON")]
-    public GameObject quitButton; // 엔딩 곡이 끝나면 나타날 종료 버튼
+    public GameObject quitButton;
 
     Cameramove cam;
 
@@ -65,14 +73,22 @@ public class GraduationApprovalSequence : MonoBehaviour
     {
         cam = Camera.main.GetComponent<Cameramove>();
 
-        stamp.SetActive(false);
+        // 두 도장 모두 처음에 꺼두기
+        if (ko_stamp != null) ko_stamp.SetActive(false);
+        if (en_stamp != null) en_stamp.SetActive(false);
+
         boyPhoto.SetActive(false);
         girlPhoto.SetActive(false);
 
         endText.gameObject.SetActive(false);
         creditText.gameObject.SetActive(false);
 
-        // 종료 버튼은 처음에 숨겨둡니다.
+        // ⭐ [초기화 추가] 라벨 및 이름 텍스트창을 언어 체크 전까지 모두 숨기거나 비웁니다.
+        if (ko_default != null) ko_default.gameObject.SetActive(false);
+        if (en_default != null) en_default.gameObject.SetActive(false);
+        if (ko_nameText != null) ko_nameText.text = "";
+        if (en_nameText != null) en_nameText.text = "";
+
         if (quitButton != null)
             quitButton.SetActive(false);
 
@@ -100,30 +116,62 @@ public class GraduationApprovalSequence : MonoBehaviour
 
     IEnumerator Sequence()
     {
-        // [이름 타이핑 및 도장 쾅 연출 로직 그대로 유지]
-        string playerName;
+        // ----------------------------------------------------
+        // ⭐ 설정 언어 체크 및 타겟 UI/라벨 엄격 매핑
+        // ----------------------------------------------------
+        bool isEnglishMode = (GameManager_L.Instance != null && GameManager_L.Instance.currentLanguage == Language.EN);
+
+        // 현재 언어에 맞는 라벨 UI 오브젝트만 활성화 (디폴트로 계속 켜져 있음)
+        if (isEnglishMode)
+        {
+            if (en_default != null) en_default.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (ko_default != null) ko_default.gameObject.SetActive(true);
+        }
+
+        // 언어에 따라 타이핑을 진행할 진짜 이름 텍스트창 골라내기
+        TextMeshProUGUI targetNameText = isEnglishMode ? en_nameText : ko_nameText;
+
+        string playerName = "";
 
         if (debugMode)
         {
-            playerName = debugName;
+            playerName = isEnglishMode ? debugName_EN : debugName_KR;
         }
         else
         {
             playerName = DialogueManager.Instance.playerData.playerName;
         }
 
-        nameText.text = "";
-
-        foreach (char c in playerName)
+        // 찾아낸 타겟 이름 텍스트창에 원래 의도하신 대로 이름만 한 글자씩 타이핑 효과 연출
+        if (targetNameText != null)
         {
-            nameText.text += c;
-            yield return new WaitForSeconds(typingSpeed);
+            targetNameText.text = ""; // 비우고 시작
+
+            foreach (char c in playerName)
+            {
+                targetNameText.text += c;
+                yield return new WaitForSeconds(typingSpeed);
+            }
         }
 
         yield return new WaitForSeconds(stampDelayAfterName);
 
-        stamp.SetActive(true);
+        // ----------------------------------------------------
+        // ⭐ 언어에 맞는 도장 오브젝트 활성화
+        // ----------------------------------------------------
+        if (isEnglishMode)
+        {
+            if (en_stamp != null) en_stamp.SetActive(true);
+        }
+        else
+        {
+            if (ko_stamp != null) ko_stamp.SetActive(true);
+        }
 
+        // [이하 기존 연출 로직 원본 상태 완벽 유지]
         if (AudioManager.Instance != null && stpSFX != null)
             AudioManager.Instance.PlayOneShotSFX(stpSFX);
 
@@ -135,44 +183,29 @@ public class GraduationApprovalSequence : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        // ----------------------------------------------------
-        // ⭐ BGM 시작 부분 (루프 없이 딱 한 번만 재생)
-        // ----------------------------------------------------
         if (AudioManager.Instance != null && phaseBGM != null)
         {
             AudioManager.Instance.PlayBGM(phaseBGM, false);
         }
 
-        // [사진 드롭 및 페이드, 크레딧 연출 로직 그대로 유지]
-        string selected;
-
-        if (debugMode)
-        {
-            selected = debugCharacter;
-        }
-        else
-        {
-            selected = PlayerPrefs.GetString("SelectedCharacter", "Boy");
-        }
-
+        string selected = debugMode ? debugCharacter : PlayerPrefs.GetString("SelectedCharacter", "Boy");
         GameObject activePhoto = selected == "Boy" ? boyPhoto : girlPhoto;
 
-        activePhoto.SetActive(true);
-
-        RectTransform photoRT = activePhoto.GetComponent<RectTransform>();
-
-        Vector2 startPos = new Vector2(0f, 1000f);
-        Vector2 endPos = new Vector2(0f, 0f);
-
-        photoRT.anchoredPosition = startPos;
-
-        float t = 0f;
-        while (t < photoDropDuration)
+        if (activePhoto != null)
         {
-            t += Time.deltaTime;
-            photoRT.anchoredPosition =
-                Vector2.Lerp(startPos, endPos, t / photoDropDuration);
-            yield return null;
+            activePhoto.SetActive(true);
+            RectTransform photoRT = activePhoto.GetComponent<RectTransform>();
+            Vector2 startPos = new Vector2(0f, 1000f);
+            Vector2 endPos = new Vector2(0f, 0f);
+            photoRT.anchoredPosition = startPos;
+
+            float t = 0f;
+            while (t < photoDropDuration)
+            {
+                t += Time.deltaTime;
+                photoRT.anchoredPosition = Vector2.Lerp(startPos, endPos, t / photoDropDuration);
+                yield return null;
+            }
         }
 
         yield return new WaitForSeconds(photoStayDuration);
@@ -186,8 +219,11 @@ public class GraduationApprovalSequence : MonoBehaviour
             yield return null;
         }
 
-        endText.gameObject.SetActive(true);
-        endText.alpha = 0;
+        if (endText != null)
+        {
+            endText.gameObject.SetActive(true);
+            endText.alpha = 0;
+        }
 
         float et = 0f;
         while (et < 1f)
@@ -202,55 +238,46 @@ public class GraduationApprovalSequence : MonoBehaviour
 
         endText.gameObject.SetActive(false);
 
-        Vector2 photoStart = photoRT.anchoredPosition;
-        Vector2 photoEnd = photoStart + Vector2.left * moveDistance;
-
-        creditText.gameObject.SetActive(true);
-
-        Vector2 creditStart = creditText.anchoredPosition + Vector2.right * moveDistance;
-        Vector2 creditEnd = creditText.anchoredPosition;
-
-        creditText.anchoredPosition = creditStart;
-
-        float m = 0f;
-        while (m < moveDuration)
+        if (activePhoto != null)
         {
-            m += Time.deltaTime;
-            float progress = m / moveDuration;
+            RectTransform photoRT = activePhoto.GetComponent<RectTransform>();
+            Vector2 photoStart = photoRT.anchoredPosition;
+            Vector2 photoEnd = photoStart + Vector2.left * moveDistance;
 
-            photoRT.anchoredPosition =
-                Vector2.Lerp(photoStart, photoEnd, progress);
+            creditText.gameObject.SetActive(true);
+            Vector2 creditStart = creditText.anchoredPosition + Vector2.right * moveDistance;
+            Vector2 creditEnd = creditText.anchoredPosition;
+            creditText.anchoredPosition = creditStart;
 
-            creditText.anchoredPosition =
-                Vector2.Lerp(creditStart, creditEnd, progress);
-
-            yield return null;
+            float m = 0f;
+            while (m < moveDuration)
+            {
+                m += Time.deltaTime;
+                float progress = m / moveDuration;
+                photoRT.anchoredPosition = Vector2.Lerp(photoStart, photoEnd, progress);
+                creditText.anchoredPosition = Vector2.Lerp(creditStart, creditEnd, progress);
+                yield return null;
+            }
         }
 
         CreditSequence cs = GetComponent<CreditSequence>();
         if (cs != null)
             cs.Play();
 
-        // ----------------------------------------------------
-        // ⭐ [핵심 추가] 엔딩 곡이 끝날 때까지 실시간 대기 후 종료 버튼 활성화
-        // ----------------------------------------------------
         if (AudioManager.Instance != null && AudioManager.Instance.bgmSource != null)
         {
-            // 노래가 플레이 중인 동안에는 계속 양보(대기)합니다.
             while (AudioManager.Instance.bgmSource.isPlaying)
             {
                 yield return null;
             }
         }
 
-        // 노래가 완전히 끝나면 종료 버튼을 화면에 띄웁니다!
         if (quitButton != null)
         {
             quitButton.SetActive(true);
         }
     }
 
-    // [버튼 연결용 함수] 게임을 완전히 종료하거나 타이틀로 보낼 때 사용
     public void OnQuitButtonClick()
     {
 #if UNITY_EDITOR

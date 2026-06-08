@@ -8,6 +8,9 @@ public class SimpleDialogueTrigger : MonoBehaviour
     [TextArea]
     public string messageKR;
 
+    [Header("SFX")]
+    public AudioClip dialogueSFX;
+
     [TextArea]
     public string messageEN;
 
@@ -28,6 +31,10 @@ public class SimpleDialogueTrigger : MonoBehaviour
                 : messageKR;
 
         DialogueManager.Instance.ShowSimpleDialogueAutoClose(message);
-        
+        if (dialogueSFX != null)
+        {
+            AudioManager.Instance.PlayOneShotSFX(dialogueSFX);
+        }
+
     }
 }

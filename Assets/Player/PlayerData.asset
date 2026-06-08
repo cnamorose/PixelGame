@@ -16,10 +16,10 @@ MonoBehaviour:
   quizCleared: 1
   pcCleared: 1
   paperclear: 1
-  bookshelfLifeUpgraded: 0
-  windowLifeUpgraded: 0
+  bookshelfLifeUpgraded: 1
+  windowLifeUpgraded: 1
   hasPen: 0
   hasPaper: 0
   hasUsb: 0
   hasPaper2: 0
-  paperTried: 0
+  paperTried: 1

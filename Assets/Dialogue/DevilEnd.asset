@@ -45,7 +45,7 @@ MonoBehaviour:
     weakShake: 0
   - speaker: Devil
     text: "\uC6C3\uAE30\uC9C0 \uB9C8, \uADF8\uB807\uAC8C \uC878\uC5C5\uC774 \uC26C\uC6B8
-      \uB9AC \uC5C6\uB2E4\uACE0!!!"
+      \uB9AC \uC5C6\uB2E4\uACE0!"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

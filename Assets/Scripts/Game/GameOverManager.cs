@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems; // ⭐ 추가: 이벤트 시스템 제어용
+using UnityEngine.EventSystems;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -14,12 +14,33 @@ public class GameOverManager : MonoBehaviour
     public bool fromGameOver = false;
 
     [Header("UI")]
-    public Image fadePanel; // ⭐ 중요: 인스펙터에서 이 이미지의 'Raycast Target'이 체크되어 있어야 합니다.
+    public Image fadePanel;
     public GameObject gameOverPanel;
     public TMP_Text extraGameOverText;
 
+    [Header("Localized Random Mentions")]
+    [Tooltip("한국어 게임오버 랜덤 문구들")]
+    public string[] ko_GameOverTexts = new string[]
+    {
+        "올해 졸업할 수 있으려나?",
+        "좀 더 분발해봐.",
+        "이래서 논문 쓰겠어?"
+    };
+
+    [Tooltip("영어 게임오버 랜덤 문구들")]
+    public string[] en_GameOverTexts = new string[]
+    {
+        "Will I be able to graduate\nthis year?",
+        "You need to work\na bit harder.",
+        "At this rate,\nno credits for you."
+    };
+
     [Header("Audio")]
     public AudioClip gameOverBGM;
+
+    // 🔒 [중복 방지 핵심 키] 직전에 나왔던 문구 번호를 기억할 변수 (초기값은 절대 겹치지 않을 -1)
+    private int lastKoIndex = -1;
+    private int lastEnIndex = -1;
 
     private void Awake()
     {
@@ -55,7 +76,6 @@ public class GameOverManager : MonoBehaviour
             extraGameOverText.gameObject.SetActive(false);
             fadePanel.gameObject.SetActive(false);
 
-            // ⭐ 씬이 로드되면 다시 클릭과 조작이 가능하도록 복구
             if (EventSystem.current != null)
                 EventSystem.current.enabled = true;
         }
@@ -71,11 +91,9 @@ public class GameOverManager : MonoBehaviour
         isGameOverSequenceRunning = true;
         fromGameOver = true;
 
-        // ⭐ 1. 플레이어 조작 즉시 잠금 (키보드 입력 차단)
         PlayerAction player = FindObjectOfType<PlayerAction>();
         if (player != null) player.LockControl();
 
-        // ⭐ 2. UI 이벤트 시스템 비활성화 (마우스 클릭 차단)
         if (EventSystem.current != null)
             EventSystem.current.enabled = false;
 
@@ -89,12 +107,77 @@ public class GameOverManager : MonoBehaviour
         GameObject CpartsUI = GameObject.Find("CpartsUI");
         if (CpartsUI != null) CpartsUI.SetActive(false);
 
+        // 랜덤 문구 중복 검사 후 세팅
+        SetRandomGameOverText();
+
         StartCoroutine(GameOverSequence());
+    }
+
+    // ⭐ [수정 완료] 직전 인덱스와 비교해서 다를 때까지 다시 무작위로 뽑는 안전한 검증 로직
+    private void SetRandomGameOverText()
+    {
+        if (extraGameOverText == null) return;
+
+        bool isEnglishMode = (GameManager_L.Instance != null && GameManager_L.Instance.currentLanguage == Language.EN);
+
+        if (isEnglishMode)
+        {
+            if (en_GameOverTexts != null && en_GameOverTexts.Length > 0)
+            {
+                int randomIndex = lastEnIndex;
+
+                // 문구가 2개 이상이면 직전과 다른 번호가 나올 때까지 계속 굴림
+                if (en_GameOverTexts.Length > 1)
+                {
+                    while (randomIndex == lastEnIndex)
+                    {
+                        randomIndex = Random.Range(0, en_GameOverTexts.Length);
+                    }
+                }
+                else
+                {
+                    randomIndex = 0; // 등록된 문구가 1개뿐이면 그냥 0번 출력
+                }
+
+                lastEnIndex = randomIndex; // 현재 뽑힌 번호를 직전 번호로 저장
+                extraGameOverText.text = en_GameOverTexts[randomIndex];
+            }
+            else
+            {
+                extraGameOverText.text = "Game Over";
+            }
+        }
+        else
+        {
+            if (ko_GameOverTexts != null && ko_GameOverTexts.Length > 0)
+            {
+                int randomIndex = lastKoIndex;
+
+                // 문구가 2개 이상이면 직전과 다른 번호가 나올 때까지 계속 굴림
+                if (ko_GameOverTexts.Length > 1)
+                {
+                    while (randomIndex == lastKoIndex)
+                    {
+                        randomIndex = Random.Range(0, ko_GameOverTexts.Length);
+                    }
+                }
+                else
+                {
+                    randomIndex = 0;
+                }
+
+                lastKoIndex = randomIndex; // 현재 뽑힌 번호를 직전 번호로 저장
+                extraGameOverText.text = ko_GameOverTexts[randomIndex];
+            }
+            else
+            {
+                extraGameOverText.text = "게임 오버";
+            }
+        }
     }
 
     private IEnumerator GameOverSequence()
     {
-        // ⭐ fadePanel을 켜는 순간 'Raycast Target'이 활성화되어 클릭을 모두 막습니다.
         fadePanel.gameObject.SetActive(true);
 
         if (AudioManager.Instance != null)
@@ -104,7 +187,7 @@ public class GameOverManager : MonoBehaviour
         Color c = fadePanel.color;
 
         // 페이드 인
-        for (float t = 0; t < fadeTime; t += Time.unscaledDeltaTime) // TimeScale 영향 안 받게 unscaled 권장
+        for (float t = 0; t < fadeTime; t += Time.unscaledDeltaTime)
         {
             float alpha = Mathf.Lerp(0f, 1f, t / fadeTime);
             fadePanel.color = new Color(c.r, c.g, c.b, alpha);
@@ -121,7 +204,6 @@ public class GameOverManager : MonoBehaviour
         extraGameOverText.gameObject.SetActive(true);
         yield return new WaitForSeconds(5f);
 
-        // 마지막 룸 이동
         if (AudioManager.Instance != null)
             AudioManager.Instance.FadeOutThenLoadScene("Room", 2f);
     }

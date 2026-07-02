@@ -218,15 +218,16 @@ public class PlayerAction : MonoBehaviour
             forceIdle = isInventoryOpen;
         }
 
+
+        //if (Input.GetKeyDown(KeyCode.F1))
+        //{
+        //    SceneManager.LoadScene("ending");
+        //    return;
+        //}
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("Room");
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            SceneManager.LoadScene("ending");
             return;
         }
 

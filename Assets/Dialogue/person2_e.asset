@@ -14,15 +14,92 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   lines:
-  - speaker: Professor
-    text: 
+  - speaker: Player
+    text: Professor...?! \nWhat in the world are you doing here...?!
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Professor
-    text: 
+    text: "Oh, {name}?\\nDid you come all this way to rescue me?\r"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: "Ah, well... I actually just came here to beat up\\nthe demon who smashed
+      my rig...\r\n\r"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: " I had absolutely no idea you were trapped here, \\nProfessor.\r"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Professor
+    text: "I see... I just took a quick nap \\nin my office and woke up here.\r"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Professor
+    text: "I found myself locked in this bizarre place.\\nThank you so much for saving
+      me.\r\n\r"
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: (Holy crap... If I hadn't defeated Fale...)
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: (My advisor would've literally vanished,\nand I'd be stuck in school forever...?)
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Professor
+    text: '{name}? \nWhat are you spacing out for?'
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: 'Oh, uh! It''s nothing, Professor!\nIt''s dangerous here, so please get
+      out of here first!
+
+'
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Player
+    text: I'll grab my thesis and meet you at the lab right away!
+    requiresName: 0
+    shakeCamera: 0
+    changeDevilSpriteOnEnd: 0
+    devilSpriteOnEnd: {fileID: 0}
+    weakShake: 0
+  - speaker: Professor
+    text: 'Alright, see you there.
+
+'
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

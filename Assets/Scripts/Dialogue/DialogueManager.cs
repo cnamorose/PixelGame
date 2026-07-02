@@ -222,6 +222,61 @@ public class DialogueManager : MonoBehaviour
         {
             dialoguePanel.SetActive(false);
             nameInputPanel.SetActive(true);
+
+            bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+
+            // 1. 인풋필드 가이드 글씨 (Placeholder) 변경
+            if (nameInputField.placeholder != null)
+            {
+                var placeholderText = nameInputField.placeholder.GetComponent<TextMeshProUGUI>();
+                if (placeholderText != null) placeholderText.text = isEN ? "Enter name... (Max 8)" : "이름을 입력하세요 (최대 4글자)";
+            }
+
+            nameInputField.text = "";
+
+            // 2. 확인 버튼 텍스트 변경
+            if (nameConfirmButton != null)
+            {
+                var buttonText = nameConfirmButton.GetComponentInChildren<TextMeshProUGUI>();
+                if (buttonText != null) buttonText.text = isEN ? "Confirm" : "입력완료";
+            }
+
+            // 3. 언어별 글자 수 제한 및 입력 타입 최적화
+            if (nameInputField != null)
+            {
+                nameInputField.characterLimit = isEN ? 8 : 4;
+                nameInputField.contentType = isEN ? TMP_InputField.ContentType.Alphanumeric : TMP_InputField.ContentType.Standard;
+
+                // 실시간 한/영 및 공백 필터링 이벤트
+                nameInputField.onValueChanged.RemoveAllListeners();
+                nameInputField.onValueChanged.AddListener((currentText) =>
+                {
+                    string filtered = "";
+                    foreach (char c in currentText)
+                    {
+                        if (isEN)
+                        {
+                            // 영어 모드: 알파벳(대소문자), 숫자만 허용 (공백 ' ' 제거)
+                            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+                                filtered += c;
+                        }
+                        else
+                        {
+                            // 한글 모드: 한글 자음/모음/완성형, 숫자만 허용 (공백 ' ' 제거)
+                            if ((c >= 'ㄱ' && c <= 'ㅎ') || (c >= 'ㅏ' && c <= 'ㅣ') || (c >= '가' && c <= '힣') || (c >= '0' && c <= '9'))
+                                filtered += c;
+                        }
+                    }
+
+                    // 공백이나 잘못된 언어가 들어가서 기존 텍스트와 다르면 강제 교체
+                    if (currentText != filtered)
+                    {
+                        nameInputField.text = filtered;
+                        nameInputField.caretPosition = filtered.Length; // 커서를 맨 뒤로 이동
+                    }
+                });
+            }
+
             return;
         }
 
@@ -347,8 +402,13 @@ public class DialogueManager : MonoBehaviour
     public void ConfirmName()
     {
         string name = nameInputField.text;
+
+        // 유저가 빈칸으로 확인을 누르면 현재 언어에 맞춰 기본값 지정
         if (string.IsNullOrWhiteSpace(name))
-            name = "플레이어";
+        {
+            bool isEN = GameManager_L.Instance.currentLanguage == Language.EN;
+            name = isEN ? "Player" : "플레이어";
+        }
 
         playerData.playerName = name;
 

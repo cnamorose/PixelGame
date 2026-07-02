@@ -9,26 +9,22 @@ public class CreditSequence : MonoBehaviour
     public float fadeDuration = 1f;
     public float stayDuration = 2f;
 
+    // ⭐ 다른 스크립트에서 감시할 수 있도록 public 선언
+    [HideInInspector] public bool isEnded = false;
+
     string[] credits =
-{
-    // 첫 번째 줄바꿈 후 폰트 크기를 10으로 줄여서 줄바꿈을 한 번 더 하고, 다시 원상복구(</size>)
-    "A Game By\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+    {
+        "A Game By\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+        "Director &\nGame Design\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+        "Programming\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+        "Art & UI Design\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+        "Music & Sound\n<size=10>\n</size>Generated via\n<color=#FF8C00>Suno AI</color>",
+        "Used Font\n<size=10>\n</size>'Mulmaru'\nby mushsooni",
+        "Special Thanks\n<size=10>\n</size><color=#008A7B>MILab</color>",
+        "Thank You\nFor Playing!"
+    };
 
-    "Director &\nGame Design\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
-
-    "Programming\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
-
-    "Art & UI Design\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
-
-    "Music & Sound\n<size=10>\n</size>Generated via\n<color=#FF8C00>Suno AI</color>",
-
-    "Used Font\n<size=10>\n</size>'Mulmaru'\nby mushsooni",
-
-    "Special Thanks\n<size=10>\n</size><color=#008A7B>MILab</color>",
-
-    "Thank You\nFor Playing!"
-};
-
+    // ⭐ 매개변수 없는 깔끔한 원래의 Play 함수
     public void Play()
     {
         StartCoroutine(PlayCredits());
@@ -36,6 +32,8 @@ public class CreditSequence : MonoBehaviour
 
     IEnumerator PlayCredits()
     {
+        isEnded = false; // 시작할 때 false 고정
+
         creditText.gameObject.SetActive(true);
 
         foreach (string line in credits)
@@ -47,6 +45,8 @@ public class CreditSequence : MonoBehaviour
         }
 
         creditText.gameObject.SetActive(false);
+
+        isEnded = true; // 완벽히 다 사라지면 진짜 끝(true)
     }
 
     IEnumerator FadeIn()

@@ -22,7 +22,7 @@ public class KBossController : MonoBehaviour
     bool isHitBlinking = false;
 
     [Header("Status")]
-    public int maxHp = 40;
+    public int maxHp = 30;
     public int hp;
 
     [Header("Attack")]

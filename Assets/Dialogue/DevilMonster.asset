@@ -36,7 +36,7 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: "\uC2B9\uC9C4\uC740\u2026 \uAD50\uC218\uB294\u2026 \uB0B4 \uAC74\uB370\u2026!!"
+    text: "\uC2B9\uC9C4\uC740\u2026 \uAD50\uC218\uB294\u2026 \uACE7 \uB0B4 \uAC74\uB370\u2026!!"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

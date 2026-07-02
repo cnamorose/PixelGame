@@ -3734,7 +3734,7 @@ MonoBehaviour:
   m_text: "\uC62C\uD574 \uC878\uC5C5\uC740 \uAE00. \uB800. \uB2E4. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d371b03ad3966d74594869883f5230d7, type: 2}
-  m_sharedMaterial: {fileID: -790574895635172270, guid: 8e82e1aba58d5914aad2c985f9996f26, type: 2}
+  m_sharedMaterial: {fileID: -4057751166150182433, guid: d371b03ad3966d74594869883f5230d7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3758,14 +3758,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 34
+  m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3794,10 +3794,10 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5.547348, y: 0, z: 4.622772, w: 0}
+  m_margin: {x: 0.24909975, y: 0, z: 0.20756532, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &505845097
@@ -6748,6 +6748,14 @@ MonoBehaviour:
   fadePanel: {fileID: 332801216}
   gameOverPanel: {fileID: 1262298712}
   extraGameOverText: {fileID: 505845096}
+  ko_GameOverTexts:
+  - "\uC62C\uD574 \uC878\uC5C5\uD560 \uC218 \uC788\uC73C\uB824\uB098?"
+  - "\uC880 \uB354 \uBD84\uBC1C\uD574\uBD10."
+  - "\uC774\uB798\uC11C \uB17C\uBB38 \uC4F0\uACA0\uC5B4?"
+  en_GameOverTexts:
+  - Will I be able to graduate\nthis year?
+  - You need to work a bit harder.
+  - At this rate, no credits for you.
   gameOverBGM: {fileID: 8300000, guid: e235447ce1767ac40bcda225b426d288, type: 3}
 --- !u!1 &1288832244
 GameObject:

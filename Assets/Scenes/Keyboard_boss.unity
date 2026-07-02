@@ -442,7 +442,7 @@ MonoBehaviour:
   deathClip: {fileID: 7400000, guid: 6ae109424c5f05c4382053a6d31fc297, type: 2}
   hitBlinkDuration: 0.15
   hitBlinkCount: 3
-  maxHp: 40
+  maxHp: 30
   hp: 0
   attackDelay: 1
   idleDelay: 0.8

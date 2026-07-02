@@ -93,7 +93,7 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Player
-    text: "(\uC878\uC5C5\uD560 \uC218 \uC788\uB294\uAC74\uAC00?)"
+    text: "(\uC81C\uBC1C\uC81C\uBC1C\u3148\u3142)"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

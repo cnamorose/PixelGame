@@ -207,15 +207,7 @@ public class PlayerAction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            if (inventoryUI == null)
-            {
-                Debug.LogWarning("InventoryUI 아직 못 찾음");
-                return;
-            }
-
-            isInventoryOpen = !isInventoryOpen;
-            inventoryUI.SetActive(isInventoryOpen);
-            forceIdle = isInventoryOpen;
+            ToggleInventory();
         }
 
 
@@ -228,6 +220,12 @@ public class PlayerAction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("Room");
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            SceneManager.LoadScene("Keyboard_boss");
             return;
         }
 

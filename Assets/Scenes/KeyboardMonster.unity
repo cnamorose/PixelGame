@@ -15524,6 +15524,7 @@ MonoBehaviour:
   respawnPoints:
   - {fileID: 44736671}
   - {fileID: 1085230197}
+  - {fileID: 1737726780}
 --- !u!61 &1606710717
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16232,6 +16233,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6266660274003229860, guid: 4d4632f9525a2b7428e4233352294a49, type: 3}
   m_PrefabInstance: {fileID: 2086632656679670449}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1737726779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1737726780}
+  m_Layer: 0
+  m_Name: PlayerPoint (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1737726780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737726779}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 77.76, y: 7.18, z: 0.1625952}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1757030768
 GameObject:
   m_ObjectHideFlags: 0
@@ -17438,6 +17470,7 @@ SceneRoots:
   - {fileID: 886236900}
   - {fileID: 44736671}
   - {fileID: 1085230197}
+  - {fileID: 1737726780}
   - {fileID: 356786279}
   - {fileID: 169419436}
   - {fileID: 1081552936}

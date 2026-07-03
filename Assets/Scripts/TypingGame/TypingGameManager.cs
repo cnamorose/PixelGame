@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
+using TMPro;
 
 public class TypingGameManager : MonoBehaviour
 {
     [Header("Warning Blink")]
     public float warningBlinkInterval = 0.7f;
-
     private Coroutine warningBlinkCoroutine;
 
     private List<WordMovement> activeWords = new List<WordMovement>();
@@ -18,20 +17,20 @@ public class TypingGameManager : MonoBehaviour
     public TextMeshProUGUI inputUIText;
 
     [Header("Goal")]
-    public int totalTarget = 10;
+    public int totalTarget = 40;
 
     [Header("Score")]
     public int successCount = 0;
 
     [Header("Rules")]
-    public int step = 5;
+    public int step = 3;
     public int minScore = -10;
 
-    [Header("Progress UI")]
+    [Header("Progress UI (크기: 15개 / 0~14)")]
     public Image progressImage;
     public Sprite[] progressSprites;
 
-    [Header("Graph UI")]
+    [Header("Graph UI (크기: 7개 / 0~6)")]
     public Image GraphImage;
     public Sprite[] GraphSprites;
 
@@ -68,6 +67,10 @@ public class TypingGameManager : MonoBehaviour
         {
             AudioManager.Instance.PlayBGM(BGM);
         }
+
+        // 시작할 때 UI 초기화 (0점 기준 세팅)
+        UpdateProgressSprite();
+        UpdateGraph();
     }
 
     void Update()
@@ -110,7 +113,6 @@ public class TypingGameManager : MonoBehaviour
         WordMovement target = null;
         float lowestY = float.MaxValue;
 
-        // 혹시 모를 죽은 데이터 미리 청소
         activeWords.RemoveAll(item => item == null);
 
         foreach (WordMovement w in activeWords)
@@ -161,7 +163,6 @@ public class TypingGameManager : MonoBehaviour
         Debug.Log("Wrong submit");
     }
 
-    // ⭐ 수정: 매개변수로 어떤 단어가 바닥에 닿았는지(this)를 전달받아 지우도록 변경
     public void OnWordMissed(WordMovement missedWord)
     {
         if (isGameOver) return;
@@ -178,23 +179,35 @@ public class TypingGameManager : MonoBehaviour
         CheckWarningAndError();
     }
 
+    // ⭐ [완벽 반영] Progress UI : 0점 이하는 0번 고정, 0~40점을 0~14인덱스로 분할 매핑
     void UpdateProgressSprite()
     {
-        if (progressImage == null || progressSprites.Length == 0)
+        if (progressImage == null || progressSprites == null || progressSprites.Length == 0)
             return;
 
-        int stage = successCount / step;
+        // 0점부터 40점까지를 0.0 ~ 1.0 비율로 변환 (음수 점수는 자동으로 0.0 처리됨)
+        float progressNormalized = Mathf.InverseLerp(0, totalTarget, successCount);
+
+        // 비율 계산 후 인덱스(0~14) 매출
+        int stage = Mathf.FloorToInt(progressNormalized * (progressSprites.Length - 1));
         stage = Mathf.Clamp(stage, 0, progressSprites.Length - 1);
+
         progressImage.sprite = progressSprites[stage];
     }
 
+    // ⭐ [완벽 반영] Graph UI : 0점 이하는 0번 고정, 0~40점을 0~6인덱스로 분할 매핑
     void UpdateGraph()
     {
         if (GraphImage == null || GraphSprites == null || GraphSprites.Length == 0)
             return;
 
-        int graphStage = successCount / 10;
+        // 0점부터 40점까지를 0.0 ~ 1.0 비율로 변환 (음수 점수는 자동으로 0.0 처리됨)
+        float graphNormalized = Mathf.InverseLerp(0, totalTarget, successCount);
+
+        // 비율 계산 후 인덱스(0~6) 매출
+        int graphStage = Mathf.FloorToInt(graphNormalized * (GraphSprites.Length - 1));
         graphStage = Mathf.Clamp(graphStage, 0, GraphSprites.Length - 1);
+
         GraphImage.sprite = GraphSprites[graphStage];
     }
 

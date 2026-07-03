@@ -1418,7 +1418,7 @@ MonoBehaviour:
   bgmSlider: {fileID: 166133387}
   sfxSlider: {fileID: 798741379}
   githubUsername: cnamorose
-  repositoryName: FaceCard
+  repositoryName: let-me-graduate
 --- !u!1 &201219586
 GameObject:
   m_ObjectHideFlags: 0

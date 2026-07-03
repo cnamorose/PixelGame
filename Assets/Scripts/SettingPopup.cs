@@ -9,12 +9,10 @@ public class SettingPopup : MonoBehaviour
 
     [Header("깃허브 문의 설정")]
     [SerializeField] private string githubUsername = "cnamorose"; // 내 계정 ID
-    [SerializeField] private string repositoryName = "FaceCard"; // 피드백 레포 이름
+    [SerializeField] private string repositoryName = "let-me-graduate"; // 피드백 레포 이름
 
     void Start()
     {
-        // 1. 게임이 켜질 때 오디오 매니저의 현재 볼륨 값을 슬라이더 핸들 위치에 똑같이 맞춰줍니다.
-        // 이 노하우 덕분에 한글 창에서 볼륨을 바꾸고 영어 창을 열어도 싱크가 칼같이 맞습니다.
         if (AudioManager.Instance != null)
         {
             if (bgmSlider != null)
@@ -24,7 +22,6 @@ public class SettingPopup : MonoBehaviour
                 sfxSlider.value = AudioManager.Instance.sfxSource.volume;
         }
 
-        // 2. 슬라이더 바를 마우스로 밀 때마다 실시간으로 오디오 매니저의 볼륨을 바꾸도록 이벤트를 꽂아줍니다.
         if (bgmSlider != null)
             bgmSlider.onValueChanged.AddListener(OnBGMVolumeChanged);
 
@@ -32,7 +29,6 @@ public class SettingPopup : MonoBehaviour
             sfxSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
     }
 
-    // BGM 슬라이더 조작 시 호출
     private void OnBGMVolumeChanged(float value)
     {
         if (AudioManager.Instance != null)
@@ -41,7 +37,6 @@ public class SettingPopup : MonoBehaviour
         }
     }
 
-    // SFX 슬라이더 조작 시 호출
     private void OnSFXVolumeChanged(float value)
     {
         if (AudioManager.Instance != null)
@@ -50,13 +45,13 @@ public class SettingPopup : MonoBehaviour
         }
     }
 
-    // [버튼 연결용] 깃허브 문의하기 (현재 언어 모드를 체크해서 알맞은 양식 팝업)
+
     public void OpenGithubFeedback()
     {
         string title = "";
         string body = "";
 
-        // GameManager_L의 현재 언어 세팅 상태 확인
+     
         if (GameManager_L.Instance != null && GameManager_L.Instance.currentLanguage == Language.EN)
         {
             // 영문 이슈 템플릿

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DevilHealth : MonoBehaviour
 {
-    public int maxHP = 50;
+    public int maxHP = 35;
     int currentHP;
 
     [Header("BGM")]

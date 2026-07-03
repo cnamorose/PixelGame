@@ -1158,7 +1158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 221, y: 105}
+  m_AnchoredPosition: {x: 227.3, y: -113.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &258081626
@@ -1593,7 +1593,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30.034}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 114.79999, y: 178.79999}
+  m_AnchoredPosition: {x: 121.10005, y: -39.500008}
   m_SizeDelta: {x: 15.4021, y: 40.7823}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &393590150
@@ -2766,7 +2766,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 322.1, y: 178.79999}
+  m_AnchoredPosition: {x: 328.4001, y: -39.500008}
   m_SizeDelta: {x: 27.8716, y: 35.0022}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &783958353
@@ -3900,7 +3900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 28.005}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 251.9, y: 179.7}
+  m_AnchoredPosition: {x: 258.20007, y: -38.6}
   m_SizeDelta: {x: 17.5277, y: 36.8439}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1029399006
@@ -7206,7 +7206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 183.6, y: 180.77}
+  m_AnchoredPosition: {x: 189.90007, y: -37.52999}
   m_SizeDelta: {x: 30.1591, y: 36.845}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1952222017
@@ -7354,12 +7354,12 @@ GameObject:
   - component: {fileID: 2012879108}
   - component: {fileID: 2012879107}
   m_Layer: 5
-  m_Name: InventoryC
+  m_Name: InventoryUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2012879105
 RectTransform:
   m_ObjectHideFlags: 0

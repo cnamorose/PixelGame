@@ -1609,9 +1609,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warningBlinkInterval: 0.5
   inputUIText: {fileID: 460485498}
-  totalTarget: 10
+  totalTarget: 40
   successCount: 0
-  step: 5
+  step: 3
   minScore: -10
   progressImage: {fileID: 1612886357}
   progressSprites:

@@ -1,20 +1,26 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PartItem : MonoBehaviour
 {
-    [Header("ȿ����")]
-    public AudioClip itemSFX; 
+    [Header("효과음")]
+    public AudioClip itemSFX;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            GameManager_KM.Instance.partCount++;
+            if (GameManager_KM.Instance != null)
+            {
+                GameManager_KM.Instance.AddPart();
+            }
 
+            // 효과음 재생
             if (AudioManager.Instance != null && itemSFX != null)
             {
                 AudioManager.Instance.PlaySFX(itemSFX);
             }
+
+            // 부품 파괴
             Destroy(gameObject);
         }
     }

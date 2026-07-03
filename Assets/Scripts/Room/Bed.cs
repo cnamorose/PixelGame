@@ -108,21 +108,21 @@ public class Bed : MonoBehaviour
     private void CheckStayDialogues(bool isEN)
     {
         // 5초 단계
-        if (stayTimer >= 5f && !didShow5s)
+        if (stayTimer >= 3f && !didShow5s)
         {
             string text = isEN ? "No time to lie down." : "누워있을 시간은 없다.";
             DialogueManager.Instance.ShowSimpleDialogueAutoClose(text, 2f);
             didShow5s = true;
         }
         // 15초 단계
-        else if (stayTimer >= 15f && !didShow15s)
+        else if (stayTimer >= 8f && !didShow15s)
         {
             string text = isEN ? "I hear the sound of graduation being delayed..." : "졸업이 밀리는 소리가 들린다...";
             DialogueManager.Instance.ShowSimpleDialogueAutoClose(text, 2f);
             didShow15s = true;
         }
         // 30초 단계
-        else if (stayTimer >= 30f && !didShow30s)
+        else if (stayTimer >= 13f && !didShow30s)
         {
             string text = isEN ? "At this rate, I'll be trapped here forever.." : "이러다가 평생 갇혀있겠어..";
             DialogueManager.Instance.ShowSimpleDialogueAutoClose(text, 3f);

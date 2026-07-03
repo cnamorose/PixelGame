@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   playerName: "\uD574\uB9BC"
-  quizCleared: 1
+  quizCleared: 0
   pcCleared: 0
   paperclear: 0
-  bookshelfLifeUpgraded: 1
-  windowLifeUpgraded: 1
-  hasPen: 0
-  hasPaper: 0
-  hasUsb: 0
-  hasPaper2: 0
+  bookshelfLifeUpgraded: 0
+  windowLifeUpgraded: 0
+  hasPen: 1
+  hasPaper: 1
+  hasUsb: 1
+  hasPaper2: 1
   paperTried: 0

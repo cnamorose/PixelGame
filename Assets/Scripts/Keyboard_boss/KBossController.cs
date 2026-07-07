@@ -170,16 +170,22 @@ public class KBossController : MonoBehaviour
     {
         if (throwPrefab == null) return;
 
-        float startAngle = (a4Shape == A4AttackShape.Cross) ? 0f : 45f;
+        bool cross = Random.value < 0.5f;
+        float startAngle = cross ? 0f : 45f;
 
         for (int i = 0; i < 4; i++)
         {
             float targetAngle = startAngle + (i * 90f);
+
             GameObject obj = Instantiate(throwPrefab, spawnPosition, Quaternion.identity);
             Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
             if (rb == null) continue;
 
-            Vector2 dir = new Vector2(Mathf.Cos(targetAngle * Mathf.Deg2Rad), Mathf.Sin(targetAngle * Mathf.Deg2Rad)).normalized;
+            Vector2 dir = new Vector2(
+                Mathf.Cos(targetAngle * Mathf.Deg2Rad),
+                Mathf.Sin(targetAngle * Mathf.Deg2Rad)
+            ).normalized;
+
             float speed = Random.Range(minThrowSpeed, maxThrowSpeed);
             rb.velocity = dir * speed;
         }
@@ -335,7 +341,7 @@ public class KBossController : MonoBehaviour
             float camHeight = cam.orthographicSize;
             float camWidth = camHeight * cam.aspect;
             float camCenterX = cam.transform.position.x;
-            float targetY = cam.transform.position.y + (camHeight * 0.3f); // 화면 상단 고정
+            float targetY = cam.transform.position.y + (camHeight * 0.2f); // 화면 상단 고정
 
             float leftLimitX = camCenterX - (camWidth * horizontalRangeRatio);
             float rightLimitX = camCenterX + (camWidth * horizontalRangeRatio);

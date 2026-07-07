@@ -56,6 +56,11 @@ public class DialogueManager : MonoBehaviour
     Coroutine typingCoroutine;
     bool isTyping = false;
 
+    Coroutine autoNextCoroutine;
+
+    // 스킵용
+    string currentFullText;
+    string currentColor;
 
 
     void Awake()
@@ -203,9 +208,30 @@ public class DialogueManager : MonoBehaviour
 
         if (mode == DialogueMode.Simple)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Space))
                 CloseDialogue();
             return;
+        }
+
+        if (mode == DialogueMode.Cutscene)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (isTyping)
+                {
+                    SkipTyping();
+                }
+                else
+                {
+                    if (autoNextCoroutine != null)
+                    {
+                        StopCoroutine(autoNextCoroutine);
+                        autoNextCoroutine = null;
+                    }
+
+                    NextLine();
+                }
+            }
         }
 
     }
@@ -311,6 +337,9 @@ public class DialogueManager : MonoBehaviour
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
+        currentFullText = text;
+        currentColor = color;
+
         typingCoroutine = StartCoroutine(TypeText(text, color));
     }
 
@@ -368,15 +397,42 @@ public class DialogueManager : MonoBehaviour
 
         isTyping = false;
 
-        // ⏳ 자동 대기
+        autoNextCoroutine = StartCoroutine(AutoNext());
+    }
+
+    IEnumerator AutoNext()
+    {
         yield return new WaitForSeconds(autoNextDelay);
+
+        autoNextCoroutine = null;
 
         NextLine();
     }
 
+    void SkipTyping()
+    {
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        if (autoNextCoroutine != null)
+            StopCoroutine(autoNextCoroutine);
+
+        isTyping = false;
+
+        dialogueText.text =
+            $"<color={currentColor}>{currentFullText}</color>";
+
+        autoNextCoroutine = StartCoroutine(AutoNext());
+    }
 
     void NextLine()
     {
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        if (autoNextCoroutine != null)
+            StopCoroutine(autoNextCoroutine);
+
         // ⭐ 지금 줄이 끝나는 순간
         var prevLine = currentLines[index];
 

@@ -5,20 +5,36 @@ using UnityEngine;
 public class ComponentItem : MonoBehaviour
 {
     public string partName;
-    public GameObject uiReal;   // 실제 컬러 UI만 필요
+    public GameObject uiReal;
+
+    [Header("효과음")]
+    public AudioClip itemSFX;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            CollectPart();
-        }
+        if (!collision.CompareTag("Player"))
+            return;
+
+        CollectPart();
     }
 
     void CollectPart()
     {
-        if (uiReal != null) uiReal.SetActive(true);
+        // 이미 먹은 부품이면 무시
+        if (GameManager_KM.Instance.HasPart(partName))
+            return;
 
-        Destroy(gameObject); // 맵에 있던 아이템 제거
+        // UI 표시
+        if (uiReal != null)
+            uiReal.SetActive(true);
+
+        // 부품 등록
+        GameManager_KM.Instance.AddPart(partName);
+
+        // 효과음
+        if (AudioManager.Instance != null && itemSFX != null)
+            AudioManager.Instance.PlaySFX(itemSFX);
+
+        Destroy(gameObject);
     }
 }

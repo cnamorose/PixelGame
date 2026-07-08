@@ -621,7 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnPoints:
-  - {fileID: 759556296}
+  - {fileID: 1399180760}
 --- !u!61 &315661829
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3161,7 +3161,7 @@ Transform:
   m_GameObject: {fileID: 1399180759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.16, y: 1.57, z: -0.4352664}
+  m_LocalPosition: {x: 24.64, y: -0.37, z: -0.4352664}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

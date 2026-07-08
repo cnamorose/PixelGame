@@ -124,7 +124,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 2
   moveSpeed: 1.5
-  knockbackForce: 5
+  knockbackForce: 7
 --- !u!61 &4810304344060356765
 BoxCollider2D:
   m_ObjectHideFlags: 0

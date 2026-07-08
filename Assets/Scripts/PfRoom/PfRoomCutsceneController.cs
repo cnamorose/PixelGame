@@ -96,11 +96,18 @@ public class PfRoomCutsceneController : MonoBehaviour
 
         DialogueSequence after = GetAfterDialogue();
 
+        // 대사가 끝났을 때 바로 씬을 바꾸지 않고, 2.5초 기다리는 코루틴을 실행합니다.
         DialogueManager.Instance.onCutsceneEnd = () =>
         {
-            SceneManager.LoadScene("Ending");
+            StartCoroutine(LoadEndingWithDelay());
         };
 
         DialogueManager.Instance.StartDialogue(after);
+    }
+
+    IEnumerator LoadEndingWithDelay()
+    {
+        yield return new WaitForSeconds(2.5f); // 원하는 대기 시간 (2.5초)
+        SceneManager.LoadScene("Ending");
     }
 }

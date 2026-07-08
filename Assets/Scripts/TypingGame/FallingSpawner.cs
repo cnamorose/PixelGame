@@ -12,7 +12,7 @@ public class FallingSpawner : MonoBehaviour
 
     private Queue<float> recentXs = new Queue<float>();
 
-    public float spawnInterval = 2f;
+    public float spawnInterval = 4f;
     private float timer;
 
     // 최근에 생성된 단어들을 기억할 큐 (중복 방지용 족보)

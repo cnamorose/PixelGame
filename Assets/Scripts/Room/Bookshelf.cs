@@ -97,7 +97,7 @@ public class Bookshelf : Interactable
 
             string rewardText = isEN
                 ? "Found a hidden vitamin! Maximum Life increased!"
-                : "숨겨진 비타민을 발견했다! 최대 목숨이 늘어났다!";
+                : "숨겨진 비타민을 발견했다! 피로가 풀리는 것 같은데?";
 
             StartCoroutine(ShowRewardDelayed(rewardText));
         }

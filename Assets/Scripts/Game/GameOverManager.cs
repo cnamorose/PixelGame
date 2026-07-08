@@ -24,7 +24,7 @@ public class GameOverManager : MonoBehaviour
     {
         "올해 졸업할 수 있으려나?",
         "좀 더 분발해봐.",
-        "이래서 논문 쓰겠어?"
+        "?"
     };
 
     [Tooltip("영어 게임오버 랜덤 문구들")]
@@ -32,7 +32,7 @@ public class GameOverManager : MonoBehaviour
     {
         "Will I be able to graduate\nthis year?",
         "You need to work\na bit harder.",
-        "At this rate,\nno credits for you."
+        "?"
     };
 
     [Header("Audio")]

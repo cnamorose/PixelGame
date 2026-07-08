@@ -211,24 +211,6 @@ public class PlayerAction : MonoBehaviour
         }
 
 
-        //if (Input.GetKeyDown(KeyCode.F1))
-        //{
-        //    SceneManager.LoadScene("ending");
-        //    return;
-        //}
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene("Room");
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            SceneManager.LoadScene("Keyboard_boss");
-            return;
-        }
-
         // ----------------------------------------------------
         // ⭕ DevilMonster 씬 전용: 방향키 누르면 해당 방향 조준 + 즉시 공격 발동!
         // ----------------------------------------------------

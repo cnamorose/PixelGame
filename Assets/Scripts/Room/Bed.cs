@@ -92,7 +92,7 @@ public class Bed : MonoBehaviour
                 // 방금 막 회복을 마쳤다면 "이제 일어나자" 출력
                 if (isRecovering && !didShowWakeUpMsg)
                 {
-                    string wakeUpText = isEN ? "Now, let's wake up." : "이제 일어나자.";
+                    string wakeUpText = isEN ? "Now, let's wake up." : "몸이 가벼워졌다. 이제 일어나자.";
                     DialogueManager.Instance.ShowSimpleDialogueAutoClose(wakeUpText, 2f);
                     didShowWakeUpMsg = true;
                     isRecovering = false; // 회복 모드 종료

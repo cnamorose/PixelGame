@@ -14,10 +14,10 @@ public class CreditSequence : MonoBehaviour
 
     string[] credits =
     {
-        "A Game By\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
-        "Director &\nGame Design\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
-        "Programming\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
-        "Art & UI Design\n<size=10>\n</size><color=#87CEEB>Haerim Kim</color>",
+        "A Game By\n<size=10>\n</size><color=#87CEEB>RiMimic</color>",
+        "Director &\nGame Design\n<size=10>\n</size><color=#87CEEB>RiMimic</color>",
+        "Programming\n<size=10>\n</size><color=#87CEEB>RiMimic</color>",
+        "Art & UI Design\n<size=10>\n</size><color=#87CEEB>RiMimic</color>",
         "Music & Sound\n<size=10>\n</size>Generated via\n<color=#FF8C00>Suno AI</color>",
         "Used Font\n<size=10>\n</size>'Mulmaru'\nby mushsooni",
         "Special Thanks\n<size=10>\n</size><color=#008A7B>MILab</color>",

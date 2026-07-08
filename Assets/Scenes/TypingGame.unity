@@ -271,7 +271,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b5f87905df8969d4b99328b1de2ca520, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ded9a9aa183b4b941a1c5c0b30f286b3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -641,7 +641,7 @@ MonoBehaviour:
   lettersParent: {fileID: 738665769}
   manager: {fileID: 1791641530}
   spawnArea: {fileID: 967703147}
-  spawnInterval: 2
+  spawnInterval: 4
 --- !u!4 &741012804
 Transform:
   m_ObjectHideFlags: 0

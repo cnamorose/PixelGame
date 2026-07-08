@@ -5,7 +5,7 @@ using TMPro;
 
 public class WordMovement : MonoBehaviour
 {
-    public float fallSpeed = 20f;
+    public float fallSpeed = 18f;
     public string word;
 
     RectTransform rt;

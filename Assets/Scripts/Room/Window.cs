@@ -59,7 +59,7 @@ public class Window : Interactable
 
         string rewardText = isEN
             ? "Replenished Vitamin D with sunlight! Max Life increased!"
-            : "햇빛으로 비타민 D를 충족했다! 최대 목숨이 늘어났다!";
+            : "햇빛으로 비타민 D를 충족했다! 체력이 늘어났다!";
 
         // 대사 씹힘 방지 딜레이
         StartCoroutine(ShowRewardDelayed(rewardText));

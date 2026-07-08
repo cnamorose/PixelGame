@@ -37,6 +37,14 @@ public class PlayerLifeManager : MonoBehaviour
 
     public void LoseLife()
     {
+        // ⭐ [추가] 특정 씬 이름일 때는 데미지를 전혀 입지 않고 무시하도록 설정
+        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (currentScene == "devil_end")
+        {
+            return; // 아래 체력 감소 코드를 실행하지 않고 바로 빠져나감
+        }
+
+        // 기존 예외 처리 코드들
         if (currentLife <= 0 || isInvincible)
             return;
 
@@ -47,10 +55,7 @@ public class PlayerLifeManager : MonoBehaviour
         if (currentLife <= 0)
         {
             currentLife = 0;
-
-            // ⭐ 플레이어 숨기기
             SetPlayerVisible(false);
-
             GameOverManager.Instance.ShowGameOver();
             return;
         }

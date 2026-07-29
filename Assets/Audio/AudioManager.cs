@@ -138,6 +138,13 @@ public class AudioManager : MonoBehaviour
         loopSFXSource.Stop();
     }
 
+    public void StopAllSFX()
+    {
+        if (sfxSource != null) sfxSource.Stop();
+        if (loopSFXSource != null) loopSFXSource.Stop();
+        if (oneShotSFXSource != null) oneShotSFXSource.Stop();
+    }
+
     public void PlayOneShotSFX(AudioClip clip, float pitchMin = 0.95f, float pitchMax = 1.05f)
     {
         oneShotSFXSource.pitch = Random.Range(pitchMin, pitchMax);

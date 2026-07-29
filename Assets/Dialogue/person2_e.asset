@@ -30,14 +30,14 @@ MonoBehaviour:
     weakShake: 0
   - speaker: Player
     text: "Ah, well... I actually just came here to beat up\\nthe demon who smashed
-      my rig...\r\n\r"
+      my rig...\r"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Player
-    text: " I had absolutely no idea you were trapped here, \\nProfessor.\r"
+    text: "I had absolutely no idea you were trapped here, \\nProfessor.\r"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
     weakShake: 0
   - speaker: Professor
     text: "I found myself locked in this bizarre place.\\nThank you so much for saving
-      me.\r\n\r"
+      me.\r"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

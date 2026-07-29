@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DevilHealth : MonoBehaviour
 {
-    public int maxHP = 35;
+    public int maxHP = 33;
     int currentHP;
 
     [Header("BGM")]
@@ -72,7 +72,7 @@ public class DevilHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         // ⭐ [안전장치 1] 플레이어가 이미 죽어서 게임오버 시퀀스가 돌고 있다면 데미지 및 판정 완전 무시
-        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning) return;
+        if (GameOverManager.Instance != null && GameOverManager.Instance.battleResolved) return;
 
         if (isTransitioning) return;
 
@@ -171,12 +171,16 @@ public class DevilHealth : MonoBehaviour
 
     void Die()
     {
-        // ⭐ [안전장치 4] 보스가 죽는 순간 게임오버 시퀀스가 돌고 있다면 사망 컷신 연출 차단
-        if (GameOverManager.Instance != null && GameOverManager.Instance.isGameOverSequenceRunning) return;
+        // ⭐ [안전장치 4] 플레이어와 승부 선점 처리
+        var gom = GameOverManager.Instance;
+        if (gom != null)
+        {
+            if (gom.battleResolved) return;   // 플레이어가 먼저 죽음 → 보스 사망 연출 차단
+            gom.battleResolved = true;        // 보스가 먼저 → 승부 확정 (게임오버를 막음)
+        }
 
         if (isTransitioning) return;
         isTransitioning = true;
-
         attackController.ForceStopAllAttacks();
         ClearRemainingProjectiles();
 
@@ -186,7 +190,6 @@ public class DevilHealth : MonoBehaviour
         {
             player.LockControl();
         }
-
         Debug.Log("Devil Dead");
         StartCoroutine(DevilDeathSequence());
     }
@@ -227,6 +230,7 @@ public class DevilHealth : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.StopBGM();
+            AudioManager.Instance.StopAllSFX();
         }
 
         yield return StartCoroutine(DeathSlowMotion(0.15f, 0.6f));
@@ -267,5 +271,16 @@ public class DevilHealth : MonoBehaviour
             Destroy(p);
         }
         Debug.Log("화면의 모든 데빌 투사체 제거 완료");
+    }
+
+    public void ForceCleanupForGameOver()
+    {
+        if (attackController != null)
+            attackController.ForceStopAllAttacks();   // 공격 루프 정지 → SkyAttackLoop 멈춤 → 소리 안 남
+
+        ClearRemainingProjectiles();
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.StopAllSFX();
     }
 }

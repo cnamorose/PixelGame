@@ -349,7 +349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a06059165ae8dc245a878bc1bfbca36f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c279fe28df9ca134ba9e66a9768072f6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3618,8 +3618,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4dd9b3f0ba47ffa4b9ceca2fb67fe9ed, type: 2}
-  m_sharedMaterial: {fileID: -9211099997254135401, guid: 4dd9b3f0ba47ffa4b9ceca2fb67fe9ed, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6744,6 +6744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameOverSequenceRunning: 0
+  battleResolved: 0
   fromGameOver: 0
   fadePanel: {fileID: 332801216}
   gameOverPanel: {fileID: 1262298712}
@@ -9965,7 +9966,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9f2b5bfce2ad9ed45a627f707c4f2022, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aa76c0fc6cb124648835b65a94cfaf17, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

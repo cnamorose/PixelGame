@@ -43,36 +43,28 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: "Hahahaha!  \r\nYou really think that\u2019s all it takes?"
+    text: "Hahahaha!  \r\nYou think writing your thesis is all it takes?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: You wrote a thesis, sure.
-    requiresName: 0
-    shakeCamera: 0
-    changeDevilSpriteOnEnd: 0
-    devilSpriteOnEnd: {fileID: 0}
-    weakShake: 0
-  - speaker: Devil
-    text: "But do you even know where the professor\nwho\u2019s supposed to approve
-      it is?"
+    text: "Even after you submit it, \nthere are still plenty of hurdles to get through!"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Player
-    text: "Don\u2019t tell me\u2026\nYou locked up the professor too?"
+    text: "That's my problem. \nNow let me out."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: "Did you really think I\u2019d let you go that easily?"
+    text: Heh. Did you really think I'd let you go that easily?
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

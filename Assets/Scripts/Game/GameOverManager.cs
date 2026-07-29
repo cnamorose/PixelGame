@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class GameOverManager : MonoBehaviour
 {
     public bool isGameOverSequenceRunning = false;
+    public bool battleResolved = false;
     public static GameOverManager Instance;
 
     public bool fromGameOver = false;
@@ -71,6 +72,7 @@ public class GameOverManager : MonoBehaviour
         if (scene.name == "Room")
         {
             isGameOverSequenceRunning = false;
+            battleResolved = false;
 
             gameOverPanel.SetActive(false);
             extraGameOverText.gameObject.SetActive(false);
@@ -83,6 +85,9 @@ public class GameOverManager : MonoBehaviour
 
     public void ShowGameOver()
     {
+        if (battleResolved) return;     
+        battleResolved = true;
+
         if (isGameOverSequenceRunning) return;
 
         if (SceneManager.GetActiveScene().name == "Room")
@@ -90,6 +95,10 @@ public class GameOverManager : MonoBehaviour
 
         isGameOverSequenceRunning = true;
         fromGameOver = true;
+
+        DevilHealth devil = FindObjectOfType<DevilHealth>();
+        if (devil != null)
+            devil.ForceCleanupForGameOver();
 
         PlayerAction player = FindObjectOfType<PlayerAction>();
         if (player != null) player.LockControl();
@@ -178,6 +187,9 @@ public class GameOverManager : MonoBehaviour
 
     private IEnumerator GameOverSequence()
     {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.StopAllSFX();
+
         fadePanel.gameObject.SetActive(true);
 
         if (AudioManager.Instance != null)

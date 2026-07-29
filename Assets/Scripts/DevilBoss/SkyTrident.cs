@@ -61,4 +61,15 @@ public class SkyTrident : MonoBehaviour
             transform.position += Vector3.up * 0.01f;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.name == "PenHitBox")
+        {
+            Destroy(gameObject);
+        }
+
+        Debug.Log("삼지창에 닿음 → 이름: " + other.name + " / 태그: " + other.tag + " / 레이어: " + LayerMask.LayerToName(other.gameObject.layer));
+    }
+
 }

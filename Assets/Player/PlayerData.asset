@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   playerName: "\u314E"
-  quizCleared: 1
-  pcCleared: 1
-  paperclear: 1
+  quizCleared: 0
+  pcCleared: 0
+  paperclear: 0
   bookshelfLifeUpgraded: 0
   windowLifeUpgraded: 0
   hasPen: 0

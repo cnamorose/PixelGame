@@ -103,7 +103,7 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Professor
-    text: "\uADF8\uB798, \uC774\uB530 \uBD10 "
+    text: "\uADF8\uB798, \uC774\uB530 \uBCF4\uC790."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

@@ -50,30 +50,31 @@ MonoBehaviour:
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: "\uB17C\uBB38\uB9CC \uC791\uC131\uD558\uBA74 \uB2E4 \uC778\uC904 \uC544\uB098?"
+    text: "\uB17C\uBB38\uB9CC \uC791\uC131\uD558\uBA74 \uB05D\uC778 \uC904 \uC544\uB098?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: "\uADF8\uAC78 \uCEE8\uD38C\uD574\uC904 \uAD50\uC218\uB2D8\uC774 \uC5B4\uB514\uC788\uB294
-      \uC904 \uC54C\uACE0?"
+    text: "\uB17C\uBB38 \uC81C\uCD9C\uD558\uACE0\uB3C4 \uAC70\uCCD0\uC57C \uD560
+      \uACFC\uC815\uC774 \uC0B0\uB354\uBBF8\uB77C\uACE0!"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Player
-    text: "\uC124\uB9C8.. \uAD50\uC218\uB2D8\uAE4C\uC9C0 \uAC00\uB454\uAC70\uC57C?"
+    text: "\uADF8\uAC74 \uB0B4\uAC00 \uC54C\uC544\uC11C \uD560 \uC77C\uC774\uC57C.
+      \n\uC774\uC81C \uB0B4\uBCF4\uB0B4\uC918."
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0
     devilSpriteOnEnd: {fileID: 0}
     weakShake: 0
   - speaker: Devil
-    text: "\uB0B4\uAC00 \uB110 \uADF8\uB9AC \uC27D\uAC8C \uBCF4\uB0B4\uC904\uAC70\uB77C
-      \uC0DD\uAC01\uD588\uB098?"
+    text: "\uD489, \uB0B4\uAC00 \uB110 \uADF8\uB807\uAC8C \n\uC27D\uAC8C \uBCF4\uB0B4\uC904
+      \uAC70\uB77C \uC0DD\uAC01\uD588\uB098?"
     requiresName: 0
     shakeCamera: 0
     changeDevilSpriteOnEnd: 0

@@ -15,6 +15,7 @@ MonoBehaviour:
   playerName: "\u314E"
   quizCleared: 0
   pcCleared: 0
+  keyboardBossCleared: 0
   paperclear: 0
   bookshelfLifeUpgraded: 0
   windowLifeUpgraded: 0

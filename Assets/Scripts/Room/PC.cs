@@ -15,6 +15,9 @@ public class PC : Interactable
 
     SpriteRenderer sr;
     [SerializeField] RedFadeController redFade;
+    [Header("Room PC Visuals")]
+    [SerializeField] GameObject pcBeforeAssemblyVisual;
+    [SerializeField] GameObject pcAfterAssemblyVisual;
 
     void Start()
     {
@@ -36,6 +39,33 @@ public class PC : Interactable
         {
             sr.sprite = screen1_Locked;
         }
+
+        UpdateAssemblyVisuals();
+    }
+
+    void UpdateAssemblyVisuals()
+    {
+        // 아직 인스펙터에 연결하지 않았을 때도 현재 Room의 PC_0 / PC_1을 사용한다.
+        if (pcBeforeAssemblyVisual == null)
+            pcBeforeAssemblyVisual = FindRoomObject("PC_0");
+        if (pcAfterAssemblyVisual == null)
+            pcAfterAssemblyVisual = FindRoomObject("PC_1");
+
+        if (pcBeforeAssemblyVisual != null)
+            pcBeforeAssemblyVisual.SetActive(!playerdata.pcCleared);
+        if (pcAfterAssemblyVisual != null)
+            pcAfterAssemblyVisual.SetActive(playerdata.pcCleared);
+    }
+
+    GameObject FindRoomObject(string objectName)
+    {
+        foreach (GameObject candidate in Resources.FindObjectsOfTypeAll<GameObject>())
+        {
+            if (candidate.name == objectName && candidate.scene == gameObject.scene)
+                return candidate;
+        }
+
+        return null;
     }
 
     public override void Interact()
@@ -55,8 +85,8 @@ public class PC : Interactable
             return;
         }
 
-        // 2️⃣ PC 미클리어 → 블루스크린 해결?
-        if (!playerdata.pcCleared)
+        // 2️⃣ 키보드 보스 미클리어 → 블루스크린 해결
+        if (!playerdata.keyboardBossCleared)
         {
             string question = isEN
                 ? "It's a blue screen.\nDo you want to fix it?"
@@ -84,7 +114,28 @@ public class PC : Interactable
             SceneManager.LoadScene("KeyboardMonster");
         }
 
-        // 3️⃣ PC 클리어 + 논문 미완성
+        // 3️⃣ 키보드 보스 클리어 후, PC 조립 전
+        if (!playerdata.pcCleared)
+        {
+            string question = isEN
+                ? "The PC needs to be assembled. Do you want to assemble it?"
+                : "PC를 조립하시겠습니까?";
+
+            DialogueManager.Instance.ShowChoiceDialogue(
+                question,
+                onYes: () => StartCoroutine(PCAssemblyWithDelay()),
+                onNo: () => { }
+            );
+            return;
+        }
+
+        IEnumerator PCAssemblyWithDelay()
+        {
+            yield return new WaitForSeconds(1.0f);
+            SceneManager.LoadScene("PC");
+        }
+
+        // 4️⃣ PC 조립 완료 + 논문 미완성
         if (playerdata.pcCleared && !playerdata.paperclear)
         {
             string question;
@@ -120,7 +171,7 @@ public class PC : Interactable
             SceneManager.LoadScene("TypingGame");
         }
 
-        // 4️⃣ 논문 완료
+        // 5️⃣ 논문 완료
         if (playerdata.paperclear)
         {
             string text = isEN

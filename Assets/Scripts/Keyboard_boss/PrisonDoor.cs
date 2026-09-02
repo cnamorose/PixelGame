@@ -104,8 +104,7 @@ public class PrisonDoor : Interactable
             senior.FreeAndWait(seniorTargetX)
         );
 
-        DialogueManager.Instance.playerData.pcCleared = true;
-
+        DialogueManager.Instance.playerData.keyboardBossCleared = true;
         DialogueManager.Instance.playerData.hasUsb = true;
 
         // 대화 시작

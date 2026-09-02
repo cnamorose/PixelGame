@@ -34,6 +34,8 @@ public class PlayerAction : MonoBehaviour
     public float v;
     bool isHorizonMove;
     bool isQuizScene = false;
+    bool isPCAssemblyScene = false;
+    Collider2D[] playerColliders;
 
     public bool forceIdle = false;
     public int idleDir = 1;
@@ -151,6 +153,7 @@ public class PlayerAction : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        playerColliders = GetComponents<Collider2D>();
 
         originalScale = transform.localScale;
 
@@ -187,6 +190,9 @@ public class PlayerAction : MonoBehaviour
 
         if (inputLocked) return;
 
+        // PC 조립은 플레이어를 조작하지 않는 드래그 전용 미니게임이다.
+        if (isPCAssemblyScene) return;
+
         if (GameOverManager.Instance != null &&
         GameOverManager.Instance.isGameOverSequenceRunning)
             return;
@@ -210,7 +216,7 @@ public class PlayerAction : MonoBehaviour
             ToggleInventory();
         }
 
- 
+
         // ----------------------------------------------------
         // ⭕ DevilMonster 씬 전용: 방향키 누르면 해당 방향 조준 + 즉시 공격 발동!
         // ----------------------------------------------------
@@ -503,16 +509,41 @@ public class PlayerAction : MonoBehaviour
             transform.localScale = originalScale * 0.5f;
         }
 
-        if (scene.name == "Quiz")
+        if (scene.name == "Quiz" || scene.name == "PC")
         {
             isQuizScene = true;
-            GetComponent<SpriteRenderer>().enabled = false;
+            sr.enabled = false;
             rigid.velocity = Vector2.zero;
+
+            if (scene.name == "PC")
+            {
+                isPCAssemblyScene = true;
+                LockControl();
+
+                if (rigid != null)
+                    rigid.simulated = false;
+
+                foreach (Collider2D playerCollider in playerColliders)
+                    playerCollider.enabled = false;
+            }
         }
         else
         {
             isQuizScene = false;
-            GetComponent<SpriteRenderer>().enabled = true;
+            sr.enabled = true;
+
+            if (isPCAssemblyScene)
+            {
+                isPCAssemblyScene = false;
+
+                if (rigid != null)
+                    rigid.simulated = true;
+
+                foreach (Collider2D playerCollider in playerColliders)
+                    playerCollider.enabled = true;
+
+                UnlockControl();
+            }
         }
 
         if (scene.name == "KeyboardMonster" || scene.name == "Keyboard_boss")
